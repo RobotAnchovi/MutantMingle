@@ -28,5 +28,5 @@
     "titleBar.inactiveForeground": "#e7e7e799"
   },
   "peacock.color": "#985cba",
-  "cSpell.ignoreWords": ["sequelizerc"]
+  "cSpell.ignoreWords": ["psql", "sequelizerc"]
 }
