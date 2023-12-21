@@ -77,6 +77,4 @@ app.use((err, _req, res, _next) => {
   });
 });
 
-// ...
-
 module.exports = app;
