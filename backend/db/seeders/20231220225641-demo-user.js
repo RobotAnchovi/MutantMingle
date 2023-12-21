@@ -2,6 +2,7 @@
 
 const { User } = require("../models");
 const bcrypt = require("bcryptjs");
+const { ValidationError } = require("sequelize");
 
 let options = {};
 if (process.env.NODE_ENV === "production") {
@@ -13,23 +14,40 @@ module.exports = {
     await User.bulkCreate(
       [
         {
+          firstName: "Peter",
+          lastName: "Miller",
           email: "demo@user.io",
           username: "Demo-lition",
           hashedPassword: bcrypt.hashSync("password"),
         },
         {
+          firstName: "Dwayne",
+          lastName: "Miller",
           email: "user1@user.io",
           username: "FakeUser1",
           hashedPassword: bcrypt.hashSync("password2"),
         },
         {
+          firstName: "Paul",
+          lastName: "Miller",
           email: "user2@user.io",
           username: "FakeUser2",
           hashedPassword: bcrypt.hashSync("password3"),
         },
       ],
       { validate: true }
-    );
+    ).catch((err) => {
+      if (err instanceof ValidationError) {
+        throw err.message;
+      } else {
+        console.log(err);
+        for (let error of err.errors) {
+          console.log(error.record);
+          console.log(error.message);
+        }
+        throw err.errors;
+      }
+    });
   },
 
   async down(queryInterface, Sequelize) {
