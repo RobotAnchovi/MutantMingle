@@ -1,8 +1,10 @@
 "use strict";
+
 let options = {};
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;
 }
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable(
@@ -24,6 +26,13 @@ module.exports = {
           allowNull: false,
           unique: true,
         },
+        firstName: {
+          type: Sequelize.STRING(50),
+        },
+        lastName: {
+          type: Sequelize.STRING(50),
+          allowNull: false,
+        },
         hashedPassword: {
           type: Sequelize.STRING.BINARY,
           allowNull: false,
@@ -42,6 +51,7 @@ module.exports = {
       options
     );
   },
+
   async down(queryInterface, Sequelize) {
     options.tableName = "Users";
     return queryInterface.dropTable(options);
