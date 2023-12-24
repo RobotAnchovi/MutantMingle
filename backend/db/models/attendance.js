@@ -10,14 +10,41 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Attendance.belongsTo(models.Event, {
+        foreignKey: "eventId",
+        as: "event",
+      });
+      Attendance.belongsTo(models.User, {
+        foreignKey: "userId",
+        as: "user",
+      });
     }
   }
   Attendance.init(
     {
-      id: DataTypes.INTEGER,
-      eventId: DataTypes.INTEGER,
-      userId: DataTypes.INTEGER,
-      status: DataTypes.STRING,
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
+      eventId: {
+        type: DataTypes.INTEGER,
+        references: { model: "Events", key: "id" },
+        allowNull: false,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        references: { model: "Users", key: "id" },
+        allowNull: false,
+      },
+      status: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          isIn: [["attending", "waitlist", "pending"]],
+        },
+      },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
     },
@@ -26,5 +53,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Attendance",
     }
   );
+
   return Attendance;
 };
