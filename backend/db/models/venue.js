@@ -1,21 +1,31 @@
 //*====> backend/db/models/venue.js <====
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class Venue extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       // define association here
+      Venue.belongsTo(models.Group, {
+        foreignKey: "groupId",
+        as: "group",
+      });
     }
   }
+
   Venue.init(
     {
-      id: DataTypes.INTEGER,
-      groupId: DataTypes.INTEGER,
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
+      groupId: {
+        type: DataTypes.INTEGER,
+        references: { model: "Groups", key: "id" },
+        allowNull: false,
+      },
       address: DataTypes.STRING,
       city: DataTypes.STRING,
       state: DataTypes.STRING,
@@ -29,5 +39,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Venue",
     }
   );
+
   return Venue;
 };
