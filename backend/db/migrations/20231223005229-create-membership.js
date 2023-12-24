@@ -14,23 +14,26 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        id: {
-          type: Sequelize.INTEGER,
-        },
         userId: {
           type: Sequelize.INTEGER,
+          references: {
+            model: "Users",
+            key: "id",
+          },
         },
         groupId: {
           type: Sequelize.INTEGER,
+          references: {
+            model: "Groups",
+            key: "id",
+          },
         },
         status: {
+          allowNull: false,
           type: Sequelize.STRING,
-        },
-        createdAt: {
-          type: Sequelize.DATE,
-        },
-        updatedAt: {
-          type: Sequelize.DATE,
+          validate: {
+            isIn: [["co-host", "member", "pending"]],
+          },
         },
         createdAt: {
           allowNull: false,
