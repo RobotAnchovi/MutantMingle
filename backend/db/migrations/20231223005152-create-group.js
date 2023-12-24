@@ -14,22 +14,30 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        id: {
-          type: Sequelize.INTEGER,
-        },
         organizerId: {
           type: Sequelize.INTEGER,
+          references: {
+            model: "Users",
+            key: "id",
+          },
         },
         name: {
+          allowNull: false,
           type: Sequelize.STRING,
         },
         about: {
+          allowNull: false,
           type: Sequelize.TEXT,
         },
         type: {
+          allowNull: false,
           type: Sequelize.STRING,
+          validate: {
+            isIn: [["Online", "In Person"]],
+          },
         },
         private: {
+          allowNull: false,
           type: Sequelize.BOOLEAN,
         },
         city: {
@@ -37,12 +45,6 @@ module.exports = {
         },
         state: {
           type: Sequelize.STRING,
-        },
-        createdAt: {
-          type: Sequelize.DATE,
-        },
-        updatedAt: {
-          type: Sequelize.DATE,
         },
         createdAt: {
           allowNull: false,
