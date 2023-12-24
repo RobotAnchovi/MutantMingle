@@ -14,23 +14,26 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        id: {
-          type: Sequelize.INTEGER,
-        },
         eventId: {
           type: Sequelize.INTEGER,
+          references: {
+            model: "Events",
+            key: "id",
+          },
         },
         userId: {
           type: Sequelize.INTEGER,
+          references: {
+            model: "Users",
+            key: "id",
+          },
         },
         status: {
+          allowNull: false,
           type: Sequelize.STRING,
-        },
-        createdAt: {
-          type: Sequelize.DATE,
-        },
-        updatedAt: {
-          type: Sequelize.DATE,
+          validate: {
+            isIn: [["attending", "waitlist", "pending"]],
+          },
         },
         createdAt: {
           allowNull: false,
