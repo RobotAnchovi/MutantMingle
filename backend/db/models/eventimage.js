@@ -1,7 +1,6 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+//*====> backend/db/models/eventimage.js <====
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class EventImage extends Model {
     /**
@@ -13,16 +12,19 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  EventImage.init({
-    id: DataTypes.INTEGER,
-    eventId: DataTypes.INTEGER,
-    url: DataTypes.STRING,
-    preview: DataTypes.BOOLEAN,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE
-  }, {
-    sequelize,
-    modelName: 'EventImage',
-  });
+  EventImage.init(
+    {
+      id: DataTypes.INTEGER,
+      eventId: DataTypes.INTEGER,
+      url: DataTypes.STRING,
+      preview: DataTypes.BOOLEAN,
+      createdAt: DataTypes.DATE,
+      updatedAt: DataTypes.DATE,
+    },
+    {
+      sequelize,
+      modelName: "EventImage",
+    }
+  );
   return EventImage;
 };

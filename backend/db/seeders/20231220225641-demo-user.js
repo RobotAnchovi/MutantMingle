@@ -1,3 +1,4 @@
+//*====> backend/db/seeders/20231220225641-demo-user.js <====
 "use strict";
 
 const { User } = require("../models");

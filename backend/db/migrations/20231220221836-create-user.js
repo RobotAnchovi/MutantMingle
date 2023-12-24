@@ -1,3 +1,4 @@
+//*====> backend/db/migrations/20231220221836-create-user.js <====
 "use strict";
 
 let options = {};

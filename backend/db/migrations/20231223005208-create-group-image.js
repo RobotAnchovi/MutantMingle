@@ -1,3 +1,4 @@
+//*====> backend/db/migrations/20231223005208-create-group-image.js <====
 "use strict";
 let options = {};
 if (process.env.NODE_ENV === "production") {

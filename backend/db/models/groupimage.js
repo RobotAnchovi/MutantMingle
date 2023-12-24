@@ -1,7 +1,6 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+//*====> backend/db/models/groupimage.js <====
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class GroupImage extends Model {
     /**
@@ -13,16 +12,19 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  GroupImage.init({
-    id: DataTypes.INTEGER,
-    groupId: DataTypes.INTEGER,
-    url: DataTypes.STRING,
-    preview: DataTypes.BOOLEAN,
-    createdAt: DataTypes.DATE,
-    updatedAt: DataTypes.DATE
-  }, {
-    sequelize,
-    modelName: 'GroupImage',
-  });
+  GroupImage.init(
+    {
+      id: DataTypes.INTEGER,
+      groupId: DataTypes.INTEGER,
+      url: DataTypes.STRING,
+      preview: DataTypes.BOOLEAN,
+      createdAt: DataTypes.DATE,
+      updatedAt: DataTypes.DATE,
+    },
+    {
+      sequelize,
+      modelName: "GroupImage",
+    }
+  );
   return GroupImage;
 };
