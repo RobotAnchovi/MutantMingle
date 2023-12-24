@@ -14,23 +14,20 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        id: {
-          type: Sequelize.INTEGER,
-        },
         eventId: {
           type: Sequelize.INTEGER,
+          references: {
+            model: "Events",
+            key: "id",
+          },
         },
         url: {
           type: Sequelize.STRING,
         },
         preview: {
+          allowNull: false,
           type: Sequelize.BOOLEAN,
-        },
-        createdAt: {
-          type: Sequelize.DATE,
-        },
-        updatedAt: {
-          type: Sequelize.DATE,
+          defaultValue: false,
         },
         createdAt: {
           allowNull: false,
