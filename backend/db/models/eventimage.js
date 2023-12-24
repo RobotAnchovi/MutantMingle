@@ -1,23 +1,37 @@
 //*====> backend/db/models/eventimage.js <====
 "use strict";
 const { Model } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
   class EventImage extends Model {
-    /**
-     * Helper method for defining associations.
-     * This method is not a part of Sequelize lifecycle.
-     * The `models/index` file will call this method automatically.
-     */
     static associate(models) {
       // define association here
+      EventImage.belongsTo(models.Event, {
+        foreignKey: "eventId",
+        as: "event",
+      });
     }
   }
+
   EventImage.init(
     {
-      id: DataTypes.INTEGER,
-      eventId: DataTypes.INTEGER,
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
+      eventId: {
+        type: DataTypes.INTEGER,
+        references: { model: "Events", key: "id" },
+        allowNull: false,
+      },
       url: DataTypes.STRING,
-      preview: DataTypes.BOOLEAN,
+      preview: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: false,
+      },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
     },
@@ -26,5 +40,6 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "EventImage",
     }
   );
+
   return EventImage;
 };
