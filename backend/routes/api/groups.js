@@ -208,4 +208,35 @@ router.post("/", requireAuth, async (req, res, next) => {
   }
 });
 
+//^ POST route to create a new group image
+router.post("/:groupId/images", requireAuth, async (req, res, next) => {
+  try {
+    const { groupId } = req.params;
+    const { url, preview } = req.body;
+    const userId = req.user.id;
+
+    const group = await Group.findByPk(groupId);
+    if (!group) {
+      return res.status(404).json({ message: "Group not found" });
+    }
+    if (group.organizerId !== userId) {
+      return res
+        .status(403)
+        .json({
+          message: "User is not authorized to add images to this group",
+        });
+    }
+
+    const newImage = await GroupImage.create({
+      groupId,
+      url,
+      preview,
+    });
+
+    return res.status(201).json(newImage);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
