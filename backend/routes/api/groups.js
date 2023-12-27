@@ -220,11 +220,9 @@ router.post("/:groupId/images", requireAuth, async (req, res, next) => {
       return res.status(404).json({ message: "Group not found" });
     }
     if (group.organizerId !== userId) {
-      return res
-        .status(403)
-        .json({
-          message: "User is not authorized to add images to this group",
-        });
+      return res.status(403).json({
+        message: "User is not authorized to add images to this group",
+      });
     }
 
     const newImage = await GroupImage.create({
@@ -234,6 +232,66 @@ router.post("/:groupId/images", requireAuth, async (req, res, next) => {
     });
 
     return res.status(201).json(newImage);
+  } catch (err) {
+    next(err);
+  }
+});
+
+//^ PUT route to update an existing group
+router.put("/:groupId", requireAuth, async (req, res, next) => {
+  try {
+    const { groupId } = req.params;
+    const userId = req.user.id;
+    const { name, about, type, isPrivate, city, state } = req.body;
+
+    const group = await Group.findByPk(groupId);
+    if (!group) {
+      return res.status(404).json({ message: "Group not found" });
+    }
+    if (group.organizerId !== userId) {
+      return res
+        .status(403)
+        .json({ message: "User is not authorized to edit this group" });
+    }
+
+    group.name = name;
+    group.about = about;
+    group.type = type;
+    group.private = isPrivate;
+    group.city = city;
+    group.state = state;
+    await group.save();
+
+    return res.json(group);
+  } catch (err) {
+    if (err.name === "SequelizeValidationError") {
+      return res
+        .status(400)
+        .json({ message: "Validation error", errors: err.errors });
+    }
+    next(err);
+  }
+});
+
+//^ DELETE route to delete an existing group
+router.delete("/:groupId", requireAuth, async (req, res, next) => {
+  try {
+    const { groupId } = req.params;
+    const userId = req.user.id;
+
+    const group = await Group.findByPk(groupId);
+    if (!group) {
+      return res.status(404).json({ message: "Group not found" });
+    }
+    if (group.organizerId !== userId) {
+      return res
+        .status(403)
+        .json({ message: "User is not authorized to delete this group" });
+    }
+
+    await group.destroy();
+
+    return res.json({ message: "Group successfully deleted" });
   } catch (err) {
     next(err);
   }
