@@ -47,7 +47,6 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
-        //^ ... Add more memberships as needed
       ],
       options
     );
