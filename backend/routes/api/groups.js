@@ -279,7 +279,7 @@ router.put("/:groupId", requireAuth, async (req, res, next) => {
   }
 });
 
-//^ DELETE route to delete an existing group
+//^ DELETE an existing group
 router.delete("/:groupId", requireAuth, async (req, res, next) => {
   try {
     const { groupId } = req.params;
@@ -343,11 +343,9 @@ router.post("/:groupId/venues", requireAuth, async (req, res, next) => {
         where: { groupId, userId, status: "co-host" },
       });
       if (!membership) {
-        return res
-          .status(403)
-          .json({
-            message: "User is not authorized to create a venue for this group",
-          });
+        return res.status(403).json({
+          message: "User is not authorized to create a venue for this group",
+        });
       }
     }
 
