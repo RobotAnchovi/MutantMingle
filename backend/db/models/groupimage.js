@@ -5,7 +5,7 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class GroupImage extends Model {
     static associate(models) {
-      // define association here
+      //^ Associations
       GroupImage.belongsTo(models.Group, {
         foreignKey: "groupId",
         as: "group",
