@@ -52,7 +52,7 @@ router.get("/", async (req, res, next) => {
 });
 
 //^ Get groups created or joined by the current user
-router.get("/user-groups", requireAuth, async (req, res, next) => {
+router.get("/current", requireAuth, async (req, res, next) => {
   try {
     const userId = req.user.id;
     const groups = await Group.findAll({
