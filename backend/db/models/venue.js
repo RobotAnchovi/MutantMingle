@@ -10,6 +10,11 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "groupId",
         as: "group",
       });
+      Venue.hasMany(models.Event, {
+        foreignKey: "venueId",
+        as: "events",
+        onDelete: "CASCADE",
+      });
     }
   }
 
@@ -26,17 +31,25 @@ module.exports = (sequelize, DataTypes) => {
         references: { model: "Groups", key: "id" },
         allowNull: false,
       },
-      address: DataTypes.STRING,
-      city: DataTypes.STRING,
-      state: DataTypes.STRING,
-      lat: DataTypes.DECIMAL,
-      lng: DataTypes.DECIMAL,
+      address: { type: DataTypes.STRING, allowNull: false },
+      city: { type: DataTypes.STRING, allowNull: false },
+      state: { type: DataTypes.STRING, allowNull: false },
+      lat: {
+        type: DataTypes.DECIMAL,
+        allowNull: true,
+      },
+      lng: {
+        type: DataTypes.DECIMAL,
+        allowNull: true,
+      },
       createdAt: DataTypes.DATE,
       updatedAt: DataTypes.DATE,
     },
     {
       sequelize,
       modelName: "Venue",
+      tableName: "Venues",
+      timestamps: true,
     }
   );
 

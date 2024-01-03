@@ -1,80 +1,77 @@
-//*====> backend/db/seeders/20231224160428-demo-groups.js <====
 "use strict";
+
+const { Group } = require("../models");
 
 let options = {};
 if (process.env.NODE_ENV === "production") {
-  options.schema = process.env.SCHEMA;
+  options.schema = process.env.SCHEMA; // define your schema in options object
 }
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert(
-      "Groups",
+    await Group.bulkCreate(
       [
         {
-          organizerId: 1,
-          name: "The Avengers",
-          about:
-            "Earth's Mightiest Heroes united to fight the foes no single hero could withstand.",
-          type: "In Person",
+          organizerId: 1, // Make sure references a valid User ID
+          name: "Outdoor Adventures",
+          about: "A group for outdoor enthusiasts",
+          type: "In person",
           private: false,
-          city: "New York",
-          state: "NY",
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          organizerId: 4,
-          name: "Science Bros",
-          about:
-            "A group for discussing science, technology, and gamma radiation research.",
-          type: "In Person",
-          private: true,
-          city: "New York",
-          state: "NY",
+          city: "San Francisco",
+          state: "CA",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           organizerId: 2,
-          name: "Stark Industries R&D",
-          about:
-            "Research and development group for Stark Industries' latest tech.",
+          name: "Tech Talks",
+          about: "Discussing the latest in technology",
           type: "Online",
-          private: true,
+          private: false,
           city: "New York",
           state: "NY",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          organizerId: 5,
-          name: "S.H.I.E.L.D. Espionage",
-          about: "Training and resources for S.H.I.E.L.D. agents.",
-          type: "In Person",
+          organizerId: 3,
+          name: "Book Club",
+          about: "Monthly fiction and non-fiction book discussions",
+          type: "In person",
           private: true,
-          city: "Washington",
-          state: "D.C.",
+          city: "Chicago",
+          state: "IL",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          organizerId: 3,
-          name: "Heroes for Justice",
-          about: "A group dedicated to community service and heroism.",
-          type: "In Person",
+          organizerId: 4,
+          name: "Movie Nights",
+          about: "Weekly gatherings to watch and discuss movies",
+          type: "In person",
           private: false,
-          city: "Brooklyn",
-          state: "NY",
+          city: "Los Angeles",
+          state: "CA",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          organizerId: 5,
+          name: "Culinary Cooks",
+          about: "Share recipes and cooking techniques",
+          type: "Online",
+          private: false,
+          city: "Seattle",
+          state: "WA",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
       ],
-      options
+      { validate: true }
     );
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete("Groups", null, options);
+    await queryInterface.bulkDelete("Groups", null, {});
   },
 };

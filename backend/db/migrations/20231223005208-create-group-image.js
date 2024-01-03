@@ -26,6 +26,7 @@ module.exports = {
         },
         url: {
           type: Sequelize.STRING,
+          allowNull: false,
         },
         preview: {
           allowNull: false,
@@ -47,6 +48,7 @@ module.exports = {
     );
   },
   async down(queryInterface, Sequelize) {
+    options.tableName = "GroupImages";
     await queryInterface.dropTable(options);
   },
 };

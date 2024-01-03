@@ -1,72 +1,72 @@
-//*====> backend/db/seeders/<timestamp>-demo-venues.js <====
 "use strict";
+
+const { Venue } = require("../models");
 
 let options = {};
 if (process.env.NODE_ENV === "production") {
-  options.schema = process.env.SCHEMA;
+  options.schema = process.env.SCHEMA; // define your schema in options object
 }
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert(
-      "Venues",
+    await Venue.bulkCreate(
       [
         {
           groupId: 1,
-          address: "890 Fifth Avenue",
-          city: "New York",
-          state: "NY",
-          lat: 40.7746,
-          lng: -73.9653,
+          address: "123 Tech Rd",
+          city: "Techville",
+          state: "Techas",
+          lat: 37.773972,
+          lng: -122.431297, // Coordinates for San Francisco
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           groupId: 2,
-          address: "177A Bleecker Street",
-          city: "New York",
-          state: "NY",
-          lat: 40.7289,
-          lng: -73.9994,
+          address: "456 Innovation Ave",
+          city: "Innovate City",
+          state: "Creativia",
+          lat: 34.052235,
+          lng: -118.243683, // Coordinates for Los Angeles
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          groupId: 1,
+          address: "789 Startup Blvd",
+          city: "Entrepreneur Town",
+          state: "Founderland",
+          lat: 40.712776,
+          lng: -74.005974, // Coordinates for New York City
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           groupId: 3,
-          address: "Xavier's School for Gifted Youngsters",
-          city: "Salem Center",
-          state: "NY",
-          lat: 41.3325,
-          lng: -73.6972,
+          address: "101 Data Dr",
+          city: "Server City",
+          state: "Compute",
+          lat: 47.606209,
+          lng: -122.332069, // Coordinates for Seattle
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           groupId: 4,
-          address: "Stark Tower",
-          city: "New York",
-          state: "NY",
-          lat: 40.7567,
-          lng: -73.9783,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          groupId: 5,
-          address: "Baxter Building",
-          city: "New York",
-          state: "NY",
-          lat: 40.7564,
-          lng: -73.9832,
+          address: "202 AI Lane",
+          city: "Robotics Village",
+          state: "Automation",
+          lat: 37.774929,
+          lng: -122.419416, // Coordinates for San Francisco
           createdAt: new Date(),
           updatedAt: new Date(),
         },
       ],
-      options
+      { validate: true }
     );
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete("Venues", null, options);
+    await queryInterface.bulkDelete("Venues", null, {});
   },
 };

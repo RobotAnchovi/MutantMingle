@@ -26,18 +26,23 @@ module.exports = {
         },
         address: {
           type: Sequelize.STRING,
+          allowNull: false,
         },
         city: {
           type: Sequelize.STRING,
+          allowNull: false,
         },
         state: {
           type: Sequelize.STRING,
+          allowNull: false,
         },
         lat: {
           type: Sequelize.DECIMAL,
+          allowNull: true,
         },
         lng: {
           type: Sequelize.DECIMAL,
+          allowNull: true,
         },
         createdAt: {
           allowNull: false,
@@ -54,6 +59,7 @@ module.exports = {
     );
   },
   async down(queryInterface, Sequelize) {
+    options.tableName = "Venues";
     await queryInterface.dropTable(options);
   },
 };

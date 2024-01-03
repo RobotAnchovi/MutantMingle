@@ -48,6 +48,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Membership",
+      tableName: "Memberships",
+      timestamps: true,
     }
   );
 

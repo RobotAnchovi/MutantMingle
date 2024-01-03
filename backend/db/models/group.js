@@ -26,6 +26,11 @@ module.exports = (sequelize, DataTypes) => {
         as: "venues",
         onDelete: "CASCADE",
       });
+      Group.hasMany(models.Event, {
+        foreignKey: "groupId",
+        as: "events",
+        onDelete: "CASCADE",
+      });
     }
   }
 
@@ -69,6 +74,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Group",
+      tableName: "Groups",
+      timestamps: true,
     }
   );
 

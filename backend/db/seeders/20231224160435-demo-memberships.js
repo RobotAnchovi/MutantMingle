@@ -1,5 +1,6 @@
-//*====> backend/db/seeders/202312241604XX-demo-memberships.js <====
 "use strict";
+
+const { Membership } = require("../models");
 
 let options = {};
 if (process.env.NODE_ENV === "production") {
@@ -8,51 +9,49 @@ if (process.env.NODE_ENV === "production") {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // Bulk inserting data into the Memberships table
-    await queryInterface.bulkInsert(
-      "Memberships",
+    await Membership.bulkCreate(
       [
         {
-          userId: 1, // Peter Parker
-          groupId: 1, // The Avengers
-          status: "member",
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          userId: 2, // Tony Stark
-          groupId: 3, // Stark Industries R&D
+          userId: 1,
+          groupId: 1,
           status: "co-host",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          userId: 3, // Steve Rogers
-          groupId: 5, // Heroes for Justice
+          userId: 2,
+          groupId: 2,
           status: "member",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          userId: 4, // Bruce Banner
-          groupId: 2, // Science Bros
+          userId: 2,
+          groupId: 2,
+          status: "pending",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          userId: 1,
+          groupId: 3,
           status: "member",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          userId: 5, // Natasha Romanoff
-          groupId: 4, // S.H.I.E.L.D. Espionage
+          userId: 1,
+          groupId: 3,
           status: "co-host",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
       ],
-      options
+      { validate: true }
     );
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete("Memberships", null, options);
+    await queryInterface.bulkDelete("Memberships", null, {});
   },
 };

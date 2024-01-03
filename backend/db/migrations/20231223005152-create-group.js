@@ -45,9 +45,11 @@ module.exports = {
         },
         city: {
           type: Sequelize.STRING,
+          allowNull: true,
         },
         state: {
           type: Sequelize.STRING,
+          allowNull: true,
         },
         createdAt: {
           allowNull: false,
@@ -64,6 +66,7 @@ module.exports = {
     );
   },
   async down(queryInterface, Sequelize) {
+    options.tableName = "Groups";
     await queryInterface.dropTable(options);
   },
 };

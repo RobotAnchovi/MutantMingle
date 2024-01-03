@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
         as: "attendances",
         onDelete: "CASCADE",
       });
+      User.hasMany(models.Group, {
+        foreignKey: "organizerId",
+        as: "organizerGroups",
+        onDelete: "CASCADE",
+      });
     }
   }
   User.init(
@@ -39,6 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       email: {
         type: DataTypes.STRING,
         allowNull: false,
+        unique: true,
         validate: {
           len: [3, 256],
           isEmail: true,

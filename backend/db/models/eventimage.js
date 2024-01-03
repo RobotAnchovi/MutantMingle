@@ -38,6 +38,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "EventImage",
+      tableName: "EventImages",
+      timestamps: true,
     }
   );
 

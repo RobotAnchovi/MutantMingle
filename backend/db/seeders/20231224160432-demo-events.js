@@ -1,86 +1,87 @@
-//*====> backend/db/seeders/20231224160413-demo-events.js <====
 "use strict";
+
+const { Event } = require("../models");
 
 let options = {};
 if (process.env.NODE_ENV === "production") {
-  options.schema = process.env.SCHEMA;
+  options.schema = process.env.SCHEMA; // define your schema in options object
 }
+
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert(
-      "Events",
+    await Event.bulkCreate(
       [
         {
-          venueId: 1,
-          groupId: 1,
-          name: "Avengers Assembly",
-          description: "Gathering of Earth's Mightiest Heroes.",
-          type: "In Person",
-          capacity: 100,
-          price: 0,
-          startDate: new Date(),
-          endDate: new Date(),
+          venueId: 1, // valid venue IDs
+          groupId: 1, // valid group IDs
+          name: "Tech Conference 2021",
+          description: "An annual conference for tech enthusiasts.",
+          type: "In person",
+          capacity: 500,
+          price: 299,
+          startDate: new Date(2021, 9, 10),
+          endDate: new Date(2021, 9, 12),
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           venueId: 2,
           groupId: 2,
-          name: "S.H.I.E.L.D. Recruitment",
-          description: "Open day for new S.H.I.E.L.D. agent recruitment.",
-          type: "In Person",
-          capacity: 150,
-          price: 0,
-          startDate: new Date(),
-          endDate: new Date(),
+          name: "Local Hack Day",
+          description: "Hackathon event for local developers.",
+          type: "In person",
+          capacity: 100,
+          price: 0, //free event
+          startDate: new Date(2021, 10, 5),
+          endDate: new Date(2021, 10, 5),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          venueId: 1,
+          groupId: 1,
+          name: "Virtual Reality Expo",
+          description: "Explore the latest in VR technology.",
+          type: "Online",
+          capacity: 200,
+          price: 150,
+          startDate: new Date(2021, 11, 1),
+          endDate: new Date(2021, 11, 3),
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
           venueId: 3,
           groupId: 3,
-          name: "X-Men Training Session",
-          description: "Training for young mutants.",
-          type: "In Person",
-          capacity: 30,
-          price: 0,
-          startDate: new Date(),
-          endDate: new Date(),
+          name: "Outdoor Photography Workshop",
+          description: "Learn outdoor photography techniques.",
+          type: "In person",
+          capacity: 50,
+          price: 200,
+          startDate: new Date(2021, 12, 15),
+          endDate: new Date(2021, 12, 17),
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          venueId: 4,
+          venueId: 2,
           groupId: 4,
-          name: "Stark Expo",
-          description: "Exhibition of Stark Industries' latest tech.",
-          type: "In Person",
-          capacity: 200,
-          price: 10,
-          startDate: new Date(),
-          endDate: new Date(),
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          venueId: 5,
-          groupId: 5,
-          name: "Fantastic Four Science Fair",
-          description: "Showcasing groundbreaking scientific discoveries.",
-          type: "In Person",
-          capacity: 80,
-          price: 5,
-          startDate: new Date(),
-          endDate: new Date(),
+          name: "Cooking Masterclass",
+          description: "Cooking class by renowned chef.",
+          type: "Online",
+          capacity: 30,
+          price: 100,
+          startDate: new Date(2022, 1, 20),
+          endDate: new Date(2022, 1, 20),
           createdAt: new Date(),
           updatedAt: new Date(),
         },
       ],
-      options
+      { validate: true }
     );
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete("Events", null, options);
+    await queryInterface.bulkDelete("Events", null, {});
   },
 };
