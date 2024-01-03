@@ -5,20 +5,18 @@ const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Event extends Model {
     static associate(models) {
-      //^ Associations
-      Event.belongsTo(models.Venue, {
-        foreignKey: "venueId",
-        as: "venue",
-      });
       Event.hasMany(models.EventImage, {
         foreignKey: "eventId",
         as: "eventImages",
         onDelete: "CASCADE",
       });
-      Event.belongsTo(models.Group, {
-        foreignKey: "groupId",
-        as: "group",
+      Event.hasMany(models.Attendance, {
+        foreignKey: "eventId",
+        as: "attendances",
+        onDelete: "CASCADE",
       });
+      Event.belongsTo(models.Venue, { foreignKey: "venueId", as: "venue" });
+      Event.belongsTo(models.Group, { foreignKey: "groupId", as: "group" });
     }
   }
 
@@ -32,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       venueId: {
         type: DataTypes.INTEGER,
-        references: { model: "Venues", key: "id" },
+        references: { model: "Venue", key: "id" },
         allowNull: false,
       },
       groupId: {
@@ -49,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isIn: [["Online", "In Person"]],
+          isIn: [["Online", "In person"]],
         },
       },
       capacity: DataTypes.INTEGER,
@@ -68,6 +66,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Event",
+      tableName: "Events",
+      timestamps: true,
     }
   );
 

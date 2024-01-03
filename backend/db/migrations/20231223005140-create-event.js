@@ -23,7 +23,7 @@ module.exports = {
             key: "id",
           },
           onUpdate: "CASCADE",
-          onDelete: "CASCADE",
+          onDelete: "SET NULL",
         },
         groupId: {
           type: Sequelize.INTEGER,
@@ -32,7 +32,7 @@ module.exports = {
             key: "id",
           },
           onUpdate: "CASCADE",
-          onDelete: "CASCADE",
+          onDelete: "SET NULL",
         },
         name: {
           allowNull: false,
@@ -50,9 +50,11 @@ module.exports = {
         },
         capacity: {
           type: Sequelize.INTEGER,
+          allowNull: true,
         },
         price: {
           type: Sequelize.INTEGER,
+          allowNull: true,
         },
         startDate: {
           allowNull: false,

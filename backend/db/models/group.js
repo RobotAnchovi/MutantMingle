@@ -26,6 +26,11 @@ module.exports = (sequelize, DataTypes) => {
         as: "venues",
         onDelete: "CASCADE",
       });
+      Group.hasMany(models.Event, {
+        foreignKey: "groupId",
+        as: "events",
+        onDelete: "CASCADE",
+      });
     }
   }
 
@@ -54,7 +59,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {
-          isIn: [["Online", "In Person"]],
+          isIn: [["Online", "In person"]],
         },
       },
       private: {
@@ -69,6 +74,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       sequelize,
       modelName: "Group",
+      tableName: "Groups",
+      timestamps: true,
     }
   );
 

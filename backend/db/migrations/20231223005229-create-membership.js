@@ -17,6 +17,7 @@ module.exports = {
         },
         userId: {
           type: Sequelize.INTEGER,
+          allowNull: false,
           references: {
             model: "Users",
             key: "id",
@@ -26,6 +27,7 @@ module.exports = {
         },
         groupId: {
           type: Sequelize.INTEGER,
+          allowNull: false,
           references: {
             model: "Groups",
             key: "id",
@@ -55,6 +57,7 @@ module.exports = {
     );
   },
   async down(queryInterface, Sequelize) {
+    options.tableName = "Memberships";
     await queryInterface.dropTable(options);
   },
 };
