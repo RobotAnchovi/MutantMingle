@@ -45,13 +45,12 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
-        //^ ... More entries can be added as needed
       ],
       { validate: true }
     );
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.bulkDelete("Attendances", null, options);
+    return queryInterface.bulkDelete("Attendance", null, options);
   },
 };
