@@ -7,16 +7,18 @@ const { Sequelize } = require("sequelize");
 const router = express.Router();
 
 //^ Get all Events
-router.get("/events", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const events = await Event.findAll({
       include: [
         {
           model: Group,
+          as: "group",
           attributes: ["id", "name", "city", "state"],
         },
         {
           model: Venue,
+          as: "venue",
           attributes: ["id", "city", "state"],
         },
         {
