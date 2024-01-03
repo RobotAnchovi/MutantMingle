@@ -1,14 +1,13 @@
 //*====> backend/db/seeders/20231224160445-demo-event-images.js <====
 "use strict";
-
+const { EventImage } = require("../models");
 let options = {};
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;
 }
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert(
-      "EventImages",
+    await EventImage.bulkCreate(
       [
         {
           eventId: 1, // Image for 'Avengers Assembly' event
@@ -46,7 +45,7 @@ module.exports = {
           updatedAt: new Date(),
         },
       ],
-      options
+      { validate: true }
     );
   },
 

@@ -1,6 +1,6 @@
 //*====> backend/db/seeders/20231224160512-demo-attendances.js <====
 "use strict";
-
+const { Attendance } = require("../models");
 let options = {};
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;
@@ -8,8 +8,7 @@ if (process.env.NODE_ENV === "production") {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert(
-      "Attendances",
+    await Attendance.bulkCreate(
       [
         {
           userId: 1, // Peter Parker attending an event
@@ -48,7 +47,7 @@ module.exports = {
         },
         //^ ... More entries can be added as needed
       ],
-      options
+      { validate: true }
     );
   },
 

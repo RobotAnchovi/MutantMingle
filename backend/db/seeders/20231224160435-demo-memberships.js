@@ -1,6 +1,6 @@
 //*====> backend/db/seeders/202312241604XX-demo-memberships.js <====
 "use strict";
-
+const { Membership } = require("../models");
 let options = {};
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;
@@ -9,8 +9,7 @@ if (process.env.NODE_ENV === "production") {
 module.exports = {
   async up(queryInterface, Sequelize) {
     // Bulk inserting data into the Memberships table
-    await queryInterface.bulkInsert(
-      "Memberships",
+    await Membership.bulkCreate(
       [
         {
           userId: 1, // Peter Parker
@@ -48,7 +47,7 @@ module.exports = {
           updatedAt: new Date(),
         },
       ],
-      options
+      { validate: true }
     );
   },
 

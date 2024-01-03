@@ -1,6 +1,6 @@
 //*====> backend/db/seeders/20231224160428-demo-groups.js <====
 "use strict";
-
+const { Group } = require("../models");
 let options = {};
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;
@@ -8,8 +8,7 @@ if (process.env.NODE_ENV === "production") {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert(
-      "Groups",
+    await Group.bulkCreate(
       [
         {
           organizerId: 1,
@@ -70,7 +69,7 @@ module.exports = {
           updatedAt: new Date(),
         },
       ],
-      options
+      { validate: true }
     );
   },
 

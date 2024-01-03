@@ -1,14 +1,13 @@
 //*====> backend/db/seeders/20231224160413-demo-events.js <====
 "use strict";
-
+const { Event } = require("../models");
 let options = {};
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;
 }
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert(
-      "Events",
+    await Event.bulkCreate(
       [
         {
           venueId: 1,
@@ -76,7 +75,7 @@ module.exports = {
           updatedAt: new Date(),
         },
       ],
-      options
+      { validate: true }
     );
   },
 

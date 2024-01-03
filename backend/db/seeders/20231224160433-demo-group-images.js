@@ -1,6 +1,6 @@
 //*====> backend/db/seeders/20231224160436-demo-group-images.js <====
 "use strict";
-
+const { GroupImage } = require("../models");
 let options = {};
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;
@@ -8,8 +8,7 @@ if (process.env.NODE_ENV === "production") {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert(
-      "GroupImages",
+    await GroupImage.bulkCreate(
       [
         {
           groupId: 1, // Corresponds to 'The Avengers'
@@ -47,7 +46,7 @@ module.exports = {
           updatedAt: new Date(),
         },
       ],
-      options
+      { validate: true }
     );
   },
 

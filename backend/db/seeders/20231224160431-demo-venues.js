@@ -1,6 +1,6 @@
 //*====> backend/db/seeders/<timestamp>-demo-venues.js <====
 "use strict";
-
+const { Venue } = require("../models");
 let options = {};
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;
@@ -8,8 +8,7 @@ if (process.env.NODE_ENV === "production") {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.bulkInsert(
-      "Venues",
+    await Venue.bulkCreate(
       [
         {
           groupId: 1,
@@ -62,7 +61,7 @@ module.exports = {
           updatedAt: new Date(),
         },
       ],
-      options
+      { validate: true }
     );
   },
 
