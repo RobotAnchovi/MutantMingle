@@ -78,7 +78,10 @@ module.exports = {
         },
       ],
       { validate: true }
-    );
+    ).catch((err) => {
+      console.log(err);
+      throw err;
+    });
   },
 
   async down(queryInterface, Sequelize) {
