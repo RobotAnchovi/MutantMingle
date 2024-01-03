@@ -4,7 +4,7 @@ const { EventImage } = require("../models");
 
 let options = {};
 if (process.env.NODE_ENV === "production") {
-  options.schema = process.env.SCHEMA; // define your schema in options object
+  options.schema = process.env.SCHEMA;
 }
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
     await EventImage.bulkCreate(
       [
         {
-          eventId: 1, // Replace with actual event IDs from Events table
+          eventId: 1,
           url: "image url",
           preview: true,
           createdAt: new Date(),

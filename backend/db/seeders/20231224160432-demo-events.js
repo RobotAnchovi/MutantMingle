@@ -12,8 +12,8 @@ module.exports = {
     await Event.bulkCreate(
       [
         {
-          venueId: 1, // valid venue IDs
-          groupId: 1, // valid group IDs
+          venueId: 1,
+          groupId: 1,
           name: "Tech Conference 2021",
           description: "An annual conference for tech enthusiasts.",
           type: "In person",
@@ -28,10 +28,10 @@ module.exports = {
           venueId: 2,
           groupId: 2,
           name: "Local Hack Day",
-          description: "Hackathon event for local developers.",
+          description: "Hack-a-thon event for local developers.",
           type: "In person",
           capacity: 100,
-          price: 0, //free event
+          price: 0,
           startDate: new Date(2021, 10, 5),
           endDate: new Date(2021, 10, 5),
           createdAt: new Date(),
