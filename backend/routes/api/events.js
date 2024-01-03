@@ -7,7 +7,7 @@ const { Sequelize } = require("sequelize");
 const router = express.Router();
 
 //^ Get all Events
-router.get("/", async (req, res, next) => {
+router.get("/events", async (req, res, next) => {
   try {
     const events = await Event.findAll({
       include: [
@@ -33,10 +33,7 @@ router.get("/", async (req, res, next) => {
         "type",
         "startDate",
         "endDate",
-        [Sequelize.fn("COUNT", Sequelize.col("Event.id")), "numAttending"],
-        "previewImage",
       ],
-      group: ["Event.id"],
     });
     return res.status(200).json({ Events: events });
   } catch (err) {

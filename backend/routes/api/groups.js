@@ -21,17 +21,17 @@ router.get("/", async (req, res, next) => {
         {
           model: GroupImage,
           as: "groupImages",
-          attributes: ["id", "url", "preview"],
+          // attributes: ["id", "url", "preview"],
         },
-        {
-          model: User,
-          as: "organizer",
-          attributes: ["id", "firstName", "lastName"],
-        },
+        // {
+        //   model: User,
+        //   as: "organizer",
+        //   attributes: ["id", "firstName", "lastName"],
+        // },
         {
           model: Membership,
           as: "memberships",
-          attributes: [],
+          // attributes: [],
         },
       ],
       attributes: {
@@ -45,7 +45,36 @@ router.get("/", async (req, res, next) => {
       },
       group: ["Group.id"],
     });
-    return res.json(groups);
+
+    let groupList = [];
+
+    groups.forEach((group) => {
+      groupList.push(group.toJSON());
+      // console.log(group.toJSON())
+    });
+
+    // console.log(groupList)
+
+    groupList.forEach((group) => {
+      // console.log(group)
+
+      group.groupImages.forEach((image) => {
+        // console.log(image.preview)
+        if (image.preview === true) {
+          // console.log(image)
+          group.previewImage = image.url;
+        }
+      });
+
+      if (!group.previewImage) {
+        group.previewImage = "no preview image found";
+      }
+
+      delete group.groupImages;
+      delete group.memberships;
+    });
+
+    return res.json({ Groups: groupList });
   } catch (err) {
     next(err);
   }
