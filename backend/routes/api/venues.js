@@ -19,15 +19,41 @@ router.get("/groups/:groupId/venues", requireAuth, async (req, res, next) => {
 
     const venues = await Venue.findAll({
       where: { groupId },
+      attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"],
     });
-    return res.json({ Venues: venues });
+    const response = { Venues: venues };
+    return res.json(response);
   } catch (err) {
     next(err);
   }
 });
+//~ Venue Validator function
+function validateVenue(req) {
+  const errors = {};
+  const { address, city, state, lat, lng } = req.body;
+
+  if (!address) errors.address = "Street address is required";
+  if (!city) errors.city = "City is required";
+  if (!state) errors.state = "State is required";
+  if (isNaN(lat) || lat < -90 || lat > 90)
+    errors.lat = "Latitude must be within -90 and 90";
+  if (isNaN(lng) || lng < -180 || lng > 180)
+    errors.lng = "Longitude must be within -180 and 180";
+
+  return Object.keys(errors).length > 0 ? errors : null;
+}
 
 //^ Create a new venue for a specific group
 router.post("/groups/:groupId/venues", requireAuth, async (req, res, next) => {
+  const validationErrors = validateVenue(req);
+
+  if (validationErrors) {
+    return res.status(400).json({
+      message: "Bad Request",
+      errors: validationErrors,
+    });
+  }
+
   const { groupId } = req.params;
   const { address, city, state, lat, lng } = req.body;
 

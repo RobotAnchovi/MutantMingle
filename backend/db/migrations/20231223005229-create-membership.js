@@ -21,6 +21,8 @@ module.exports = {
             model: "Users",
             key: "id",
           },
+          onUpdate: "CASCADE",
+          onDelete: "CASCADE",
         },
         groupId: {
           type: Sequelize.INTEGER,
@@ -28,6 +30,8 @@ module.exports = {
             model: "Groups",
             key: "id",
           },
+          onUpdate: "CASCADE",
+          onDelete: "CASCADE",
         },
         status: {
           allowNull: false,

@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       Group.hasMany(models.GroupImage, {
         foreignKey: "groupId",
         as: "groupImages",
+        onDelete: "CASCADE",
       });
 
       Group.belongsTo(models.User, {
@@ -18,10 +19,12 @@ module.exports = (sequelize, DataTypes) => {
       Group.hasMany(models.Membership, {
         foreignKey: "groupId",
         as: "memberships",
+        onDelete: "CASCADE",
       });
       Group.hasMany(models.Venue, {
         foreignKey: "groupId",
         as: "venues",
+        onDelete: "CASCADE",
       });
     }
   }
