@@ -52,6 +52,15 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete("EventImages", null, {});
+    options.tableName = "EventImages";
+    const Op = Sequelize.Op;
+    return queryInterface.bulkDelete(
+      options,
+      {
+        // Adjust the condition to match the records you want to delete
+        id: { [Op.in]: [1, 2, 3, 4, 5] },
+      },
+      {}
+    );
   },
 };
