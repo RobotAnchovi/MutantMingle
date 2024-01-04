@@ -23,7 +23,7 @@ module.exports = {
             key: "id",
           },
           onUpdate: "CASCADE",
-          onDelete: "SET NULL",
+          onDelete: "CASCADE",
         },
         groupId: {
           type: Sequelize.INTEGER,
@@ -32,7 +32,7 @@ module.exports = {
             key: "id",
           },
           onUpdate: "CASCADE",
-          onDelete: "SET NULL",
+          onDelete: "CASCADE",
         },
         name: {
           allowNull: false,
