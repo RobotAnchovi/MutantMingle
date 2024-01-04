@@ -4,7 +4,7 @@ const { Venue } = require("../models");
 
 let options = {};
 if (process.env.NODE_ENV === "production") {
-  options.schema = process.env.SCHEMA;
+  options.schema = process.env.SCHEMA; // define your schema in options object
 }
 
 module.exports = {
@@ -17,7 +17,7 @@ module.exports = {
           city: "Techville",
           state: "Techas",
           lat: 37.773972,
-          lng: -122.431297,
+          lng: -122.431297, // Coordinates for San Francisco
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -27,7 +27,7 @@ module.exports = {
           city: "Innovate City",
           state: "Creativia",
           lat: 34.052235,
-          lng: -118.243683,
+          lng: -118.243683, // Coordinates for Los Angeles
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -37,7 +37,7 @@ module.exports = {
           city: "Entrepreneur Town",
           state: "Founderland",
           lat: 40.712776,
-          lng: -74.005974,
+          lng: -74.005974, // Coordinates for New York City
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -47,7 +47,7 @@ module.exports = {
           city: "Server City",
           state: "Compute",
           lat: 47.606209,
-          lng: -122.332069,
+          lng: -122.332069, // Coordinates for Seattle
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -57,7 +57,7 @@ module.exports = {
           city: "Robotics Village",
           state: "Automation",
           lat: 37.774929,
-          lng: -122.419416,
+          lng: -122.419416, // Coordinates for San Francisco
           createdAt: new Date(),
           updatedAt: new Date(),
         },

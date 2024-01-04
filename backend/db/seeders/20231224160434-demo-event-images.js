@@ -4,7 +4,7 @@ const { EventImage } = require("../models");
 
 let options = {};
 if (process.env.NODE_ENV === "production") {
-  options.schema = process.env.SCHEMA;
+  options.schema = process.env.SCHEMA; // define your schema in options object
 }
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
     await EventImage.bulkCreate(
       [
         {
-          eventId: 1,
+          eventId: 1, // Replace with actual event IDs from Events table
           url: "image url",
           preview: true,
           createdAt: new Date(),
@@ -47,12 +47,12 @@ module.exports = {
           updatedAt: new Date(),
         },
       ],
-      options
+      { validate: true }
     );
   },
 
   async down(queryInterface, Sequelize) {
     options.tableName = "EventImages";
-    return queryInterface.bulkDelete(options);
+    await queryInterface.bulkDelete(options);
   },
 };

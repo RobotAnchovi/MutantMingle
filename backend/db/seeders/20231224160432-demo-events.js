@@ -12,13 +12,13 @@ module.exports = {
     await Event.bulkCreate(
       [
         {
-          venueId: 1,
-          groupId: 1,
+          venueId: 1, // valid venue IDs
+          groupId: 1, // valid group IDs
           name: "Tech Conference 2021",
           description: "An annual conference for tech enthusiasts.",
           type: "In person",
           capacity: 500,
-          price: 299,
+          price: 299.4,
           startDate: new Date(2021, 9, 10),
           endDate: new Date(2021, 9, 12),
           createdAt: new Date(),
@@ -28,23 +28,22 @@ module.exports = {
           venueId: 2,
           groupId: 2,
           name: "Local Hack Day",
-          description: "Hack-a-thon event for local developers.",
+          description: "Hackathon event for local developers.",
           type: "In person",
           capacity: 100,
-          price: 0,
+          price: 0, //free event
           startDate: new Date(2021, 10, 5),
           endDate: new Date(2021, 10, 5),
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          venueId: 1,
-          groupId: 1,
+          groupId: 5,
           name: "Virtual Reality Expo",
           description: "Explore the latest in VR technology.",
           type: "Online",
           capacity: 200,
-          price: 150,
+          price: 150.11,
           startDate: new Date(2021, 11, 1),
           endDate: new Date(2021, 11, 3),
           createdAt: new Date(),
@@ -78,14 +77,11 @@ module.exports = {
         },
       ],
       { validate: true }
-    ).catch((err) => {
-      console.log(err);
-      throw err;
-    });
+    );
   },
 
   async down(queryInterface, Sequelize) {
     options.tableName = "Events";
-    return queryInterface.bulkDelete(options);
+    await queryInterface.bulkDelete(options);
   },
 };

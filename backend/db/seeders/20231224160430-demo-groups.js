@@ -4,7 +4,7 @@ const { Group } = require("../models");
 
 let options = {};
 if (process.env.NODE_ENV === "production") {
-  options.schema = process.env.SCHEMA;
+  options.schema = process.env.SCHEMA; // define your schema in options object
 }
 
 module.exports = {
@@ -23,7 +23,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          organizerId: 2,
+          organizerId: 1,
           name: "Tech Talks",
           about: "Discussing the latest in technology",
           type: "Online",
@@ -34,7 +34,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          organizerId: 3,
+          organizerId: 1,
           name: "Book Club",
           about: "Monthly fiction and non-fiction book discussions",
           type: "In person",
@@ -45,7 +45,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          organizerId: 3,
+          organizerId: 4,
           name: "Movie Nights",
           about: "Weekly gatherings to watch and discuss movies",
           type: "In person",
@@ -56,7 +56,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          organizerId: 2,
+          organizerId: 5,
           name: "Culinary Cooks",
           about: "Share recipes and cooking techniques",
           type: "Online",
@@ -68,14 +68,11 @@ module.exports = {
         },
       ],
       { validate: true }
-    ).catch((err) => {
-      console.log(err);
-      throw err;
-    });
+    );
   },
 
   async down(queryInterface, Sequelize) {
     options.tableName = "Groups";
-    return queryInterface.bulkDelete(options);
+    await queryInterface.bulkDelete(options);
   },
 };

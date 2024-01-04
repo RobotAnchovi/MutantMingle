@@ -47,7 +47,7 @@ module.exports = {
           updatedAt: new Date(),
         },
       ],
-      options
+      { validate: true }
     );
   },
 
