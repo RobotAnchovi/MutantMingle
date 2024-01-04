@@ -33,11 +33,8 @@ module.exports = {
           type: Sequelize.TEXT,
         },
         type: {
+          type: Sequelize.ENUM("In person", "Online"),
           allowNull: false,
-          type: Sequelize.STRING,
-          validate: {
-            isIn: [["Online", "In person"]],
-          },
         },
         private: {
           allowNull: false,
