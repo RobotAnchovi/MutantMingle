@@ -1,8 +1,9 @@
+//*====> backend/db/migrations/20231220221836-create-user.js <====
 "use strict";
 
 let options = {};
 if (process.env.NODE_ENV === "production") {
-  options.schema = process.env.SCHEMA; // define your schema in options object
+  options.schema = process.env.SCHEMA;
 }
 
 module.exports = {
@@ -16,13 +17,20 @@ module.exports = {
           primaryKey: true,
           type: Sequelize.INTEGER,
         },
-        username: {
-          type: Sequelize.STRING(30),
+        firstName: {
+          type: Sequelize.STRING(50),
+        },
+        lastName: {
+          type: Sequelize.STRING(50),
           allowNull: false,
-          unique: true,
         },
         email: {
           type: Sequelize.STRING(256),
+          allowNull: false,
+          unique: true,
+        },
+        username: {
+          type: Sequelize.STRING(30),
           allowNull: false,
           unique: true,
         },
