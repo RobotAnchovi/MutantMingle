@@ -9,7 +9,7 @@ const {
   Venue,
 } = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
-const { Sequelize } = require("sequelize");
+const { Sequelize, Op } = require("sequelize");
 
 const router = express.Router();
 
