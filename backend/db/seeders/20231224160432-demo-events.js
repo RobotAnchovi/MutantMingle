@@ -38,6 +38,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
+          venueId: 2,
           groupId: 5,
           name: "Virtual Reality Expo",
           description: "Explore the latest in VR technology.",
@@ -77,7 +78,10 @@ module.exports = {
         },
       ],
       { validate: true }
-    );
+    ).catch((err) => {
+      console.log(err);
+      throw err;
+    });
   },
 
   async down(queryInterface, Sequelize) {

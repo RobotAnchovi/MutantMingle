@@ -51,7 +51,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       capacity: DataTypes.INTEGER,
-      price: DataTypes.INTEGER,
+      price: DataTypes.FLOAT,
       startDate: {
         type: DataTypes.DATE,
         allowNull: false,

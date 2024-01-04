@@ -50,7 +50,7 @@ module.exports = {
           allowNull: true,
         },
         price: {
-          type: Sequelize.INTEGER,
+          type: Sequelize.FLOAT,
           allowNull: true,
         },
         startDate: {
@@ -77,6 +77,7 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    return queryInterface.dropTable("Events", options);
+    options.tableName = "Events";
+    return queryInterface.dropTable(options);
   },
 };
