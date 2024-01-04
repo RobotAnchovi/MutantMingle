@@ -75,9 +75,9 @@ router.get("/current", requireAuth, async (req, res, next) => {
     const groups = await Group.findAll({
       where: {
         [Sequelize.Op.or]: [
-          { organizerId: userId }, // the user is the organizer of the group
-          // OR
-          { "$memberships.userId$": userId }, // the user is a member of the group
+          { organizerId: userId },
+
+          { "$memberships.userId$": userId },
         ],
       },
       include: [
