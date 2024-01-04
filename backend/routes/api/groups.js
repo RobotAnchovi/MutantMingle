@@ -37,7 +37,7 @@ router.get("/", async (req, res, next) => {
         ],
         exclude: ["memberships"],
       },
-      group: ["Group.id"],
+      group: ["Group.id", "memberships.id", "groupImages.id"],
     });
 
     let groupList = [];
