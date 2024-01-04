@@ -4,7 +4,7 @@ const { Group } = require("../models");
 
 let options = {};
 if (process.env.NODE_ENV === "production") {
-  options.schema = process.env.SCHEMA; // define your schema in options object
+  options.schema = process.env.SCHEMA;
 }
 
 module.exports = {
@@ -12,7 +12,7 @@ module.exports = {
     await Group.bulkCreate(
       [
         {
-          organizerId: 1, // Make sure references a valid User ID
+          organizerId: 1,
           name: "Outdoor Adventures",
           about: "A group for outdoor enthusiasts",
           type: "In person",

@@ -1,4 +1,5 @@
 //*====> backend/app.js <====
+const routes = require("./routes");
 const express = require("express");
 require("express-async-errors");
 const morgan = require("morgan");
@@ -40,7 +41,6 @@ app.use(
 );
 
 //*====> Routes <====
-const routes = require("./routes");
 app.use(routes);
 
 //~ Catch unhandled requests and forward to error handler.

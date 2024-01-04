@@ -9,7 +9,7 @@ const {
   Venue,
 } = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
-const { Sequelize } = require("sequelize");
+const { Sequelize, Op } = require("sequelize");
 
 const router = express.Router();
 
@@ -75,9 +75,9 @@ router.get("/current", requireAuth, async (req, res, next) => {
     const groups = await Group.findAll({
       where: {
         [Sequelize.Op.or]: [
-          { organizerId: userId }, // the user is the organizer of the group
-          // OR
-          { "$memberships.userId$": userId }, // the user is a member of the group
+          { organizerId: userId },
+
+          { "$memberships.userId$": userId },
         ],
       },
       include: [
@@ -205,7 +205,7 @@ router.get("/:groupId", async (req, res, next) => {
       group: ["Group.id"],
     });
     if (!group) {
-      return res.status(404).json({ message: "Group not found" });
+      return res.status(404).json({ message: "Group couldn't be found" });
     }
     return res.json(group);
   } catch (err) {
