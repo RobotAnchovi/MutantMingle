@@ -17,7 +17,7 @@ const { handleValidationErrors } = require("../../utils/validation");
 
 const router = express.Router();
 
-// Define validation checks
+//^ Define validation checks
 const validateVenue = [
   check("address").notEmpty().withMessage("Street address is required"),
   check("city").notEmpty().withMessage("City is required"),
@@ -31,7 +31,7 @@ const validateVenue = [
   handleValidationErrors,
 ];
 
-// Edit a Venue specified by its id
+//^ Edit a Venue specified by its id
 
 router.put("/:venueId", requireAuth, validateVenue, async (req, res, next) => {
   const errors = validationResult(req);
@@ -69,7 +69,7 @@ router.put("/:venueId", requireAuth, validateVenue, async (req, res, next) => {
         .json({ message: "Associated group couldn't be found" });
     }
 
-    // Check if the user is the organizer or a co-host
+    //^ Check if the user is the organizer or a co-host
     const isOrganizer = group.organizerId === userId;
     const isCoHost = await Membership.findOne({
       where: { groupId: group.id, userId, status: "co-host" },
@@ -83,7 +83,7 @@ router.put("/:venueId", requireAuth, validateVenue, async (req, res, next) => {
 
     const updatedVenue = await venue.update({ address, city, state, lat, lng });
 
-    // response object
+    //^ response object
     const responseVenue = {
       id: updatedVenue.id,
       groupId: updatedVenue.groupId,

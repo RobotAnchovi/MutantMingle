@@ -52,23 +52,19 @@ const validateEvent = [
   handleValidationErrors,
 ];
 
-async function isAuthorizedUser(userId, groupId) {
-  const group = await Group.findByPk(groupId);
-  if (!group) return false; // Group doesn't exist
-
-  if (group.organizerId === userId) return true; // User is the organizer
-
-  // Check if user is a co-host
-  const membership = await Membership.findOne({
-    where: {
-      groupId: groupId,
-      userId: userId,
-      status: "co-host",
-    },
-  });
-
-  return !!membership; // true if membership exists and user is a co-host, false otherwise
-}
+// validation checks for venue stuff
+const validateVenue = [
+  check("address").notEmpty().withMessage("Street address is required"),
+  check("city").notEmpty().withMessage("City is required"),
+  check("state").notEmpty().withMessage("State is required"),
+  check("lat")
+    .isFloat({ min: -90, max: 90 })
+    .withMessage("Latitude must be within -90 and 90"),
+  check("lng")
+    .isFloat({ min: -180, max: 180 })
+    .withMessage("Longitude must be within -180 and 180"),
+  handleValidationErrors,
+];
 
 router.post("/", requireAuth, validateGroup, async (req, res, next) => {
   const errors = validationResult(req);
@@ -167,42 +163,6 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// router.get("/", async (req, res, next) => {
-//   try {
-//     const groups = await Group.findAll({
-//       include: [
-//         {
-//           model: GroupImage,
-//           as: "groupImages",
-//         }
-//       ]
-//     });
-
-//     let groupList = [];
-
-//     for (let group of groups) {
-//       let groupJson = group.toJSON();
-
-//       // Lazy load the count of memberships for each group
-//       const numMembers = await Membership.count({
-//         where: { groupId: group.id }
-//       });
-
-//       const previewImage = groupJson.groupImages.find(image => image.preview === true)?.url || "No preview image found.";
-
-//       groupList.push({
-//         ...groupJson,
-//         numMembers,
-//         previewImage
-//       });
-//     }
-
-//     return res.json({"Groups": groupList});
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
 // Route to get all groups joined or organized by the current user
 router.get("/current", requireAuth, async (req, res, next) => {
   try {
@@ -256,7 +216,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
   }
 });
 
-// Route to get details of a group by ID
+// Route to get details of a group by ID using lazy loading
 router.get("/:groupId", async (req, res, next) => {
   try {
     const groupId = parseInt(req.params.groupId, 10);
@@ -265,33 +225,36 @@ router.get("/:groupId", async (req, res, next) => {
       return res.json({ message: "Invalid group ID" });
     }
 
-    const group = await Group.findByPk(groupId, {
-      include: [
-        {
-          model: GroupImage,
-          as: "groupImages",
-          attributes: ["id", "url", "preview"],
-        },
-        {
-          model: User,
-          as: "organizer",
-          attributes: ["id", "firstName", "lastName"],
-        },
-        {
-          model: Venue,
-          as: "venues",
-          attributes: ["id", "address", "city", "state", "lat", "lng"],
-        },
-      ],
-    });
-
+    // Initially load only the Group model
+    const group = await Group.findByPk(groupId);
     if (!group) {
       res.status(404);
       return res.json({ message: "Group couldn't be found" });
     }
 
+    // Lazy load aggregates
+    const groupImages = await group.getGroupImages({
+      attributes: ["id", "url", "preview"],
+    });
+    const organizer = await group.getOrganizer({
+      attributes: ["id", "firstName", "lastName"],
+    });
+    const venues = await group.getVenues({
+      attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"],
+    });
+    const memberships = await group.getMemberships();
+
+    // Construct and send response
+    const groupJSON = {
+      ...group.toJSON(),
+      numMembers: memberships.length,
+      GroupImages: groupImages.map((gi) => gi.toJSON()),
+      Organizer: organizer ? organizer.toJSON() : {},
+      Venues: venues.map((v) => v.toJSON()),
+    };
+
     res.status(200);
-    return res.json(group);
+    return res.json(groupJSON);
   } catch (err) {
     next(err);
   }
@@ -317,11 +280,9 @@ router.post("/:groupId/images", requireAuth, async (req, res, next) => {
     }
 
     if (group.organizerId !== organizerId) {
-      return res
-        .status(403)
-        .json({
-          message: "You must be the organizer of the group to add images.",
-        });
+      return res.status(403).json({
+        message: "You must be the organizer of the group to add images.",
+      });
     }
 
     // Create the new image for the group
@@ -361,11 +322,9 @@ router.put("/:groupId", requireAuth, validateGroup, async (req, res, next) => {
     }
 
     if (group.organizerId !== organizerId) {
-      return res
-        .status(403)
-        .json({
-          message: "You must be the organizer of the group to edit it.",
-        });
+      return res.status(403).json({
+        message: "You must be the organizer of the group to edit it.",
+      });
     }
 
     const updatedGroup = await group.update({
@@ -410,11 +369,9 @@ router.delete("/:groupId", requireAuth, async (req, res, next) => {
     }
 
     if (group.organizerId !== organizerId) {
-      return res
-        .status(403)
-        .json({
-          message: "You must be the organizer of the group to delete it.",
-        });
+      return res.status(403).json({
+        message: "You must be the organizer of the group to delete it.",
+      });
     }
 
     await group.destroy();
@@ -425,7 +382,6 @@ router.delete("/:groupId", requireAuth, async (req, res, next) => {
 });
 
 // Get All Venues for a Group specified by its id
-
 router.get("/:groupId/venues", requireAuth, async (req, res, next) => {
   try {
     const groupId = parseInt(req.params.groupId, 10);
@@ -433,13 +389,26 @@ router.get("/:groupId/venues", requireAuth, async (req, res, next) => {
       return res.status(400).json({ message: "Invalid group ID" });
     }
 
-    if (!(await isAuthorizedUser(req.user.id, groupId))) {
-      return res
-        .status(403)
-        .json({
-          message:
-            "You must be the organizer or a co-host of the group to view venues.",
-        });
+    const group = await Group.findByPk(groupId);
+    if (!group) {
+      return res.status(404).json({ message: "Group couldn't be found" });
+    }
+
+    let isPrivilegedUser = false;
+    if (req.user) {
+      const userId = req.user.id;
+      isPrivilegedUser =
+        group.organizerId === userId ||
+        (await Membership.findOne({
+          where: { groupId, userId, status: "co-host" },
+        })) != null;
+    }
+
+    if (!isPrivilegedUser) {
+      return res.status(403).json({
+        message:
+          "You must be the organizer or a co-host of the group to view venues.",
+      });
     }
 
     const venues = await Venue.findAll({ where: { groupId } });
@@ -450,45 +419,74 @@ router.get("/:groupId/venues", requireAuth, async (req, res, next) => {
 });
 
 // Create a new Venue for a Group specified by its id
-router.post("/:groupId/venues", requireAuth, async (req, res, next) => {
-  try {
+router.post(
+  "/:groupId/venues",
+  requireAuth,
+  validateVenue,
+  async (req, res, next) => {
     const groupId = parseInt(req.params.groupId, 10);
-    if (isNaN(groupId)) {
-      return res.status(400).json({ message: "Invalid group ID" });
-    }
+    try {
+      if (isNaN(groupId)) {
+        return res.status(400).json({ message: "Invalid group ID" });
+      }
 
-    if (!(await isAuthorizedUser(req.user.id, groupId))) {
-      return res
-        .status(403)
-        .json({
+      const group = await Group.findByPk(groupId);
+      if (!group) {
+        return res.status(404).json({ message: "Group couldn't be found" });
+      }
+
+      let isPrivilegedUser = false;
+      if (req.user) {
+        const userId = req.user.id;
+        isPrivilegedUser =
+          group.organizerId === userId || // Check if user is the organizer
+          (await Membership.findOne({
+            // Check if user is a co-host
+            where: { groupId, userId, status: "co-host" },
+          })) != null;
+      }
+
+      if (!isPrivilegedUser) {
+        return res.status(403).json({
           message:
-            "You must be the organizer or a co-host of the group to add venues.",
+            "You do not have permission to create a venue for this group",
         });
+      }
+
+      const { address, city, state, lat, lng } = req.body;
+
+      const newVenue = await Venue.create({
+        groupId,
+        address,
+        city,
+        state,
+        lat,
+        lng,
+      });
+
+      const responseVenue = {
+        id: newVenue.id,
+        groupId: newVenue.groupId,
+        address: newVenue.address,
+        city: newVenue.city,
+        state: newVenue.state,
+        lat: newVenue.lat,
+        lng: newVenue.lng,
+      };
+
+      res.status(200).json({ Venues: [responseVenue] });
+    } catch (err) {
+      if (err.name === "SequelizeValidationError") {
+        const errors = err.errors.reduce(
+          (acc, cur) => ({ ...acc, [cur.path]: cur.message }),
+          {}
+        );
+        return res.status(400).json({ message: "Bad Request", errors });
+      }
+      next(err);
     }
-
-    const { address, city, state, lat, lng } = req.body;
-
-    const newVenue = await Venue.create({
-      groupId,
-      address,
-      city,
-      state,
-      lat,
-      lng,
-    });
-
-    res.status(200).json(newVenue);
-  } catch (err) {
-    if (err.name === "SequelizeValidationError") {
-      const errors = err.errors.reduce(
-        (acc, cur) => ({ ...acc, [cur.path]: cur.message }),
-        {}
-      );
-      return res.status(400).json({ message: "Bad Request", errors });
-    }
-    next(err);
   }
-});
+);
 
 // Get all Events of a Group specified by its id
 
@@ -582,7 +580,7 @@ router.post(
       startDate,
       endDate,
     } = req.body;
-    const userId = req.user.id; // Assuming you're storing the user's ID on the request object
+    const userId = req.user.id;
 
     try {
       // Check if the group exists and user is authorized (organizer or co-host)
@@ -598,12 +596,10 @@ router.post(
         });
 
         if (!isCoHost) {
-          return res
-            .status(403)
-            .json({
-              message:
-                "You must be the organizer or a co-host to create an event.",
-            });
+          return res.status(403).json({
+            message:
+              "You must be the organizer or a co-host to create an event.",
+          });
         }
       }
 
@@ -628,7 +624,6 @@ router.post(
         endDate,
       });
 
-      // Construct the response object
       const responseEvent = {
         id: event.id,
         groupId: event.groupId,
@@ -781,11 +776,9 @@ router.put("/:groupId/membership", requireAuth, async (req, res, next) => {
     });
 
     if (!membership) {
-      return res
-        .status(404)
-        .json({
-          message: "Membership between the user and the group does not exist",
-        });
+      return res.status(404).json({
+        message: "Membership between the user and the group does not exist",
+      });
     }
 
     const currentUserMembership = await Membership.findOne({
@@ -814,12 +807,10 @@ router.put("/:groupId/membership", requireAuth, async (req, res, next) => {
     }
 
     if (status === "pending") {
-      return res
-        .status(400)
-        .json({
-          message: "Bad Request",
-          errors: { status: "Cannot change a membership status to pending" },
-        });
+      return res.status(400).json({
+        message: "Bad Request",
+        errors: { status: "Cannot change a membership status to pending" },
+      });
     }
 
     membership.status = status;

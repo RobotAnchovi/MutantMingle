@@ -3,7 +3,7 @@ const { Group, Membership, GroupImage } = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
 const router = express.Router();
 
-// Delete an Image for a Group
+//^ Delete an Image for a Group
 
 router.delete("/:imageId", requireAuth, async (req, res, next) => {
   const imageId = parseInt(req.params.imageId, 10);

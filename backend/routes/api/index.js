@@ -8,7 +8,7 @@ const eventImagesRouter = require("./event-images.js");
 const groupImagesRouter = require("./group-images.js");
 const { restoreUser } = require("../../utils/auth.js");
 
-// Connect restoreUser middleware to the API router
+//^ Connect restoreUser middleware to the API router
 router.use(restoreUser);
 
 router.use("/session", sessionRouter);
