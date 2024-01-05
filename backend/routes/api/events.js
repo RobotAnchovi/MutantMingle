@@ -89,23 +89,44 @@ router.get("/", validateQueryParams, async (req, res, next) => {
   try {
     //^ Fetch only events first
     const events = await Event.findAll({
+      // where,
+      // attributes: {
+      //   include: [
+      //     [
+      //       Sequelize.literal(`(
+      //           SELECT COUNT(*)
+      //           FROM Attendances AS attendance
+      //           WHERE
+      //               attendance.eventId = Event.id
+      //       )`),
+      //       "numAttending",
+      //     ],
+      //   ],
+      // },
+      // limit: size,
+      // offset: (page - 1) * size,
       where,
+      include: [
+        {
+          model: Attendance,
+          as: "Attendances",
+          attributes: [],
+        },
+      ],
       attributes: {
         include: [
           [
-            Sequelize.literal(`(
-                SELECT COUNT(*)
-                FROM Attendances AS attendance
-                WHERE
-                    attendance.eventId = Event.id
-            )`),
+            Sequelize.fn("COUNT", Sequelize.col("Attendances.id")),
             "numAttending",
           ],
         ],
       },
+      group: ["Event.id"],
       limit: size,
       offset: (page - 1) * size,
     });
+
+    return res.status(200).json({ Events: events });
 
     //^ Process each event to add associated data and previewImage
     const formattedEvents = await Promise.all(
