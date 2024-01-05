@@ -46,9 +46,13 @@ const validateEvent = [
   check("price").isFloat().withMessage("Price is invalid"),
   check("description").notEmpty().withMessage("Description is required"),
   check("startDate")
-    .isISO8601()
-    .withMessage("Start date must be in the future"),
-  check("endDate").isISO8601().withMessage("End date is less than start date"),
+    .toDate()
+    .isAfter(new Date().toString())
+    .withMessage("Start date must be set in the future"),
+  check("endDate")
+    .toDate()
+    .custom((value, { req }) => new Date(value) > new Date(req.body.startDate))
+    .withMessage("End date must be after start date"),
   handleValidationErrors,
 ];
 
