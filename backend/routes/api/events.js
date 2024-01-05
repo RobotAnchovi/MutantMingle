@@ -109,19 +109,40 @@ router.get("/", validateQueryParams, async (req, res, next) => {
       include: [
         {
           model: Attendance,
-          as: "Attendance",
+          as: "attendances",
           attributes: [],
         },
       ],
       attributes: {
         include: [
           [
-            Sequelize.fn("COUNT", Sequelize.col("Attendances.id")),
+            // Use a subquery to count attendances
+            Sequelize.literal(`(
+          SELECT COUNT(*)
+          FROM Attendances
+          WHERE Attendances.eventId = Event.id
+        )`),
             "numAttending",
           ],
         ],
+        // Exclude attendances from the final output
+        exclude: ["attendances"],
       },
-      group: ["Event.id"],
+      group: [
+        // Group by Event fields
+        "Event.id",
+        "Event.venueId",
+        "Event.groupId",
+        "Event.name",
+        "Event.description",
+        "Event.type",
+        "Event.capacity",
+        "Event.price",
+        "Event.startDate",
+        "Event.endDate",
+        "Event.createdAt",
+        "Event.updatedAt",
+      ],
       limit: size,
       offset: (page - 1) * size,
     });
