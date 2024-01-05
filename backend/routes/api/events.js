@@ -140,6 +140,52 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+//^ Get an event by its id
+router.get("/:eventId", async (req, res, next) => {
+  const eventId = parseInt(req.params.eventId, 10);
+
+  try {
+    // Fetch the event with the specified ID, including associated models
+    const event = await Event.findByPk(eventId, {
+      include: [
+        {
+          model: Group,
+          as: "group",
+          attributes: ["id", "name", "private", "city", "state"],
+        },
+        {
+          model: Venue,
+          as: "venue",
+          attributes: ["id", "address", "city", "state", "lat", "lng"],
+        },
+        {
+          model: EventImage,
+          as: "eventImages",
+          attributes: ["id", "url", "preview"],
+        },
+      ],
+    });
+
+    if (!event) {
+      return res.status(404).json({ message: "Event couldn't be found" });
+    }
+
+    // Count the number of attendances
+    const numAttending = await Attendance.count({
+      where: { eventId: event.id },
+    });
+
+    // Construct the response object
+    const eventDetails = {
+      ...event.get({ plain: true }),
+      numAttending,
+    };
+
+    return res.status(200).json(eventDetails);
+  } catch (error) {
+    next(error);
+  }
+});
 //^ Add an image to an event
 router.post(
   "/:eventId/images",
