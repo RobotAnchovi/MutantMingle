@@ -13,7 +13,7 @@ module.exports = {
       [
         {
           organizerId: 1,
-          name: "Outdoor Adventures",
+          name: "Outdoor Adventurers",
           about: "A group for outdoor enthusiasts",
           type: "In person",
           private: false,
@@ -24,7 +24,7 @@ module.exports = {
         },
         {
           organizerId: 1,
-          name: "Tech Talks",
+          name: "Techno Talks",
           about: "Discussing the latest in technology",
           type: "Online",
           private: false,
@@ -35,7 +35,7 @@ module.exports = {
         },
         {
           organizerId: 1,
-          name: "Book Club",
+          name: "Readers Club",
           about: "Monthly fiction and non-fiction book discussions",
           type: "In person",
           private: true,
@@ -46,7 +46,7 @@ module.exports = {
         },
         {
           organizerId: 3,
-          name: "Movie Nights",
+          name: "Movie Knights",
           about: "Weekly gatherings to watch and discuss movies",
           type: "In person",
           private: false,
@@ -57,7 +57,7 @@ module.exports = {
         },
         {
           organizerId: 2,
-          name: "Culinary Cooks",
+          name: "Culinary Club",
           about: "Share recipes and cooking techniques",
           type: "Online",
           private: false,
