@@ -281,11 +281,9 @@ router.post("/:groupId/images", requireAuth, async (req, res, next) => {
     }
 
     if (group.organizerId !== organizerId) {
-      return res
-        .status(403)
-        .json({
-          message: "You must be the organizer of the group to add images.",
-        });
+      return res.status(403).json({
+        message: "You must be the organizer of the group to add images.",
+      });
     }
 
     // Create the new image for the group
@@ -325,11 +323,9 @@ router.put("/:groupId", requireAuth, validateGroup, async (req, res, next) => {
     }
 
     if (group.organizerId !== organizerId) {
-      return res
-        .status(403)
-        .json({
-          message: "You must be the organizer of the group to edit it.",
-        });
+      return res.status(403).json({
+        message: "You must be the organizer of the group to edit it.",
+      });
     }
 
     const updatedGroup = await group.update({
@@ -374,11 +370,9 @@ router.delete("/:groupId", requireAuth, async (req, res, next) => {
     }
 
     if (group.organizerId !== organizerId) {
-      return res
-        .status(403)
-        .json({
-          message: "You must be the organizer of the group to delete it.",
-        });
+      return res.status(403).json({
+        message: "You must be the organizer of the group to delete it.",
+      });
     }
 
     await group.destroy();
@@ -398,12 +392,10 @@ router.get("/:groupId/venues", requireAuth, async (req, res, next) => {
     }
 
     if (!(await isAuthorizedUser(req.user.id, groupId))) {
-      return res
-        .status(403)
-        .json({
-          message:
-            "You must be the organizer or a co-host of the group to view venues.",
-        });
+      return res.status(403).json({
+        message:
+          "You must be the organizer or a co-host of the group to view venues.",
+      });
     }
 
     const venues = await Venue.findAll({ where: { groupId } });
@@ -422,12 +414,10 @@ router.post("/:groupId/venues", requireAuth, async (req, res, next) => {
     }
 
     if (!(await isAuthorizedUser(req.user.id, groupId))) {
-      return res
-        .status(403)
-        .json({
-          message:
-            "You must be the organizer or a co-host of the group to add venues.",
-        });
+      return res.status(403).json({
+        message:
+          "You must be the organizer or a co-host of the group to add venues.",
+      });
     }
 
     const { address, city, state, lat, lng } = req.body;
@@ -562,12 +552,10 @@ router.post(
         });
 
         if (!isCoHost) {
-          return res
-            .status(403)
-            .json({
-              message:
-                "You must be the organizer or a co-host to create an event.",
-            });
+          return res.status(403).json({
+            message:
+              "You must be the organizer or a co-host to create an event.",
+          });
         }
       }
 
