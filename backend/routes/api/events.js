@@ -109,7 +109,7 @@ router.get("/", validateQueryParams, async (req, res, next) => {
       include: [
         {
           model: Attendance,
-          as: "Attendances",
+          // as: "Attendances",
           attributes: [],
         },
       ],
