@@ -416,7 +416,18 @@ router.get("/:groupId/venues", requireAuth, async (req, res, next) => {
     }
 
     const venues = await Venue.findAll({ where: { groupId } });
-    res.status(200).json({ Venues: venues });
+
+    const cleanedVenues = venues.map((venue) => ({
+      id: venue.id,
+      address: venue.address,
+      city: venue.city,
+      state: venue.state,
+      lat: venue.lat,
+      lng: venue.lng,
+      groupId: venue.groupId,
+    }));
+
+    res.status(200).json({ Venues: cleanedVenues });
   } catch (err) {
     next(err);
   }
@@ -715,7 +726,6 @@ router.post("/:groupId/membership", requireAuth, async (req, res, next) => {
       return res.status(404).json({ message: "Group couldn't be found" });
     }
 
-    // Check if user already has a membership (pending or accepted) in the group
     const existingMembership = await Membership.findOne({
       where: {
         groupId,
@@ -728,6 +738,10 @@ router.post("/:groupId/membership", requireAuth, async (req, res, next) => {
         return res
           .status(400)
           .json({ message: "Membership has already been requested" });
+      } else if (existingMembership.status === "co-host") {
+        return res
+          .status(400)
+          .json({ message: "User is already a member of the group" });
       } else if (existingMembership.status === "member") {
         return res
           .status(400)
@@ -735,7 +749,6 @@ router.post("/:groupId/membership", requireAuth, async (req, res, next) => {
       }
     }
 
-    // Create new membership with 'pending' status
     const newMembership = await Membership.create({
       groupId,
       userId,

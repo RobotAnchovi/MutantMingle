@@ -199,10 +199,9 @@ router.post(
   async (req, res, next) => {
     const eventId = parseInt(req.params.eventId, 10);
     const { url, preview } = req.body;
-    const userId = req.user.id; //^ Assuming you're storing the user's ID on the request object
+    const userId = req.user.id;
 
     try {
-      //^ Find the event and group associated with it
       const event = await Event.findByPk(eventId, {
         include: { model: Group, as: "group" },
       });
@@ -212,29 +211,24 @@ router.post(
 
       const groupId = event.group.id;
 
-      //^ Check if the user is attending the event
       const attendance = await Attendance.findOne({
         where: { eventId, userId, status: "attending" },
       });
 
-      //^ Check if the user is a co-host or organizer of the group
       const membership = await Membership.findOne({
-        where: { groupId, userId, status: ["co-host", "member"] },
+        where: { groupId, userId, status: ["co-host"] },
       });
 
       const isOrganizer = event.group.organizerId === userId;
 
-      //^ User must be an attendee, co-host, or the organizer of the group
       if (!attendance && !membership && !isOrganizer) {
         return res.status(403).json({
           message: "You must be an attendee, host, or co-host to add images.",
         });
       }
 
-      //^ Create the event image
       const image = await EventImage.create({ eventId, url, preview });
 
-      //^ Respond with the new image details
       res.status(200).json({
         id: image.id,
         url: image.url,
@@ -599,10 +593,16 @@ router.get("/", async (req, res, next) => {
 
   const where = {};
 
-  if (name) where.name = { [Op.like]: `%${name}%` };
-  if (type) where.type = type;
-  if (startDate) where.startDate = { [Op.gte]: new Date(startDate) };
-
+  if (name && typeof name === "string") where.name = { [Op.like]: `%${name}%` };
+  if (type && (type === "Online" || type === "In Person")) where.type = type;
+  if (startDate) {
+    const date = new Date(startDate);
+    if (!isNaN(date.getTime())) where.startDate = { [Op.gte]: date };
+    else
+      return res
+        .status(400)
+        .json({ message: "Start date must be a valid datetime" });
+  }
   try {
     const events = await Event.findAll({
       where,
