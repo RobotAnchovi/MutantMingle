@@ -30,12 +30,12 @@ module.exports = (sequelize, DataTypes) => {
       },
       eventId: {
         type: DataTypes.INTEGER,
-        references: { model: "Events", key: "id" },
+        references: { model: "Event", key: "id" },
         allowNull: false,
       },
       userId: {
         type: DataTypes.INTEGER,
-        references: { model: "Users", key: "id" },
+        references: { model: "User", key: "id" },
         allowNull: false,
       },
       status: {
