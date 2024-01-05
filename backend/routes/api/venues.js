@@ -1,134 +1,100 @@
-//*====> backend/routes/api/venues.js <====
 const express = require("express");
-const { Venue, Group, Membership } = require("../../db/models");
+const {
+  Group,
+  GroupImage,
+  User,
+  Membership,
+  Venue,
+  Attendance,
+  Event,
+  EventImage,
+} = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
+const { Sequelize } = require("sequelize");
+
+const { check, validationResult } = require("express-validator");
+const { handleValidationErrors } = require("../../utils/validation");
+
 const router = express.Router();
 
-//^ Get all venues for a specific group by group ID
-router.get("/groups/:groupId/venues", requireAuth, async (req, res, next) => {
-  const { groupId } = req.params;
+// Define validation checks
+const validateVenue = [
+  check("address").notEmpty().withMessage("Street address is required"),
+  check("city").notEmpty().withMessage("City is required"),
+  check("state").notEmpty().withMessage("State is required"),
+  check("lat")
+    .isFloat({ min: -90, max: 90 })
+    .withMessage("Latitude must be within -90 and 90"),
+  check("lng")
+    .isFloat({ min: -180, max: 180 })
+    .withMessage("Longitude must be within -180 and 180"),
+  handleValidationErrors,
+];
+
+// Edit a Venue specified by its id
+
+router.put("/:venueId", requireAuth, validateVenue, async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const formattedErrors = errors.array().reduce((acc, error) => {
+      acc[error.param] = error.msg;
+      return acc;
+    }, {});
+
+    return res
+      .status(400)
+      .json({ message: "Bad Request", errors: formattedErrors });
+  }
 
   try {
-    //^ Check if the user is part of the group
-    const userMembership = await Membership.findOne({
-      where: { groupId, userId: req.user.id },
-    });
-    if (!userMembership) {
-      return res.status(403).json({ message: "User is not authorized" });
+    const venueId = parseInt(req.params.venueId, 10);
+    if (isNaN(venueId)) {
+      return res.status(400).json({ message: "Invalid venue ID" });
     }
 
-    const venues = await Venue.findAll({
-      where: { groupId },
-      attributes: ["id", "groupId", "address", "city", "state", "lat", "lng"],
+    const { address, city, state, lat, lng } = req.body;
+    const userId = req.user.id;
+
+    const venue = await Venue.findByPk(venueId, {
+      include: [{ model: Group, as: "group" }],
     });
-    const response = { Venues: venues };
-    return res.json(response);
-  } catch (err) {
-    next(err);
-  }
-});
-//~ Venue Validator function
-function validateVenue(req) {
-  const errors = {};
-  const { address, city, state, lat, lng } = req.body;
-
-  if (!address) errors.address = "Street address is required";
-  if (!city) errors.city = "City is required";
-  if (!state) errors.state = "State is required";
-  if (isNaN(lat) || lat < -90 || lat > 90)
-    errors.lat = "Latitude must be within -90 and 90";
-  if (isNaN(lng) || lng < -180 || lng > 180)
-    errors.lng = "Longitude must be within -180 and 180";
-
-  return Object.keys(errors).length > 0 ? errors : null;
-}
-
-//^ Create a new venue for a specific group
-router.post("/groups/:groupId/venues", requireAuth, async (req, res, next) => {
-  const validationErrors = validateVenue(req);
-
-  if (validationErrors) {
-    return res.status(400).json({
-      message: "Bad Request",
-      errors: validationErrors,
-    });
-  }
-
-  const { groupId } = req.params;
-  const { address, city, state, lat, lng } = req.body;
-
-  try {
-    //^ Check if the user is part of the group
-    const userMembership = await Membership.findOne({
-      where: { groupId, userId: req.user.id },
-    });
-    if (!userMembership) {
-      return res.status(403).json({ message: "User is not authorized" });
-    }
-
-    const newVenue = await Venue.create({
-      groupId,
-      address,
-      city,
-      state,
-      lat,
-      lng,
-    });
-
-    return res.status(201).json(newVenue);
-  } catch (err) {
-    next(err);
-  }
-});
-
-//^ PUT route to update an existing venue
-router.put("/venues/:venueId", requireAuth, async (req, res, next) => {
-  const { venueId } = req.params;
-  const { address, city, state, lat, lng } = req.body;
-  const userId = req.user.id;
-
-  try {
-    const venue = await Venue.findByPk(venueId);
     if (!venue) {
       return res.status(404).json({ message: "Venue couldn't be found" });
     }
 
-    //^ Check if the user is part of the group and has the correct role
     const group = await Group.findByPk(venue.groupId);
-    if (group.organizerId !== userId) {
-      const membership = await Membership.findOne({
-        where: { groupId: venue.groupId, userId, status: "co-host" },
-      });
-      if (!membership) {
-        return res
-          .status(403)
-          .json({ message: "User is not authorized to edit this venue" });
-      }
+    if (!group) {
+      return res
+        .status(404)
+        .json({ message: "Associated group couldn't be found" });
     }
 
-    //^ Validation for the input fields
-    if (!address || !city || !state || isNaN(lat) || isNaN(lng)) {
-      return res.status(400).json({
-        message: "Bad Request",
-        errors: {
-          address: "Street address is required",
-          city: "City is required",
-          state: "State is required",
-          lat: "Latitude must be within -90 and 90",
-          lng: "Longitude must be within -180 and 180",
-        },
-      });
+    // Check if the user is the organizer or a co-host
+    const isOrganizer = group.organizerId === userId;
+    const isCoHost = await Membership.findOne({
+      where: { groupId: group.id, userId, status: "co-host" },
+    });
+
+    if (!isOrganizer && !isCoHost) {
+      return res
+        .status(403)
+        .json({ message: "You don't have permission to edit this venue." });
     }
 
-    //^ Update venue details
-    venue.address = address;
-    venue.city = city;
-    venue.state = state;
-    venue.lat = lat;
-    venue.lng = lng;
-    await venue.save();
+    const updatedVenue = await venue.update({ address, city, state, lat, lng });
 
-    return res.json(venue);
+    // response object
+    const responseVenue = {
+      id: updatedVenue.id,
+      groupId: updatedVenue.groupId,
+      address: updatedVenue.address,
+      city: updatedVenue.city,
+      state: updatedVenue.state,
+      lat: updatedVenue.lat,
+      lng: updatedVenue.lng,
+    };
+
+    res.status(200).json(responseVenue);
   } catch (err) {
     next(err);
   }

@@ -1,5 +1,10 @@
+const express = require("express");
+const { Group, Membership, EventImage, Event } = require("../../db/models");
+const { requireAuth } = require("../../utils/auth");
+const router = express.Router();
+
 //^ Delete an existing image for an Event
-router.delete("/event-images/:imageId", requireAuth, async (req, res, next) => {
+router.delete("/:imageId", requireAuth, async (req, res, next) => {
   const imageId = parseInt(req.params.imageId, 10);
   const userId = req.user.id;
 
@@ -19,10 +24,8 @@ router.delete("/event-images/:imageId", requireAuth, async (req, res, next) => {
       return res.status(404).json({ message: "Event Image couldn't be found" });
     }
 
-    //^ Authorization check: Ensure user is organizer or co-host of the Group that the Event belongs to
     const group = eventImage.event.group;
     if (group.organizerId !== userId) {
-      //^ Check if the user is a co-host
       const isCoHost = await Membership.findOne({
         where: {
           groupId: group.id,
@@ -44,3 +47,5 @@ router.delete("/event-images/:imageId", requireAuth, async (req, res, next) => {
     next(err);
   }
 });
+
+module.exports = router;

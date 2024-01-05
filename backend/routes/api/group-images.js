@@ -1,4 +1,11 @@
-router.delete("/group-images/:imageId", requireAuth, async (req, res, next) => {
+const express = require("express");
+const { Group, Membership, GroupImage } = require("../../db/models");
+const { requireAuth } = require("../../utils/auth");
+const router = express.Router();
+
+// Delete an Image for a Group
+
+router.delete("/:imageId", requireAuth, async (req, res, next) => {
   const imageId = parseInt(req.params.imageId, 10);
   const userId = req.user.id;
 
@@ -14,10 +21,8 @@ router.delete("/group-images/:imageId", requireAuth, async (req, res, next) => {
       return res.status(404).json({ message: "Group Image couldn't be found" });
     }
 
-    //^ Authorization check: Ensure user is organizer or co-host
     const group = groupImage.group;
     if (group.organizerId !== userId) {
-      //^ Check if the user is a co-host
       const isCoHost = await Membership.findOne({
         where: {
           groupId: group.id,
@@ -39,3 +44,5 @@ router.delete("/group-images/:imageId", requireAuth, async (req, res, next) => {
     next(err);
   }
 });
+
+module.exports = router;
