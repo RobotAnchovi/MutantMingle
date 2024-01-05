@@ -73,76 +73,76 @@ const validateQueryParams = [
   handleValidationErrors,
 ];
 
-router.get("/", async (req, res, next) => {
-  // Extract query parameters with default values
-  let { page = 1, size = 20, name, type, startDate } = req.query;
+// router.get("/", async (req, res, next) => {
+//   // Extract query parameters with default values
+//   let { page = 1, size = 20, name, type, startDate } = req.query;
 
-  // Validate and setup for pagination
-  page = isNaN(page) || page <= 0 ? 1 : parseInt(page);
-  size = isNaN(size) || size <= 0 ? 20 : parseInt(size);
-  size = size > 20 ? 20 : size; // Limiting size to a maximum of 20
+//   // Validate and setup for pagination
+//   page = isNaN(page) || page <= 0 ? 1 : parseInt(page);
+//   size = isNaN(size) || size <= 0 ? 20 : parseInt(size);
+//   size = size > 20 ? 20 : size; // Limiting size to a maximum of 20
 
-  const where = {};
+//   const where = {};
 
-  // Apply filters based on query parameters
-  if (name) where.name = { [Op.like]: `%${name}%` };
-  if (type) where.type = type;
-  if (startDate) where.startDate = { [Op.gte]: new Date(startDate) };
+//   // Apply filters based on query parameters
+//   if (name) where.name = { [Op.like]: `%${name}%` };
+//   if (type) where.type = type;
+//   if (startDate) where.startDate = { [Op.gte]: new Date(startDate) };
 
-  try {
-    // Fetch events with filters and pagination applied
-    const events = await Event.findAll({
-      where,
-      include: [
-        {
-          model: Group,
-          as: "group",
-          attributes: ["id", "name", "city", "state"],
-        },
-        {
-          model: Venue,
-          as: "venue",
-          attributes: ["id", "city", "state"],
-        },
-        // Include other necessary models
-      ],
-      limit: size,
-      offset: (page - 1) * size,
-      // Apply any necessary group and order clauses
-    });
+//   try {
+//     // Fetch events with filters and pagination applied
+//     const events = await Event.findAll({
+//       where,
+//       include: [
+//         {
+//           model: Group,
+//           as: "group",
+//           attributes: ["id", "name", "city", "state"],
+//         },
+//         {
+//           model: Venue,
+//           as: "venue",
+//           attributes: ["id", "city", "state"],
+//         },
+//         // Include other necessary models
+//       ],
+//       limit: size,
+//       offset: (page - 1) * size,
+//       // Apply any necessary group and order clauses
+//     });
 
-    // Fetch attendance counts separately for each event
-    for (const event of events) {
-      const count = await Attendance.count({
-        where: { eventId: event.id },
-      });
-      event.setDataValue("numAttending", count);
-    }
+//     // Fetch attendance counts separately for each event
+//     for (const event of events) {
+//       const count = await Attendance.count({
+//         where: { eventId: event.id },
+//       });
+//       event.setDataValue("numAttending", count);
+//     }
 
-    // Process each event to format the response
-    const formattedEvents = events.map((event) => {
-      // Format each event's data here
-      return {
-        id: event.id,
-        groupId: event.groupId,
-        venueId: event.venueId,
-        name: event.name,
-        type: event.type,
-        startDate: event.startDate,
-        endDate: event.endDate,
-        numAttending: event.dataValues.numAttending,
-        previewImage: event.previewImage, // Include logic to determine previewImage
-        Group: event.group,
-        Venue: event.venue,
-      };
-    });
+//     // Process each event to format the response
+//     const formattedEvents = events.map((event) => {
+//       // Format each event's data here
+//       return {
+//         id: event.id,
+//         groupId: event.groupId,
+//         venueId: event.venueId,
+//         name: event.name,
+//         type: event.type,
+//         startDate: event.startDate,
+//         endDate: event.endDate,
+//         numAttending: event.dataValues.numAttending,
+//         previewImage: event.previewImage, // Include logic to determine previewImage
+//         Group: event.group,
+//         Venue: event.venue,
+//       };
+//     });
 
-    res.status(200).json({ Events: formattedEvents });
-  } catch (error) {
-    // Handle errors, potentially from the database or other issues
-    res.status(500).json({ error: error.message });
-  }
-});
+//     res.status(200).json({ Events: formattedEvents });
+//   } catch (error) {
+//     // Handle errors, potentially from the database or other issues
+//     res.status(500).json({ error: error.message });
+//   }
+// });
 
 //^ Get an event by its id
 router.get("/:eventId", async (req, res, next) => {
