@@ -175,11 +175,12 @@ router.get("/:eventId", async (req, res, next) => {
       where: { eventId: event.id },
     });
 
-    // Construct the response object
-    const eventDetails = {
-      ...event.get({ plain: true }),
-      numAttending,
-    };
+    // Get event data as plain object and exclude createdAt and updatedAt
+    const eventData = event.get({ plain: true });
+    const { createdAt, updatedAt, ...eventDetails } = eventData;
+
+    // Add numAttending to the eventDetails object
+    eventDetails.numAttending = numAttending;
 
     return res.status(200).json(eventDetails);
   } catch (error) {
