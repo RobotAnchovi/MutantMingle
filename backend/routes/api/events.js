@@ -557,7 +557,7 @@ router.post("/:eventId/attendance", requireAuth, async (req, res, next) => {
     const membership = await Membership.findOne({
       where: { groupId: event.groupId, userId: userId },
     });
-    if (!membership) {
+    if (!membership || membership.status === "pending") {
       return res.status(403).json({
         message: "You must be a member of the group to request attendance",
       });
