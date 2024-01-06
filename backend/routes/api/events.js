@@ -17,14 +17,14 @@ const { handleValidationErrors } = require("../../utils/validation");
 
 const router = express.Router();
 
-// Validation middleware for creating an event image
+//? Validation middleware for creating an event image
 const validateEventImage = [
   check("url").notEmpty().withMessage("Image URL is required."),
   check("preview").isBoolean().withMessage("Preview must be a boolean."),
   handleValidationErrors,
 ];
 
-// Validation middleware for editing an event
+//? Validation middleware for editing an event
 const validateEventEditing = [
   check("name")
     .isLength({ min: 5 })
@@ -46,7 +46,7 @@ const validateEventEditing = [
   handleValidationErrors,
 ];
 
-// Validation middleware for query parameters
+//? Validation middleware for query parameters
 const validateQueryParams = [
   check("page")
     .optional()
@@ -73,7 +73,7 @@ const validateQueryParams = [
   handleValidationErrors,
 ];
 
-// Get an event (version 1 lazy loading and pagination without all the params)
+//! Get an event (version 1 lazy loading and pagination without all the params)
 // router.get("/", validateQueryParams, async (req, res, next) => {
 //   let { page = 1, size = 20, name, type, startDate } = req.query;
 
@@ -212,8 +212,7 @@ router.get("/", validateQueryParams, async (req, res, next) => {
   }
 });
 
-// Get all events (version two eager loading and pagination
-
+//~ Get all events (version two eager loading and pagination)
 router.get("/", async (req, res, next) => {
   let { page = 1, size = 20, name, type, startDate } = req.query;
 
@@ -274,8 +273,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// Add an image to an event
-
+//~ Add an image to an event
 router.post(
   "/:eventId/images",
   requireAuth,
@@ -324,7 +322,7 @@ router.post(
   }
 );
 
-//^ Get an event by its id
+//~ Get an event by its id
 router.get("/:eventId", async (req, res, next) => {
   const eventId = parseInt(req.params.eventId, 10);
 
@@ -368,7 +366,7 @@ router.get("/:eventId", async (req, res, next) => {
   }
 });
 
-// Edit an event
+//~ Edit an event
 router.put(
   "/:eventId",
   requireAuth,
@@ -385,9 +383,9 @@ router.put(
       startDate,
       endDate,
     } = req.body;
-    const userId = req.user.id; // Assuming you're storing the user's ID on the request object
+    const userId = req.user.id;
 
-    // Validate request body
+    //^ Validate request body
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res
@@ -396,7 +394,7 @@ router.put(
     }
 
     try {
-      // Find the event and its related group
+      //^ Find the event and its related group
       const event = await Event.findByPk(eventId, {
         include: { model: Group, as: "group" },
       });
@@ -407,7 +405,7 @@ router.put(
       const groupId = event.group.id;
       const group = await Group.findByPk(groupId);
 
-      // Authorization check: current user must be the organizer of the group or a co-host
+      //^ Authorization check: current user must be the organizer of the group or a co-host
       const isOrganizer = group && group.organizerId === userId;
       const membership = await Membership.findOne({
         where: { groupId, userId, status: "co-host" },
@@ -418,7 +416,7 @@ router.put(
         });
       }
 
-      // Check if the venue exists if venueId is provided
+      //^ Check if the venue exists if venueId is provided
       if (venueId) {
         const venue = await Venue.findByPk(venueId);
         if (!venue) {
@@ -457,13 +455,13 @@ router.put(
   }
 );
 
-// Delete an event
+//~ Delete an event
 router.delete("/:eventId", requireAuth, async (req, res, next) => {
   const eventId = parseInt(req.params.eventId, 10);
-  const userId = req.user.id; // Assuming you're storing the user's ID on the request object
+  const userId = req.user.id;
 
   try {
-    // Find the event and its related group
+    //^ Find the event and its related group
     const event = await Event.findByPk(eventId, {
       include: { model: Group, as: "group" },
     });
@@ -474,7 +472,7 @@ router.delete("/:eventId", requireAuth, async (req, res, next) => {
     const groupId = event.group.id;
     const group = await Group.findByPk(groupId);
 
-    // Authorization check: current user must be the organizer of the group or a co-host
+    //^ Authorization check: current user must be the organizer of the group or a co-host
     const isOrganizer = group && group.organizerId === userId;
     const membership = await Membership.findOne({
       where: { groupId, userId, status: "co-host" },
@@ -485,18 +483,17 @@ router.delete("/:eventId", requireAuth, async (req, res, next) => {
       });
     }
 
-    // Delete the event
+    //^ Delete the event
     await event.destroy();
 
-    // Respond with confirmation message
+    //^ Respond with confirmation message
     res.status(200).json({ message: "Successfully deleted" });
   } catch (err) {
     next(err);
   }
 });
 
-// Get all Attendees of an Event specified by its id
-
+//~ Get all Attendees of an Event specified by its id
 router.get("/:eventId/attendees", async (req, res, next) => {
   try {
     const eventId = parseInt(req.params.eventId, 10);
@@ -504,7 +501,7 @@ router.get("/:eventId/attendees", async (req, res, next) => {
       return res.status(400).json({ message: "Invalid event ID" });
     }
 
-    // Fetch the event with corrected alias
+    //^ Fetch the event with corrected alias
     const event = await Event.findByPk(eventId, {
       include: [
         {
@@ -525,7 +522,7 @@ router.get("/:eventId/attendees", async (req, res, next) => {
       return res.status(404).json({ message: "Event couldn't be found" });
     }
 
-    // Ensure attendances data exists before tryna map it
+    //^ Ensure attendances data exists before tryna map it
     const attendees = event.attendances
       ? event.attendances.map((att) => {
           const { id, firstName, lastName } = att.user;
@@ -546,8 +543,7 @@ router.get("/:eventId/attendees", async (req, res, next) => {
   }
 });
 
-// Request to Attend an Event based on the Event's id
-
+//~ Request to Attend an Event based on the Event's id
 router.post("/:eventId/attendance", requireAuth, async (req, res, next) => {
   try {
     const eventId = parseInt(req.params.eventId, 10);
@@ -596,8 +592,7 @@ router.post("/:eventId/attendance", requireAuth, async (req, res, next) => {
   }
 });
 
-// Change the status of an attendance for an event specified by id
-
+//~ Change the status of an attendance for an event specified by id
 router.put("/:eventId/attendance", requireAuth, async (req, res, next) => {
   try {
     const eventId = parseInt(req.params.eventId, 10);
@@ -656,8 +651,7 @@ router.put("/:eventId/attendance", requireAuth, async (req, res, next) => {
   }
 });
 
-// Delete an Event specified by its ID
-
+//~ Delete an Event specified by its ID
 router.delete(
   "/:eventId/attendance/:userId",
   requireAuth,
@@ -667,19 +661,19 @@ router.delete(
       const targetUserId = parseInt(req.params.userId, 10);
       const currentUserId = req.user.id;
 
-      // Check if event exists
+      //^ Check if event exists
       const event = await Event.findByPk(eventId);
       if (!event) {
         return res.status(404).json({ message: "Event couldn't be found" });
       }
 
-      // Check if the user to be deleted exists
+      //^ Check if the user to be deleted exists
       const user = await User.findByPk(targetUserId);
       if (!user) {
         return res.status(404).json({ message: "User couldn't be found" });
       }
 
-      // Authorization check: current user must be the organizer or the target user
+      //^ Authorization check: current user must be the organizer or the target user
       const group = await Group.findByPk(event.groupId);
       const isOrganizer = group && group.organizerId === currentUserId;
       if (!isOrganizer && currentUserId !== targetUserId) {
@@ -688,7 +682,7 @@ router.delete(
           .json({ message: "Insufficient permissions to delete attendance" });
       }
 
-      // Find and delete the attendance
+      //^ Find and delete the attendance
       const attendance = await Attendance.findOne({
         where: { eventId: eventId, userId: targetUserId },
       });
@@ -710,7 +704,7 @@ router.delete(
   }
 );
 
-// router.get('/', async (req, res, next) => {
+//! router.get('/', async (req, res, next) => {
 //     try {
 //         // Default values
 //         const page = parseInt(req.query.page) || 1;
@@ -773,7 +767,7 @@ router.delete(
 router.get("/", async (req, res, next) => {
   let { page = 1, size = 20, name, type, startDate } = req.query;
 
-  // Validate and setup for pagination
+  //^ Validate and setup for pagination
   page = isNaN(page) || page < 1 ? 1 : parseInt(page);
   size = isNaN(size) || size < 1 ? 20 : parseInt(size);
   size = size > 20 ? 20 : size; // Ensuring size does not exceed 20
@@ -792,15 +786,14 @@ router.get("/", async (req, res, next) => {
       include: [
         {
           model: Group,
-          as: "Group", // Alias should match your model associations
+          as: "Group",
           attributes: ["id", "name", "city", "state"],
         },
         {
           model: Venue,
-          as: "Venue", // Alias should match your model associations
+          as: "Venue",
           attributes: ["id", "city", "state"],
         },
-        // You may need to include Attendance for numAttending
       ],
       limit: size,
       offset: (page - 1) * size,
@@ -816,8 +809,8 @@ router.get("/", async (req, res, next) => {
         type: event.type,
         startDate: event.startDate,
         endDate: event.endDate,
-        // numAttending: event.Attendances.length, // Uncomment and adjust if you have Attendances associated
-        previewImage: event.previewImage, // Adjust as needed
+
+        previewImage: event.previewImage,
         Group: event.Group,
         Venue: event.Venue,
       };
@@ -825,7 +818,6 @@ router.get("/", async (req, res, next) => {
 
     res.status(200).json({ Events: responseEvents });
   } catch (error) {
-    // Handle errors, potentially from the database or other issues
     res.status(500).json({ error: error.message });
   }
 });
