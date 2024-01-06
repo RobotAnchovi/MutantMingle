@@ -489,7 +489,7 @@ router.post(
         lng: newVenue.lng,
       };
 
-      res.status(200).json({ Venues: [responseVenue] });
+      res.status(200).json(responseVenue);
     } catch (err) {
       if (err.name === "SequelizeValidationError") {
         const errors = err.errors.reduce(
