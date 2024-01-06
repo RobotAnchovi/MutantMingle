@@ -548,13 +548,17 @@ router.get("/:groupId/events", async (req, res, next) => {
 
     // Process each event to add previewImage
     const formattedEvents = events.map((event) => {
+      // let previewImage = "No preview image found.";
+      // if (Array.isArray(event.eventImages)) {
+      //   event.eventImages.forEach((image) => {
+      //     if (image.preview === true) {
+      //       previewImage = image.url;
       let previewImage = "No preview image found.";
-      if (Array.isArray(event.eventImages)) {
-        event.eventImages.forEach((image) => {
-          if (image.preview === true) {
-            previewImage = image.url;
-          }
-        });
+      if (Array.isArray(eventImages)) {
+        const preview = eventImages.find((image) => image.preview === true);
+        if (preview) {
+          previewImage = preview.url;
+        }
       }
 
       return {
