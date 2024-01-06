@@ -95,7 +95,7 @@ router.get("/", validateQueryParams, async (req, res, next) => {
           [
             Sequelize.literal(`(
                 SELECT COUNT(*)
-                FROM Attendances AS attendance
+                FROM "Attendances" AS attendance
                 WHERE
                     attendance.eventId = Event.id
             )`),
@@ -244,11 +244,9 @@ router.post(
       const isOrganizer = event.group.organizerId === userId;
 
       if (!attendance && !membership && !isOrganizer) {
-        return res
-          .status(403)
-          .json({
-            message: "You must be an attendee, host, or co-host to add images.",
-          });
+        return res.status(403).json({
+          message: "You must be an attendee, host, or co-host to add images.",
+        });
       }
 
       const image = await EventImage.create({ eventId, url, preview });
@@ -353,12 +351,9 @@ router.put(
         where: { groupId, userId, status: "co-host" },
       });
       if (!isOrganizer && !membership) {
-        return res
-          .status(403)
-          .json({
-            message:
-              "You must be the organizer or a co-host to edit the event.",
-          });
+        return res.status(403).json({
+          message: "You must be the organizer or a co-host to edit the event.",
+        });
       }
 
       // Check if the venue exists if venueId is provided
@@ -423,12 +418,9 @@ router.delete("/:eventId", requireAuth, async (req, res, next) => {
       where: { groupId, userId, status: "co-host" },
     });
     if (!isOrganizer && !membership) {
-      return res
-        .status(403)
-        .json({
-          message:
-            "You must be the organizer or a co-host to delete the event.",
-        });
+      return res.status(403).json({
+        message: "You must be the organizer or a co-host to delete the event.",
+      });
     }
 
     // Delete the event
@@ -508,11 +500,9 @@ router.post("/:eventId/attendance", requireAuth, async (req, res, next) => {
       where: { groupId: event.groupId, userId: userId },
     });
     if (!membership) {
-      return res
-        .status(403)
-        .json({
-          message: "You must be a member of the group to request attendance",
-        });
+      return res.status(403).json({
+        message: "You must be a member of the group to request attendance",
+      });
     }
 
     const existingAttendance = await Attendance.findOne({
@@ -569,12 +559,10 @@ router.put("/:eventId/attendance", requireAuth, async (req, res, next) => {
     });
 
     if (!isOrganizer && !isCoHost) {
-      return res
-        .status(403)
-        .json({
-          message:
-            "You must be the organizer or a co-host to change attendance status.",
-        });
+      return res.status(403).json({
+        message:
+          "You must be the organizer or a co-host to change attendance status.",
+      });
     }
 
     if (status === "pending") {
@@ -588,11 +576,9 @@ router.put("/:eventId/attendance", requireAuth, async (req, res, next) => {
     });
 
     if (!attendance) {
-      return res
-        .status(404)
-        .json({
-          message: "Attendance between the user and the event does not exist",
-        });
+      return res.status(404).json({
+        message: "Attendance between the user and the event does not exist",
+      });
     }
 
     await attendance.update({ status });
