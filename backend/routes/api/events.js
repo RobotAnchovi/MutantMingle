@@ -97,7 +97,7 @@ router.get("/", validateQueryParams, async (req, res, next) => {
                 SELECT COUNT(*)
                 FROM "meetup_schema_dev_ops"."Attendances" AS attendance
                 WHERE
-                    attendance.eventId = Event.id
+                    attendance."eventId" = Event.id
             )`),
             "numAttending",
           ],
