@@ -542,6 +542,7 @@ router.delete("/:eventId", requireAuth, async (req, res, next) => {
 //     next(err);
 //   }
 // });
+//~ Version 2
 
 router.get("/:eventId/attendees", requireAuth, async (req, res, next) => {
   try {
@@ -565,14 +566,18 @@ router.get("/:eventId/attendees", requireAuth, async (req, res, next) => {
       return res.status(404).json({ message: "Event couldn't be found" });
     }
 
-    //^ Check if the user is the organizer or a co-host of the group
-    const isAuthorized = await Membership.findOne({
-      where: {
-        groupId: event.groupId,
-        userId: userId,
-        status: { [Op.or]: ["organizer", "co-host"] },
-      },
-    });
+    // Check if the user is the organizer or a co-host of the group
+    const group = await Group.findByPk(event.groupId);
+    let isAuthorized = false;
+
+    if (group.organizerId === userId) {
+      isAuthorized = true;
+    } else {
+      const coHost = await Membership.findOne({
+        where: { groupId: event.groupId, userId: userId, status: "co-host" },
+      });
+      if (coHost) isAuthorized = true;
+    }
 
     const attendees = await Attendance.findAll({
       where: {
@@ -606,7 +611,6 @@ router.get("/:eventId/attendees", requireAuth, async (req, res, next) => {
     next(err);
   }
 });
-
 //~ Request to Attend an Event based on the Event's id
 router.post("/:eventId/attendance", requireAuth, async (req, res, next) => {
   try {
