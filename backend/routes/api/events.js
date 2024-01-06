@@ -494,26 +494,69 @@ router.delete("/:eventId", requireAuth, async (req, res, next) => {
 });
 
 //~ Get all Attendees of an Event specified by its id
-router.get("/:eventId/attendees", async (req, res, next) => {
+// router.get("/:eventId/attendees", async (req, res, next) => {
+//   try {
+//     const eventId = parseInt(req.params.eventId, 10);
+//     if (isNaN(eventId)) {
+//       return res.status(400).json({ message: "Invalid event ID" });
+//     }
+
+//     //^ Fetch the event with corrected alias
+//     const event = await Event.findByPk(eventId, {
+//       include: [
+//         {
+//           model: Attendance,
+//           as: "attendances",
+//           include: [
+//             {
+//               model: User,
+//               as: "user",
+//               attributes: ["id", "firstName", "lastName"],
+//             },
+//           ],
+//         },
+//       ],
+//     });
+
+//     if (!event) {
+//       return res.status(404).json({ message: "Event couldn't be found" });
+//     }
+
+//     //^ Ensure attendances data exists before tryna map it
+//     const attendees = event.attendances
+//       ? event.attendances.map((att) => {
+//           const { id, firstName, lastName } = att.user;
+//           return {
+//             id,
+//             firstName,
+//             lastName,
+//             Attendance: {
+//               status: att.status,
+//             },
+//           };
+//         })
+//       : [];
+
+//     res.status(200).json({ Attendees: attendees });
+//   } catch (err) {
+//     next(err);
+//   }
+// });
+
+router.get("/:eventId/attendees", requireAuth, async (req, res, next) => {
   try {
     const eventId = parseInt(req.params.eventId, 10);
+    const userId = req.user.id;
+
     if (isNaN(eventId)) {
       return res.status(400).json({ message: "Invalid event ID" });
     }
 
-    //^ Fetch the event with corrected alias
     const event = await Event.findByPk(eventId, {
       include: [
         {
-          model: Attendance,
-          as: "attendances",
-          include: [
-            {
-              model: User,
-              as: "user",
-              attributes: ["id", "firstName", "lastName"],
-            },
-          ],
+          model: Group,
+          as: "group",
         },
       ],
     });
@@ -522,22 +565,43 @@ router.get("/:eventId/attendees", async (req, res, next) => {
       return res.status(404).json({ message: "Event couldn't be found" });
     }
 
-    //^ Ensure attendances data exists before tryna map it
-    const attendees = event.attendances
-      ? event.attendances.map((att) => {
-          const { id, firstName, lastName } = att.user;
-          return {
-            id,
-            firstName,
-            lastName,
-            Attendance: {
-              status: att.status,
-            },
-          };
-        })
-      : [];
+    //^ Check if the user is the organizer or a co-host of the group
+    const isAuthorized = await Membership.findOne({
+      where: {
+        groupId: event.groupId,
+        userId: userId,
+        status: { [Op.or]: ["organizer", "co-host"] },
+      },
+    });
 
-    res.status(200).json({ Attendees: attendees });
+    const attendees = await Attendance.findAll({
+      where: {
+        eventId: eventId,
+
+        ...(isAuthorized ? {} : { status: "attending" }),
+      },
+      include: [
+        {
+          model: User,
+          as: "user",
+          attributes: ["id", "firstName", "lastName"],
+        },
+      ],
+    });
+
+    const attendeeData = attendees.map((att) => {
+      const { id, firstName, lastName } = att.user;
+      return {
+        id,
+        firstName,
+        lastName,
+        Attendance: {
+          status: att.status,
+        },
+      };
+    });
+
+    res.status(200).json({ Attendees: attendeeData });
   } catch (err) {
     next(err);
   }
