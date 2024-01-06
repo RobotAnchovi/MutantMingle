@@ -553,6 +553,7 @@ router.get("/:groupId/events", async (req, res, next) => {
       //   event.eventImages.forEach((image) => {
       //     if (image.preview === true) {
       //       previewImage = image.url;
+      const eventImages = event.getEventImages();
       let previewImage = "No preview image found.";
       if (Array.isArray(eventImages)) {
         const preview = eventImages.find((image) => image.preview === true);
