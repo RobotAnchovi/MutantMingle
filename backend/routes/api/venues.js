@@ -17,7 +17,7 @@ const { handleValidationErrors } = require("../../utils/validation");
 
 const router = express.Router();
 
-//^ Define validation checks
+//? Define validation checks
 const validateVenue = [
   check("address").notEmpty().withMessage("Street address is required"),
   check("city").notEmpty().withMessage("City is required"),
@@ -31,8 +31,7 @@ const validateVenue = [
   handleValidationErrors,
 ];
 
-//^ Edit a Venue specified by its id
-
+//~ Edit a Venue specified by its id
 router.put("/:venueId", requireAuth, validateVenue, async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {

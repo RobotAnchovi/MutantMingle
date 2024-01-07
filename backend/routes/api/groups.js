@@ -70,6 +70,7 @@ const validateVenue = [
   handleValidationErrors,
 ];
 
+//~ Create a new group
 router.post("/", requireAuth, validateGroup, async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -501,7 +502,7 @@ router.post(
   }
 );
 
-//~ Get all Events of a Group specified by its id
+//! Get all Events of a Group specified by its id VERSION 1
 // router.get("/:groupId/events", async (req, res, next) => {
 //   const groupId = parseInt(req.params.groupId, 10);
 
@@ -574,8 +575,9 @@ router.post(
 //   }
 // });
 
+//~ Get all Events of a Group specified by its id VERSION 2
 router.get("/:groupId/events", async (req, res, next) => {
-  const groupId = parseInt(req.params.groupId, 10); // Parse groupId from URL params
+  const groupId = parseInt(req.params.groupId, 10);
 
   if (isNaN(groupId)) {
     return res.status(400).json({ message: "Invalid group ID" });
@@ -597,7 +599,7 @@ router.get("/:groupId/events", async (req, res, next) => {
         },
         { model: Venue, as: "venue", attributes: ["id", "city", "state"] },
         { model: Attendance, as: "attendances", attributes: [] },
-        // Fetching EventImages similar to the working route
+
         {
           model: EventImage,
           as: "eventImages",
@@ -618,7 +620,7 @@ router.get("/:groupId/events", async (req, res, next) => {
 
     const formattedEvents = events.map((event) => {
       let previewImage = "No preview image found.";
-      // Find the first preview image if available
+
       const previewEventImage = event.eventImages.find(
         (image) => image.preview === true
       );

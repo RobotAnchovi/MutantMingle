@@ -20,20 +20,20 @@ app.use(morgan("dev"));
 app.use(cookieParser());
 app.use(express.json());
 
-// Security Middleware
+//? Security Middleware
 if (!isProduction) {
-  // enable cors only in development
+  //^ enable cors only in development
   app.use(cors());
 }
 
-// helmet helps set a variety of headers to better secure your app
+//^ helmet helps set a variety of headers to better secure your app
 app.use(
   helmet.crossOriginResourcePolicy({
     policy: "cross-origin",
   })
 );
 
-// Set the _csrf token and create req.csrfToken method
+//~ Set the _csrf token and create req.csrfToken method
 app.use(
   csurf({
     cookie: {
@@ -44,9 +44,9 @@ app.use(
   })
 );
 
-app.use(routes); // Connect all the routes
+app.use(routes);
 
-// Catch unhandled requests and forward to error handler.
+//~ Catch unhandled requests and forward to error handler.
 app.use((_req, _res, next) => {
   const err = new Error("The requested resource couldn't be found.");
   err.title = "Resource Not Found";
@@ -55,7 +55,7 @@ app.use((_req, _res, next) => {
   next(err);
 });
 
-// Process sequelize errors
+//~ Process sequelize errors
 app.use((err, _req, _res, next) => {
   if (err instanceof ValidationError) {
     let errors = {};
@@ -68,7 +68,7 @@ app.use((err, _req, _res, next) => {
   next(err);
 });
 
-// Error formatter
+//~ Error formatter
 app.use((err, _req, res, _next) => {
   res.status(err.status || 500);
   console.error(err);
