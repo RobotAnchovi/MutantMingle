@@ -359,6 +359,12 @@ router.get("/:eventId", async (req, res, next) => {
     const { createdAt, updatedAt, group, venue, eventImages, ...rest } =
       eventData;
 
+    //^ Parse lat and lng to numbers
+    if (venue) {
+      venue.lat = parseFloat(venue.lat);
+      venue.lng = parseFloat(venue.lng);
+    }
+
     const eventDetails = {
       ...rest,
       Group: group,
