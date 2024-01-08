@@ -422,8 +422,8 @@ router.get("/:groupId/venues", requireAuth, async (req, res, next) => {
       address: venue.address,
       city: venue.city,
       state: venue.state,
-      lat: venue.lat,
-      lng: venue.lng,
+      lat: parseFloat(venue.lat),
+      lng: parseFloat(venue.lng),
       groupId: venue.groupId,
     }));
 
@@ -484,8 +484,8 @@ router.post(
         address: newVenue.address,
         city: newVenue.city,
         state: newVenue.state,
-        lat: newVenue.lat,
-        lng: newVenue.lng,
+        lat: parseFloat(newVenue.lat),
+        lng: parseFloat(newVenue.lng),
       };
 
       res.status(200).json(responseVenue);

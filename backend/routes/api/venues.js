@@ -104,15 +104,14 @@ router.put("/:venueId", requireAuth, validateVenue, async (req, res, next) => {
       lng: longitude,
     });
 
-    //^ Ensure lat and lng in response are numbers
     const responseVenue = {
       id: updatedVenue.id,
       groupId: updatedVenue.groupId,
       address: updatedVenue.address,
       city: updatedVenue.city,
       state: updatedVenue.state,
-      lat: parseFloat(updatedVenue.lat),
-      lng: parseFloat(updatedVenue.lng),
+      lat: updatedVenue.lat,
+      lng: updatedVenue.lng,
     };
     res.status(200).json(responseVenue);
   } catch (err) {
