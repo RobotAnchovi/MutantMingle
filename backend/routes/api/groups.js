@@ -255,7 +255,11 @@ router.get("/:groupId", async (req, res, next) => {
       numMembers: memberships.length,
       GroupImages: groupImages.map((gi) => gi.toJSON()),
       Organizer: organizer ? organizer.toJSON() : {},
-      Venues: venues.map((v) => v.toJSON()),
+      Venues: venues.map((v) => ({
+        ...v.toJSON(),
+        lat: parseFloat(v.lat), // Parse latitude as a number
+        lng: parseFloat(v.lng), // Parse longitude as a number
+      })),
     };
 
     res.status(200);
