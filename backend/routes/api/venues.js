@@ -80,19 +80,40 @@ router.put("/:venueId", requireAuth, validateVenue, async (req, res, next) => {
         .json({ message: "You don't have permission to edit this venue." });
     }
 
-    const updatedVenue = await venue.update({ address, city, state, lat, lng });
+    // const updatedVenue = await venue.update({ address, city, state, lat, lng });
 
-    //^ response object
+    // //^ response object
+    // const responseVenue = {
+    //   id: updatedVenue.id,
+    //   groupId: updatedVenue.groupId,
+    //   address: updatedVenue.address,
+    //   city: updatedVenue.city,
+    //   state: updatedVenue.state,
+    //   lat: updatedVenue.lat,
+    //   lng: updatedVenue.lng,
+    // };
+    //^ Convert lat and lng to floating point numbers
+    const latitude = parseFloat(req.body.lat);
+    const longitude = parseFloat(req.body.lng);
+
+    const updatedVenue = await venue.update({
+      address: req.body.address,
+      city: req.body.city,
+      state: req.body.state,
+      lat: latitude,
+      lng: longitude,
+    });
+
+    //^ Ensure lat and lng in response are numbers
     const responseVenue = {
       id: updatedVenue.id,
       groupId: updatedVenue.groupId,
       address: updatedVenue.address,
       city: updatedVenue.city,
       state: updatedVenue.state,
-      lat: updatedVenue.lat,
-      lng: updatedVenue.lng,
+      lat: parseFloat(updatedVenue.lat),
+      lng: parseFloat(updatedVenue.lng),
     };
-
     res.status(200).json(responseVenue);
   } catch (err) {
     next(err);

@@ -33,7 +33,7 @@ const validateEventEditing = [
     .isIn(["Online", "In person"])
     .withMessage("Type must be Online or In person"),
   check("capacity").isInt().withMessage("Capacity must be an integer"),
-  check("price").isFloat().withMessage("Price is invalid"),
+  check("price").isFloat({ min: 0 }).withMessage("Price is invalid"),
   check("description").notEmpty().withMessage("Description is required"),
   check("startDate")
     .toDate()
@@ -356,9 +356,16 @@ router.get("/:eventId", async (req, res, next) => {
     });
 
     const eventData = event.get({ plain: true });
-    const { createdAt, updatedAt, ...eventDetails } = eventData;
+    const { createdAt, updatedAt, group, venue, eventImages, ...rest } =
+      eventData;
 
-    eventDetails.numAttending = numAttending;
+    const eventDetails = {
+      ...rest,
+      Group: group,
+      Venue: venue,
+      EventImages: eventImages,
+      numAttending: numAttending,
+    };
 
     return res.status(200).json(eventDetails);
   } catch (error) {

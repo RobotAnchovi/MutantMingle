@@ -43,7 +43,7 @@ const validateEvent = [
     .isIn(["Online", "In person"])
     .withMessage("Type must be Online or In person"),
   check("capacity").isInt().withMessage("Capacity must be an integer"),
-  check("price").isFloat().withMessage("Price is invalid"),
+  check("price").isFloat({ min: 0 }).withMessage("Price is invalid"),
   check("description").notEmpty().withMessage("Description is required"),
   check("startDate")
     .toDate()
