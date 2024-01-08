@@ -360,7 +360,7 @@ router.get("/:eventId", async (req, res, next) => {
       eventData;
 
     //^ Parse lat and lng to numbers
-    if (venue) {
+    if (eventData.venue) {
       venue.lat = parseFloat(venue.lat);
       venue.lng = parseFloat(venue.lng);
     }
