@@ -141,28 +141,43 @@ router.get("/", async (req, res, next) => {
       group: ["Group.id", "memberships.id", "groupImages.id"],
     });
 
-    let groupList = [];
+    // let groupList = [];
 
-    groups.forEach((group) => {
-      let groupJson = group.toJSON(); //* New line for numMembers to be a number (tested locally)
-      groupJson.numMembers = Number(groupJson.numMembers); //* New line for numMembers to be a number (tested locally)
-      groupList.push(group.toJSON());
-    });
+    // groups.forEach((group) => {
+    //   let groupJson = group.toJSON();
+    //   groupJson.numMembers = Number(groupJson.numMembers);
+    //   groupList.push(group.toJSON());
+    // });
 
-    groupList.forEach((group) => {
-      group.groupImages.forEach((image) => {
-        if (image.preview === true) {
-          group.previewImage = image.url;
-        }
-      });
+    // groupList.forEach((group) => {
+    //   group.groupImages.forEach((image) => {
+    //     if (image.preview === true) {
+    //       group.previewImage = image.url;
+    //     }
+    //   });
 
-      if (!group.previewImage) {
-        group.previewImage = "No preview image found.";
-      }
+    //   if (!group.previewImage) {
+    //     group.previewImage = "No preview image found.";
+    //   }
 
-      delete group.groupImages;
-      delete group.memberships;
-    });
+    //   delete group.groupImages;
+    //   delete group.memberships;
+    // });
+
+    const groupList = await Promise.all(
+      groups.map(async (group) => {
+        const groupJSON = group.toJSON();
+        groupJSON.numMembers = await Membership.count({
+          where: { groupId: group.id },
+        });
+        groupJSON.previewImage = groupJSON.groupImages.length
+          ? groupJSON.groupImages[0].url
+          : "No preview image found.";
+        delete groupJSON.groupImages;
+        delete groupJSON.memberships;
+        return groupJSON;
+      })
+    );
 
     return res.json({ Groups: groupList });
   } catch (err) {
