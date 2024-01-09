@@ -201,7 +201,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
           [
             Sequelize.cast(
               Sequelize.fn("COUNT", Sequelize.col("memberships.id")),
-              "integer"
+              "float"
             ), //* Cast to integer to avoid string
             "numMembers",
           ],
@@ -213,6 +213,7 @@ router.get("/current", requireAuth, async (req, res, next) => {
 
     const groupList = groups.map((group) => {
       const groupJSON = group.toJSON();
+      groupJSON.numMembers = parseFloat(groupJSON.numMembers); //* Parse to float to avoid string
       groupJSON.previewImage = groupJSON.groupImages.length
         ? groupJSON.groupImages[0].url
         : "No preview image found.";
