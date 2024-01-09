@@ -199,7 +199,10 @@ router.get("/current", requireAuth, async (req, res, next) => {
       attributes: {
         include: [
           [
-            Sequelize.fn("COUNT", Sequelize.col("memberships.id")),
+            Sequelize.cast(
+              Sequelize.fn("COUNT", Sequelize.col("memberships.id")),
+              "integer"
+            ), //* Cast to integer to avoid string
             "numMembers",
           ],
         ],
