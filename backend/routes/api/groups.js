@@ -144,6 +144,8 @@ router.get("/", async (req, res, next) => {
     let groupList = [];
 
     groups.forEach((group) => {
+      let groupJson = group.toJSON(); //* New line for numMembers to be a number (tested locally)
+      groupJson.numMembers = Number(groupJson.numMembers); //* New line for numMembers to be a number (tested locally)
       groupList.push(group.toJSON());
     });
 
