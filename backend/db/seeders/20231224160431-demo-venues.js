@@ -61,6 +61,56 @@ module.exports = {
           createdAt: new Date(),
           updatedAt: new Date(),
         },
+        {
+          groupId: 6,
+          address: "303 Quantum Quarters",
+          city: "Quantumville",
+          state: "Physics",
+          lat: 41.878113,
+          lng: -87.629799, // Coordinates for Chicago
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          groupId: 7,
+          address: "404 Hacker's Hideout",
+          city: "Cyber City",
+          state: "Digitalia",
+          lat: 42.360082,
+          lng: -71.05888, // Coordinates for Boston
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          groupId: 8,
+          address: "505 Virtual Vistas",
+          city: "Virtual Town",
+          state: "Simulatia",
+          lat: 38.907192,
+          lng: -77.036873, // Coordinates for Washington D.C.
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          groupId: 9,
+          address: "606 Blockchain Blvd",
+          city: "Crypto City",
+          state: "Decentral",
+          lat: 25.76168,
+          lng: -80.19179, // Coordinates for Miami
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          groupId: 10,
+          address: "707 Silicon Street",
+          city: "Techopolis",
+          state: "Innovatia",
+          lat: 36.162664,
+          lng: -86.781602, // Coordinates for Nashville
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
       ],
       { validate: true }
     );
