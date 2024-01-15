@@ -33,6 +33,55 @@ module.exports = {
           username: "FakeUser2",
           hashedPassword: bcrypt.hashSync("password3"),
         },
+        {
+          firstName: "Tony",
+          lastName: "Stark",
+          email: "ironman@user.io",
+          username: "IronMan",
+          hashedPassword: bcrypt.hashSync("password4"),
+        },
+        {
+          firstName: "Steve",
+          lastName: "Rogers",
+          email: "cap@user.io",
+          username: "CaptainAmerica",
+          hashedPassword: bcrypt.hashSync("password5"),
+        },
+        {
+          firstName: "Peter",
+          lastName: "Parker",
+          email: "spiderman@user.io",
+          username: "SpiderMan",
+          hashedPassword: bcrypt.hashSync("password6"),
+        },
+        {
+          firstName: "Bruce",
+          lastName: "Banner",
+          email: "hulk@user.io",
+          username: "Hulk",
+          hashedPassword: bcrypt.hashSync("password7"),
+        },
+        {
+          firstName: "Natasha",
+          lastName: "Romanoff",
+          email: "blackwidow@user.io",
+          username: "BlackWidow",
+          hashedPassword: bcrypt.hashSync("password8"),
+        },
+        {
+          firstName: "Thor",
+          lastName: "Odinson",
+          email: "thor@user.io",
+          username: "Thor",
+          hashedPassword: bcrypt.hashSync("password9"),
+        },
+        {
+          firstName: "Stephen",
+          lastName: "Strange",
+          email: "doctorstrange@user.io",
+          username: "DoctorStrange",
+          hashedPassword: bcrypt.hashSync("password10"),
+        },
       ],
       { validate: true }
     );
@@ -44,7 +93,20 @@ module.exports = {
     return queryInterface.bulkDelete(
       options,
       {
-        username: { [Op.in]: ["Demo-lition", "FakeUser1", "FakeUser2"] },
+        username: {
+          [Op.in]: [
+            "Demo-lition",
+            "FakeUser1",
+            "FakeUser2",
+            "IronMan",
+            "CaptainAmerica",
+            "SpiderMan",
+            "Hulk",
+            "BlackWidow",
+            "Thor",
+            "DoctorStrange",
+          ],
+        },
       },
       {}
     );
