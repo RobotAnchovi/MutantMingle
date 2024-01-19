@@ -1,4 +1,4 @@
-# Meetup Clone
+# MutantMingle (Meetup Clone)
 
 ## Database Schema Design
 
