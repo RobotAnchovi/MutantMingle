@@ -12,22 +12,26 @@ import {
   GroupDetails,
   GroupList,
   ManageGroup,
-} from "./components/Group";
+} from "./components/Groups";
 import {
   CreateEvent,
   EditEvent,
   EventDetails,
-  EventList,
+  ListEvents,
   ManageEvent,
-} from "./components/Event";
+} from "./components/Events";
 import { Modal } from "./context/Modal";
 import NotFound from "./components/NotFound";
+import { thunkLoadGroups } from "./store/groups";
+import { thunkLoadEvents } from "./store/events";
 
 function Layout() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    dispatch(thunkLoadGroups());
+    dispatch(thunkLoadEvents());
     dispatch(sessionActions.restoreUser()).then(() => {
       setIsLoaded(true);
     });
@@ -88,7 +92,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: "/",
-            element: <EventList />,
+            element: <ListEvents />,
           },
           {
             path: "create",
