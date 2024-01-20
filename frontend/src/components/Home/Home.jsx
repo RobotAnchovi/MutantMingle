@@ -44,12 +44,14 @@ const Home = () => {
             alt={"placeholder for Faction Img"}
             path={`groups`}
             linkText={`Discover Factions`}
+            description={"Find your Faction and join the adventure!"}
           />
           <HomeCard
             image={"#"}
             alt={"placeholder for Campaign Img"}
             path={`events`}
             linkText={`Discover Campaigns`}
+            description={"Find a Campaign suited to your unique abilities!"}
           />
           <HomeCard
             activeLink={activeLink}
@@ -57,6 +59,7 @@ const Home = () => {
             alt={"Placeholder for Create Faction Img"}
             path={`groups/new`}
             linkText={`Create Your Own Faction`}
+            description={"Assemble your own team of heroes or villains!"}
           />
         </div>
       </div>
