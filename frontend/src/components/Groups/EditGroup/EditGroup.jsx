@@ -1,35 +1,39 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { thunkCreateGroup, thunkAddImage } from "../../../store/groups";
-import "./CreateGroup.css";
+import "./EditGroup.css";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { thunkEditGroup, thunkGroupDetails } from "../../../store/groups";
 
-const CreateGroup = () => {
+const EditGroupForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [name, setName] = useState("");
-  const [about, setAbout] = useState("");
-  const [type, setType] = useState("placeholder");
-  const [privacy, setPrivacy] = useState("placeholder");
-  const [imageUrl, setImageUrl] = useState("");
+  const { groupId } = useParams();
+  const group = useSelector((state) => state.groups[groupId]);
+  const user = useSelector((state) => state.session.user);
+  const [city, setCity] = useState(group?.city);
+  const [state, setState] = useState(group?.state);
+  const [name, setName] = useState(group?.name);
+  const [about, setAbout] = useState(group?.about);
+  const [type, setType] = useState(group?.type);
+  const [privacy, setPrivacy] = useState(group?.private);
   const [validationErrors, setValidationErrors] = useState({});
+  const isUserOwner = group?.organizerId == user?.id;
 
-  useEffect(() => {}, []);
+  if (isUserOwner == false) {
+    navigate("/");
+  }
+
+  useEffect(() => {
+    dispatch(thunkGroupDetails(groupId));
+  }, [dispatch, groupId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const errors = {};
-    const urlEndings = [".png", ".jpg", ".jpeg"];
-    const urlEnding3 = imageUrl.slice(-4);
-    const urlEnding4 = imageUrl.slice(-5);
 
     if (!city) errors.city = "City is required";
     if (!state) errors.state = "State is required";
-    if (state.length < 2 || state.length > 2)
-      errors.state = "State must be formatted as a two-letter abbreviation";
     if (!name)
       errors.name =
         "Your true identity is required, but trust we will tell no one.";
@@ -38,46 +42,38 @@ const CreateGroup = () => {
         "Description must be at least 30 characters long. Unless your tentacles prohibit this.";
     if (type == "placeholder" || !type)
       errors.type = "Faction Type is required";
-    if (privacy == "placeholder" || !privacy)
+    if (privacy == "placeholder")
       errors.privacy = "Visibility Type is required even if you are invisible";
-    if (!urlEndings.includes(urlEnding3) && !urlEndings.includes(urlEnding4))
-      errors.imageUrl = "Image URL must end in .png, .jpg, or .jpeg";
 
-    if (Object.values(errors).length) {
-      setValidationErrors(errors);
-    } else {
+    setValidationErrors(errors);
+
+    if (!Object.values(validationErrors).length) {
       const newGroupReqBody = {
         name,
         about,
         type,
         private: privacy,
         city,
-        state: state.toUpperCase(),
+        state,
       };
 
-      const newImageReqBody = {
-        url: imageUrl,
-        preview: true,
-      };
+      const editedGroup = await dispatch(
+        thunkEditGroup(groupId, newGroupReqBody)
+      );
 
-      const createdGroup = await dispatch(thunkCreateGroup(newGroupReqBody));
-
-      if (createdGroup.errors) {
-        // console.log("createdGroup.errors:", createdGroup.errors)
-        // set validation errors
+      if (editedGroup.errors) {
+        // console.log("editedGroup.errors:", editedGroup.errors)
       } else {
-        // dispatch the image to the new group's id
-        // the dispatch needs the group id AND the body
-        await dispatch(thunkAddImage(createdGroup.id, newImageReqBody));
-        navigate(`/groups/${createdGroup.id}`);
+        // await dispatch(thunkAddImage(groupId, newImageReqBody))
+        navigate(`/groups/${groupId}`);
       }
     }
   };
 
   return (
     <section className="group-section">
-      <h4>ORGANIZE YOUR OWN FACTION</h4>
-      <h2>Start a New faction</h2>
+      <h4>DECLARE YOUR FACTION&apos;S NEW ALLEGIANCES!</h4>
+      <h2>Update your Faction</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <h2>Declare your faction&apos;s secret location</h2>
@@ -87,10 +83,9 @@ const CreateGroup = () => {
             We&apos;ll connect you with mutants, heroes, or villains in your
             area.
           </p>
-          <label htmlFor="city">
+          <label>
             <input
               type="text"
-              name="city"
               id="group-city"
               placeholder="City of Origin"
               value={city}
@@ -98,7 +93,7 @@ const CreateGroup = () => {
             />
           </label>
           <span id="comma-span">,</span>
-          <label htmlFor="state">
+          <label>
             <input
               type="text"
               id="group-state"
@@ -107,18 +102,12 @@ const CreateGroup = () => {
               onChange={(e) => setState(e.target.value)}
             />
           </label>
-          <div className="errors-div">
-            {"city" in validationErrors && (
-              <span className="errors" id="group-error-city">
-                {validationErrors.city}
-              </span>
-            )}
-            {"state" in validationErrors && (
-              <span className="errors" id="group-error-state">
-                {validationErrors.state}
-              </span>
-            )}
-          </div>
+          {"city" in validationErrors && (
+            <p className="errors">{validationErrors.city}</p>
+          )}
+          {"state" in validationErrors && (
+            <p className="errors">{validationErrors.state}</p>
+          )}
         </div>
         <div>
           <h2>What shall we call your faction?</h2>
@@ -138,11 +127,9 @@ const CreateGroup = () => {
               onChange={(e) => setName(e.target.value)}
             />
           </label>
-          <div className="errors-div">
-            {"name" in validationErrors && (
-              <span className="errors">{validationErrors.name}</span>
-            )}
-          </div>
+          {"name" in validationErrors && (
+            <p className="errors">{validationErrors.name}</p>
+          )}
         </div>
         <div>
           <h2>Proclaim the purpose of your faction!</h2>
@@ -168,14 +155,12 @@ const CreateGroup = () => {
             value={about}
             onChange={(e) => setAbout(e.target.value)}
           ></textarea>
-          <div className="errors-div">
-            {"about" in validationErrors && (
-              <span className="errors">{validationErrors.about}</span>
-            )}
-          </div>
+          {"about" in validationErrors && (
+            <p className="errors">{validationErrors.about}</p>
+          )}
         </div>
         <div id="final-steps-div">
-          <h2>Almost complete...</h2>
+          <h2>Almost Complete...</h2>
           <label htmlFor="type">
             <p>Does your faction meet in person or online?</p>
             <select
@@ -194,11 +179,9 @@ const CreateGroup = () => {
               <option value="Online">Online</option>
             </select>
           </label>
-          <div className="errors-div">
-            {"type" in validationErrors && (
-              <span className="errors">{validationErrors.type}</span>
-            )}
-          </div>
+          {"type" in validationErrors && (
+            <p className="errors">{validationErrors.type}</p>
+          )}
           <label htmlFor="privacy">
             <p>
               Does this faction operate in the shadows as private or openly in
@@ -219,34 +202,16 @@ const CreateGroup = () => {
               <option value={true}>Private</option>
             </select>
           </label>
-          <div className="errors-div">
-            {"privacy" in validationErrors && (
-              <span className="errors">{validationErrors.privacy}</span>
-            )}
-          </div>
-          <label htmlFor="imageUrl">
-            <p>Add an image or calling card for your faction below:</p>
-            <input
-              id="group-imageUrl"
-              type="url"
-              name="imageUrl"
-              placeholder="Image Url"
-              value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
-            />
-          </label>
-          <div className="errors-div">
-            {"imageUrl" in validationErrors && (
-              <span className="errors">{validationErrors.imageUrl}</span>
-            )}
-          </div>
+          {"privacy" in validationErrors && (
+            <p className="errors">{validationErrors.privacy}</p>
+          )}
         </div>
         <div>
-          <button onSubmit={handleSubmit}>Establish your Faction!</button>
+          <button onSubmit={handleSubmit}>Re-Assemble your Faction</button>
         </div>
       </form>
     </section>
   );
 };
 
-export default CreateGroup;
+export default EditGroupForm;
