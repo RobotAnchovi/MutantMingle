@@ -1,60 +1,57 @@
-import { Link, useNavigate } from "react-router-dom";
-import OpenModalButton from "../../OpenModalButton";
-import DeleteGroupModal from "../DeleteGroupModal";
+import { useDispatch, useSelector } from "react-redux";
+import ListGroupItem from "../ListGroupItem/ListGroupItem";
+import { useEffect } from "react";
+import { thunkLoadGroups } from "../../../store/groups";
+import { NavLink } from "react-router-dom";
+import { thunkLoadEvents } from "../../../store/events";
 import "./GroupList.css";
 
-const GroupList = ({ group, isOwner, isMember }) => {
-  const navigate = useNavigate();
+const GroupList = () => {
+  const dispatch = useDispatch();
+  const groupsObj = useSelector((state) => state.groups);
+  const eventsObj = useSelector((state) => state.events);
+  const groups = Object.values(groupsObj);
+  const events = Object.values(eventsObj);
+
+  if (groups.length) {
+    groups?.forEach((group) => {
+      group.events = [];
+      events?.forEach((event) => {
+        if (event?.groupId == group.id) {
+          group.events.push(event);
+        }
+      });
+    });
+  }
+
+  useEffect(() => {
+    dispatch(thunkLoadGroups());
+    dispatch(thunkLoadEvents());
+  }, [dispatch]);
 
   return (
-    <li>
-      <Link to={`/groups/${group.id}`}>
-        <div className="faction-list-item">
-          <div className="faction-list-image-div">
-            <img
-              className="faction-list-image"
-              src={group.previewImage || group.GroupImages[0].url}
-              alt=""
-            />
-          </div>
-          <div className="faction-list-info">
-            <h2>{group.name}</h2>
-            <h4>
-              {group.city}, {group.state}
-            </h4>
-            <p>{group.about}</p>
-            <div className="faction-list-item-lowest-container">
-              <div className="faction-campaigns-type-container">
-                <span>{group.events?.length} Campaigns</span>
-                <span> · </span>
-                <span>{group.private ? "Private" : "Public"}</span>
-              </div>
-            </div>
-          </div>
+    <div className="faction-list-page">
+      <section>
+        <div className="page-links">
+          <NavLink className="" to="/events">
+            Campaigns
+          </NavLink>
+          <NavLink className="" to="/groups">
+            Factions
+          </NavLink>
         </div>
-      </Link>
-      <div className="faction-management-btn-container">
-        {isOwner && (
-          <button onClick={() => navigate(`/groups/${group.id}/edit`)}>
-            Update
-          </button>
-        )}
-        {isOwner && (
-          <OpenModalButton
-            buttonText="Delete"
-            modalComponent={<DeleteGroupModal group={group} />}
-          />
-        )}
-        {isMember && (
-          <button
-            id="leave-faction-btn"
-            onClick={() => alert("There is no escaping this faction yet...")}
-          >
-            Leave this Faction
-          </button>
-        )}
-      </div>
-    </li>
+        <div>
+          <span>Factions on MutantMingle</span>
+        </div>
+      </section>
+      <section>
+        <ul className="faction-list">
+          {groups.map((group) => (
+            <ListGroupItem group={group} key={group.id} />
+          ))}
+        </ul>
+      </section>
+    </div>
   );
 };
 
