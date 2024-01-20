@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import OpenModalButton from "../../OpenModalButton";
-import DeleteGroupModal from "../DeleteGroupModal";
+import DeleteGroup from "../DeleteGroup";
 import "./GroupList.css";
 
 const ListGroupItem = ({ group, isOwner, isMember }) => {
@@ -42,7 +42,7 @@ const ListGroupItem = ({ group, isOwner, isMember }) => {
         {isOwner && (
           <OpenModalButton
             buttonText="Delete"
-            modalComponent={<DeleteGroupModal group={group} />}
+            modalComponent={<DeleteGroup group={group} />}
           />
         )}
         {isMember && (

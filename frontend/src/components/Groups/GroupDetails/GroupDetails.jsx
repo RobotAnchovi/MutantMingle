@@ -2,7 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGroupDetails } from "../../../store/groups";
 import { useEffect } from "react";
-import EventsListItem from "../../Events/EventsListItem/";
+import EventItem from "../../Events/EventItem";
 import OpenModalButton from "../../OpenModalButton";
 import DeleteGroupModal from "../DeleteGroupModal";
 import "./GroupDetails.css";
@@ -109,7 +109,7 @@ const GroupDetails = () => {
               <h2>Upcoming Campaigns ({upcoming.length})</h2>
               <ul>
                 {upcoming.map((event) => (
-                  <EventsListItem key={event.id} event={event} />
+                  <EventItem key={event.id} event={event} />
                 ))}
               </ul>
             </div>
@@ -119,7 +119,7 @@ const GroupDetails = () => {
               <h2>Past Campaigns ({past.length})</h2>
               <ul>
                 {past.map((event) => (
-                  <EventsListItem key={event.id} event={event} />
+                  <EventItem key={event.id} event={event} />
                 ))}
               </ul>
             </div>

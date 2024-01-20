@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkEditGroup, thunkGroupDetails } from "../../../store/groups";
 
-const EditGroupForm = () => {
+const EditGroup = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { groupId } = useParams();
@@ -214,4 +214,4 @@ const EditGroupForm = () => {
   );
 };
 
-export default EditGroupForm;
+export default EditGroup;
