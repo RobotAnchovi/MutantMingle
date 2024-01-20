@@ -1,3 +1,3 @@
-// import DeleteEvent from "./DeleteEvent";
+import DeleteEvent from "./DeleteEvent";
 
-// export default DeleteEvent;
+export default DeleteEvent;

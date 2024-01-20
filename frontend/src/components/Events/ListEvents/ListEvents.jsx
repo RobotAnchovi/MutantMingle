@@ -1,7 +1,7 @@
 import EventItem from "../EventItem";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import "./ListEvent.css";
+import "./ListEvents.css";
 
 const ListEvents = () => {
   const eventsObj = useSelector((state) => state.events);

@@ -59,7 +59,7 @@ const router = createBrowserRouter([
         element: <Outlet />,
         children: [
           {
-            path: "/",
+            path: ".",
             element: <GroupList />,
           },
           {
@@ -91,7 +91,7 @@ const router = createBrowserRouter([
         element: <Outlet />,
         children: [
           {
-            path: "/",
+            path: ".",
             element: <ListEvents />,
           },
           {

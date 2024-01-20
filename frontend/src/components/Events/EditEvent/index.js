@@ -1,3 +1,3 @@
-// import EditEvent from "./EditEvent";
+import EditEvent from "./EditEvent";
 
-// export default EditEvent;
+export default EditEvent;

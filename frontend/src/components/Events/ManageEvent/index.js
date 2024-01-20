@@ -1,3 +1,3 @@
-// import ManageEvent from "./ManageEvent";
+import ManageEvent from "./ManageEvent";
 
-// export default ManageEvent;
+export default ManageEvent;

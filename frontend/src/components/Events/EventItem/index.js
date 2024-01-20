@@ -1,3 +1,3 @@
-// import EventItem from "./EventItem";
+import EventItem from "./EventItem";
 
-// export default EventItem;
+export default EventItem;
