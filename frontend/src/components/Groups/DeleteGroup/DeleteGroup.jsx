@@ -22,7 +22,7 @@ const DeleteGroup = ({ group }) => {
   };
 
   return (
-    <div className="delete-group-modal">
+    <div className="delete-faction-modal">
       <h1>Confirm Disband</h1>
       <h4>Are you sure you want to disband? Think of the children!</h4>
       <button id="faction-delete-yea-btn" onClick={handleDelete}>

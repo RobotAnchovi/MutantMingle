@@ -71,7 +71,7 @@ const EditGroupForm = () => {
   };
 
   return (
-    <section className="group-section">
+    <section className="faction-section">
       <h4>DECLARE YOUR FACTION&apos;S NEW ALLEGIANCES!</h4>
       <h2>Update your Faction</h2>
       <form onSubmit={handleSubmit}>
@@ -86,7 +86,7 @@ const EditGroupForm = () => {
           <label>
             <input
               type="text"
-              id="group-city"
+              id="faction-city"
               placeholder="City of Origin"
               value={city}
               onChange={(e) => setCity(e.target.value)}
@@ -96,7 +96,7 @@ const EditGroupForm = () => {
           <label>
             <input
               type="text"
-              id="group-state"
+              id="faction-state"
               placeholder="STATE"
               value={state}
               onChange={(e) => setState(e.target.value)}
@@ -121,7 +121,7 @@ const EditGroupForm = () => {
           <label>
             <input
               type="text"
-              id="group-name"
+              id="faction-name"
               placeholder="Your faction shall be called..."
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -148,7 +148,7 @@ const EditGroupForm = () => {
           </label>
           <textarea
             name=""
-            id="group-about"
+            id="faction-about"
             cols="30"
             rows="10"
             placeholder="State your purpose with at least 30 characters"

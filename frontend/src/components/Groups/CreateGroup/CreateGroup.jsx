@@ -66,7 +66,7 @@ const CreateGroup = () => {
         // console.log("createdGroup.errors:", createdGroup.errors)
         // set validation errors
       } else {
-        // dispatch the image to the new group's id
+        // dispatch the image to the new faction's id
         // the dispatch needs the group id AND the body
         await dispatch(thunkAddImage(createdGroup.id, newImageReqBody));
         navigate(`/groups/${createdGroup.id}`);
@@ -75,9 +75,9 @@ const CreateGroup = () => {
   };
 
   return (
-    <section className="group-section">
+    <section className="faction-section">
       <h4>ORGANIZE YOUR OWN FACTION</h4>
-      <h2>Start a New faction</h2>
+      <h2>Start a New Faction</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <h2>Declare your faction&apos;s secret location</h2>
@@ -91,7 +91,7 @@ const CreateGroup = () => {
             <input
               type="text"
               name="city"
-              id="group-city"
+              id="faction-city"
               placeholder="City of Origin"
               value={city}
               onChange={(e) => setCity(e.target.value)}
@@ -101,7 +101,7 @@ const CreateGroup = () => {
           <label htmlFor="state">
             <input
               type="text"
-              id="group-state"
+              id="faction-state"
               placeholder="STATE"
               value={state}
               onChange={(e) => setState(e.target.value)}
@@ -109,12 +109,12 @@ const CreateGroup = () => {
           </label>
           <div className="errors-div">
             {"city" in validationErrors && (
-              <span className="errors" id="group-error-city">
+              <span className="errors" id="faction-error-city">
                 {validationErrors.city}
               </span>
             )}
             {"state" in validationErrors && (
-              <span className="errors" id="group-error-state">
+              <span className="errors" id="faction-error-state">
                 {validationErrors.state}
               </span>
             )}
@@ -132,7 +132,7 @@ const CreateGroup = () => {
           <label>
             <input
               type="text"
-              id="group-name"
+              id="faction-name"
               placeholder="Your faction shall be called..."
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -156,12 +156,12 @@ const CreateGroup = () => {
               <br />
               2. Who should align themselves with your faction?
               <br />
-              3. What type of events will your faction pursue?
+              3. What type of campaigns will your faction pursue?
             </p>
           </label>
           <textarea
             name=""
-            id="group-about"
+            id="faction-about"
             cols="30"
             rows="10"
             placeholder="State your purpose with at least 30 characters"
@@ -227,7 +227,7 @@ const CreateGroup = () => {
           <label htmlFor="imageUrl">
             <p>Add an image or calling card for your faction below:</p>
             <input
-              id="group-imageUrl"
+              id="faction-imageUrl"
               type="url"
               name="imageUrl"
               placeholder="Image Url"
