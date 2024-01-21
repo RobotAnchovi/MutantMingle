@@ -12,7 +12,6 @@ const removeUser = () => ({
   type: REMOVE_USER,
 });
 
-//*====> Session Thunks <====
 export const login =
   ({ credential, password }) =>
   async (dispatch) => {

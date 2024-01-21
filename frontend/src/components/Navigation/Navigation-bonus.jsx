@@ -1,22 +1,28 @@
-import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import ProfileButton from './ProfileButton-bonus';
-import './Navigation.css';
+import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
+import ProfileButton from "./ProfileButton-bonus";
+import "./Navigation.css";
 
 function Navigation({ isLoaded }) {
-  const sessionUser = useSelector(state => state.session.user);
+  const sessionUser = useSelector((state) => state.session.user);
 
   return (
-    <ul>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
-      {isLoaded && (
+    <div className="navigation-container">
+      <ul className="nav-list">
         <li>
-          <ProfileButton user={sessionUser} />
+          <NavLink to="/">
+            <img src={"#"} alt="Offline" />
+          </NavLink>
         </li>
-      )}
-    </ul>
+      </ul>
+      <ul className="nav-list">
+        {isLoaded && (
+          <li>
+            <ProfileButton user={sessionUser} />
+          </li>
+        )}
+      </ul>
+    </div>
   );
 }
 
