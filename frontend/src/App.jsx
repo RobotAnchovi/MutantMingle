@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { Outlet, createBrowserRouter, RouterProvider } from "react-router-dom";
 // import LoginFormPage from './components/LoginFormPage';
 // import SignupFormPage from './components/SignupFormPage';
-import Navigation from "./components/Navigation/Navigation-bonus";
+import Navigation from "./components/Navigation/Navigation";
 import * as sessionActions from "./store/session";
 import Home from "./components/Home";
 import {
