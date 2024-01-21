@@ -5,7 +5,7 @@ import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import { Link } from "react-router-dom";
-import cyclopsLogo from "../../../dist/cyclops copy.png";
+import cyclopsLogo from "../../../public/cyclopsLogo.png";
 import "./Navigation.css";
 
 // function Navigation({ isLoaded }) {
@@ -53,6 +53,7 @@ function Navigation() {
       <div className="nav-bar-logo">
         <Link to="/">
           <img id="logo" src={cyclopsLogo} alt="Home" />
+          <span className="logo-text">MutantMingle</span>
         </Link>
       </div>
 
