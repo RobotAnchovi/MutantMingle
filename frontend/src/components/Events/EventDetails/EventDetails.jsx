@@ -54,14 +54,12 @@ const EventDetails = () => {
   let endingTime;
 
   if (event?.startDate) {
-    const starting = event.startDate.split(" ");
-    startingDate = starting[0];
-    startingTime = starting[1];
-    startingTime = startingTime.slice(0, 5);
-    const ending = event.endDate?.split(" ");
-    endingDate = ending[0];
-    endingTime = ending[1];
-    endingTime = endingTime.slice(0, 5);
+    const startingDateObject = new Date(event.startDate);
+    startingDate = startingDateObject.toLocaleDateString();
+    const endingDateObject = event.endDate ? new Date(event.endDate) : null;
+    endingDate = endingDateObject
+      ? endingDateObject.toLocaleDateString()
+      : null;
   }
 
   if (!event) return null;

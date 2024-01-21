@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import EventItem from "../../Events/EventItem";
 import OpenModalButton from "../../OpenModalButton";
 import DeleteGroup from "../DeleteGroup";
+
 import "./GroupDetails.css";
 
 const GroupDetails = () => {
@@ -17,6 +18,16 @@ const GroupDetails = () => {
   let events = Object.values(eventsObj);
   const now = new Date();
 
+  useEffect(() => {
+    dispatch(thunkGroupDetails(groupId));
+  }, [dispatch, groupId]);
+
+  useEffect(() => {
+    if (!group) {
+      navigate("*");
+    }
+  }, [group, navigate]);
+
   events = events.filter((event) => event.groupId == groupId);
 
   const upcoming = [];
@@ -27,10 +38,6 @@ const GroupDetails = () => {
   events?.forEach((event) => {
     new Date(event.startDate) < now ? past.push(event) : upcoming.push(event);
   });
-
-  useEffect(() => {
-    dispatch(thunkGroupDetails(groupId));
-  }, [dispatch, groupId]);
 
   const groupPreviewImage = group?.GroupImages?.find(
     (image) => image.preview == true
@@ -81,7 +88,7 @@ const GroupDetails = () => {
             )}
             {user?.id == group?.organizerId && (
               <button onClick={() => navigate(`/groups/${groupId}/edit`)}>
-                Update
+                Update Intel
               </button>
             )}
             {user?.id == group?.organizerId && (
