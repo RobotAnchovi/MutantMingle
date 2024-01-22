@@ -63,5 +63,9 @@
 }
 
 .errors {
-  color: #e76f51;
+  color: red;
+}
+span.errors {
+  font-family: "Bangers", cursive;
+  color: red;
 }

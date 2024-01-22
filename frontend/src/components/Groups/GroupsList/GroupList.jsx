@@ -45,7 +45,7 @@ const GroupList = () => {
         </div>
       </section>
       <section>
-        <ul className="group-list">
+        <ul className="group-list" style={{ listStyleType: "none" }}>
           {groups.map((group) => (
             <ListGroupItem group={group} key={group.id} />
           ))}

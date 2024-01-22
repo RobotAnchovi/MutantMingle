@@ -26,15 +26,20 @@ const CreateGroupForm = () => {
     const urlEnding3 = imageUrl.slice(-4);
     const urlEnding4 = imageUrl.slice(-5);
 
-    if (!city) errors.city = "City is required";
-    if (!state) errors.state = "State is required";
+    if (!city)
+      errors.city =
+        "City is required (If from another planet: Use the city you landed in)";
+    if (!state)
+      errors.state =
+        "State is required, and we aren't talking about Meta-physical states...";
     if (state.length < 2 || state.length > 2)
-      errors.state = "State must be formatted as a two-letter abbreviation";
-    if (!name) errors.name = "Name is required";
+      errors.state = "State must be 2 characters long";
+    if (!name) errors.name = "Actual Name is required. No aliases allowed";
     if (about.length < 30)
-      errors.about = "Description must be at least 30 characters long";
+      errors.about =
+        "Less than 30 characters to describe your faction? You're that famous, huh?";
     if (type == "placeholder" || !type)
-      errors.type = "Faction Type is required";
+      errors.type = "Faction Type is required for authorization";
     if (privacy == "placeholder" || !privacy)
       errors.privacy = "Visibility Type is required even if you're invisible";
     if (!urlEndings.includes(urlEnding3) && !urlEndings.includes(urlEnding4))
@@ -70,15 +75,17 @@ const CreateGroupForm = () => {
 
   return (
     <section className="group-section">
-      <h4>ORGANIZE YOUR OWN FACTION!</h4>
+      <h4>ASSEMBLE YOUR OWN FACTION!</h4>
       <h2>Start a New Faction</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <h2>Set your faction&apos;s base operation&apos;location</h2>
+          <h2>Set your faction&apos;s base of operation&apos;s location</h2>
           <p>
-            MutantMingle factions meet locally, in person and online.
+            MutantMingle factions assemble locally, in person and online.
             <br />
             We&apos;ll connect you with heroes or villains in your area.
+            <br />
+            (Galactic locations are not supported at this time)
           </p>
           <label htmlFor="city">
             <input
@@ -114,19 +121,21 @@ const CreateGroupForm = () => {
           </div>
         </div>
         <div>
-          <h2>What will your Faction&apos;s name be?</h2>
+          <h2>
+            How will your Faction&apos;s name be seen by your enemies and fans?
+          </h2>
           <p>
-            Choose a name that will strike fear in the hearts of citizens or
-            villains.
+            Choose a name that will strike fear in your enemies and cheered by
+            your fans.
             <br />
             Be creative! Your faction name is critical! You can always change it
-            later.
+            later. (Avengers is already taken)
           </p>
           <label>
             <input
               type="text"
               id="group-name"
-              placeholder="What is your faction name?"
+              placeholder="What is your faction's name?"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -193,7 +202,10 @@ const CreateGroupForm = () => {
             )}
           </div>
           <label htmlFor="privacy">
-            <p>Is this faction private or public?</p>
+            <p>
+              Is this faction a private underground syndicate or a public entity
+              for gifted mutants?
+            </p>
             <select
               value={privacy}
               onChange={(e) => setPrivacy(e.target.value)}
@@ -215,7 +227,10 @@ const CreateGroupForm = () => {
             )}
           </div>
           <label htmlFor="imageUrl">
-            <p>Please add an image url for your faction below:</p>
+            <p>
+              Add a decent image url for your faction below (JJ Jameson may want
+              to hire you!):
+            </p>
             <input
               id="group-imageUrl"
               type="url"

@@ -30,7 +30,7 @@ const EventsList = () => {
         </div>
       </section>
       <section>
-        <ul className="campaigns-list">
+        <ul className="campaigns-list" style={{ listStyleType: "none" }}>
           {upcoming?.map((event) => (
             <EventsListItem eventId={event.id} key={event.id} />
           ))}

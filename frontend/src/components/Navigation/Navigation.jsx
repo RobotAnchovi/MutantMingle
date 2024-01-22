@@ -20,7 +20,7 @@ function Navigation() {
       {sessionUser ? (
         <div className="nav-bar-user-links">
           <Link to={"/groups/new"} className="link">
-            Start a new group
+            Start a new Faction!
           </Link>
           <ProfileButton user={sessionUser} />
         </div>

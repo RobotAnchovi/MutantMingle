@@ -49,18 +49,68 @@ export const deleteAssociatedEvents = (eventId) => ({
 
 //*====> Thunks <====
 
+//~ Date Formatter
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1; // getMonth() returns 0-11
+  const day = date.getDate();
+  //~ Time
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  // const seconds = date.getSeconds();
+
+  const formattedDate = `${month.toString().padStart(2, "0")}-${day
+    .toString()
+    .padStart(2, "0")}-${year}`;
+  const formattedTime = `${hours.toString().padStart(2, "0")}:${minutes
+    .toString()
+    .padStart(2, "0")}`;
+
+  return `${formattedDate} ${formattedTime}`;
+};
+
 export const thunkLoadEvents = () => async (dispatch) => {
   const response = await fetch("/api/events");
-  const events = await response.json();
-  dispatch(loadEvents(events.Events));
+  const { Events } = await response.json();
+  const formattedEvents = Events.map((event) => ({
+    ...event,
+    startDate: formatDate(event.startDate),
+    endDate: formatDate(event.endDate),
+  }));
+  // console.log("HERE ARE THE FORMATTED EVENTS,:", formattedEvents);
+  dispatch(loadEvents(formattedEvents));
 };
+
+// export const thunkLoadEvents = () => async (dispatch) => {
+//   const response = await fetch("/api/events");
+//   const events = await response.json();
+//   dispatch(loadEvents(events.Events));
+// };
+
+// export const thunkEventDetails = (eventId) => async (dispatch) => {
+//   const response = await fetch(`/api/events/${eventId}`);
+//   const event = await response.json();
+
+//   if (response.ok) {
+//     dispatch(loadEventDetails(event));
+//   }
+// };
 
 export const thunkEventDetails = (eventId) => async (dispatch) => {
   const response = await fetch(`/api/events/${eventId}`);
   const event = await response.json();
 
   if (response.ok) {
-    dispatch(loadEventDetails(event));
+    // Apply the formatting to the event dates
+    const formattedEvent = {
+      ...event,
+      startDate: formatDate(event.startDate),
+      endDate: formatDate(event.endDate),
+    };
+
+    dispatch(loadEventDetails(formattedEvent));
   }
 };
 

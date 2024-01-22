@@ -69,9 +69,16 @@
   margin: 0.5rem 0;
 }
 
-span {
+.campaigns-list span {
   font-size: large;
   padding-right: 1.5rem;
   color: red;
+  font-family: "Bangers", cursive;
+}
+
+p {
+  font-size: large;
+  padding-right: 1.5rem;
+  color: #1e81b0;
   font-family: "Bangers", cursive;
 }

@@ -1,4 +1,7 @@
 .back-link {
+  font-family: "Bangers", cursive;
+  color: #1e81b0;
+  font-weight: bold;
   width: 80%;
   margin: 3rem auto 0;
 }
