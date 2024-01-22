@@ -53,7 +53,7 @@ function SignupFormModal() {
     console.log("Error State:", newErrors);
     if (Object.keys(newErrors).length === 0) {
       return dispatch(
-        sessionActions.signup({
+        sessionActions.thunkSignup({
           email,
           username,
           firstName,
@@ -62,12 +62,25 @@ function SignupFormModal() {
         })
       )
         .then(closeModal)
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data?.errors) setErrors(data.errors);
+        .catch((error) => {
+          // Assuming the error thrown by your thunk action is an object
+          if (error && error.errors) {
+            setErrors(error.errors);
+          } else {
+            // Fallback for other types of errors
+            setErrors({
+              general: "An error occurred during signup. Please try again.",
+            });
+          }
         });
     }
   };
+  //       .catch(async (res) => {
+  //         const data = await res.json();
+  //         if (data?.errors) setErrors(data.errors);
+  //       });
+  //   }
+  // };
 
   return (
     <>

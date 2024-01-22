@@ -2,9 +2,9 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { thunkEventDetails } from "../../../store/events";
-import { thunkGroupDetails, thunkLoadGroups } from "../../../store/groups";
+import { thunkGroupDetails } from "../../../store/groups";
 import OpenModalButton from "../../OpenModalButton";
-import DeleteEvent from "../DeleteEvent";
+import DeleteEventModal from "../DeleteEventModal";
 import "./EventDetails.css";
 
 const EventDetails = () => {
@@ -20,7 +20,6 @@ const EventDetails = () => {
   useEffect(() => {
     const helper = async () => {
       await dispatch(thunkEventDetails(eventId));
-      await dispatch(thunkLoadGroups());
       setUeRan(true);
     };
     if (ueRan) {
@@ -66,47 +65,47 @@ const EventDetails = () => {
 
   return (
     <>
-      <div className="campaign-heading">
+      <div className="event-heading">
         <span>{"<"}</span>
-        <Link id="back-to-campaigns" to={"/events"}>
-          Campaigns
+        <Link id="back-to-events" to={"/events"}>
+          Events
         </Link>
         <h1>{event?.name}</h1>
         <h4>
-          Led by: {group?.Organizer?.firstName} {group?.Organizer?.lastName}
+          Hosted by: {group?.Organizer?.firstName} {group?.Organizer?.lastName}
         </h4>
       </div>
-      <section className="campaign-section">
-        <div className="campaign-detail">
-          <div className="campaign-img">
+      <section className="event-section">
+        <div className="event-detail">
+          <div className="event-img">
             {event?.EventImages && <img src={eventImagesPreview} alt="" />}
           </div>
-          <div className="campaign-stats-section">
+          <div className="event-stats-section">
             <Link to={`/groups/${event.groupId}`}>
-              <div className="campaign-group-card">
-                <div className="campaign-group-image">
+              <div className="event-group-card">
+                <div className="event-group-image">
                   {group?.GroupImages && <img src={groupPreview} />}
                 </div>
-                <div className="campaign-group-info">
+                <div className="event-group-info">
                   <h3>{group?.name}</h3>
                   <h4>{group?.private ? "Private" : "Public"}</h4>
                 </div>
               </div>
             </Link>
-            <div className="campaign-stats">
+            <div className="event-stats">
               <div className="times">
                 <div className="icon-div">
                   <i className="fa-regular fa-clock"></i>
                 </div>
                 <div className="times-headers">
                   <p>
-                    <span>COMMENCING</span>
+                    <span>START</span>
                   </p>
                   <p>
-                    <span>COMPLETION</span>
+                    <span>END</span>
                   </p>
                 </div>
-                <div className="campaign-stats-stats">
+                <div className="event-stats-stats">
                   <p>
                     {startingDate} · {"<"}
                     {startingTime}
@@ -120,33 +119,39 @@ const EventDetails = () => {
                 </div>
               </div>
 
-              <div className="campaign-price">
+              <div className="event-price">
                 <div className="icon-div">
                   <i className="fa-solid fa-dollar-sign"></i>
                 </div>
-                <div className="campaign-price-stat">
-                  <span>{event?.price == 0 ? "FREE" : event?.price}</span>
+                <div className="event-price-stat">
+                  <span>
+                    {event?.price == 0
+                      ? "FREE"
+                      : event?.price?.toLocaleString("en-US", {
+                          minimumFractionDigits: 2,
+                        })}
+                  </span>
                 </div>
               </div>
 
-              <div className="campaign-type">
+              <div className="event-type">
                 <div className="icon-div">
                   <i className="fa-solid fa-map-pin"></i>
                 </div>
-                <div className="campaign-type-stat">
+                <div className="event-type-stat">
                   <span>{event?.type}</span>
                 </div>
 
-                <div className="campaign-details-user-buttons">
+                <div className="event-details-user-buttons">
                   {isUserOwner && (
                     <button onClick={() => navigate(`/events/${eventId}/edit`)}>
-                      Update Intel
+                      Update
                     </button>
                   )}
                   {isUserOwner && (
                     <OpenModalButton
-                      buttonText="Abort Campaign"
-                      modalComponent={<DeleteEvent event={event} />}
+                      buttonText="Delete"
+                      modalComponent={<DeleteEventModal event={event} />}
                     />
                   )}
                 </div>
@@ -154,8 +159,8 @@ const EventDetails = () => {
             </div>
           </div>
         </div>
-        <div className="campaign-description">
-          <h2>Campaign Briefing</h2>
+        <div className="event-description">
+          <h2>Description</h2>
           <p>{event?.description}</p>
         </div>
       </section>

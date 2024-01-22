@@ -1,29 +1,27 @@
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Outlet, createBrowserRouter, RouterProvider } from "react-router-dom";
-// import LoginFormPage from './components/LoginFormPage';
-// import SignupFormPage from './components/SignupFormPage';
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import Navigation from "./components/Navigation/Navigation";
 import * as sessionActions from "./store/session";
 import Home from "./components/Home";
 import {
-  CreateGroup,
-  EditGroup,
+  CreateGroupForm,
+  EditGroupForm,
   GroupDetails,
-  GroupList,
-  ManageGroup,
+  GroupsList,
+  ManageGroups,
 } from "./components/Groups";
 import {
-  CreateEvent,
-  EditEvent,
+  CreateEventForm,
+  EditEventForm,
   EventDetails,
-  ListEvents,
-  ManageEvent,
+  EventsList,
+  ManageEvents,
 } from "./components/Events";
 import { Modal } from "./context/Modal";
-import NotFound from "./components/NotFound";
 import { thunkLoadGroups } from "./store/groups";
 import { thunkLoadEvents } from "./store/events";
+import NotFound from "./components/NotFound/NotFound";
 
 function Layout() {
   const dispatch = useDispatch();
@@ -32,8 +30,10 @@ function Layout() {
   useEffect(() => {
     dispatch(thunkLoadGroups());
     dispatch(thunkLoadEvents());
-    dispatch(sessionActions.restoreUser()).then(() => {
+    dispatch(sessionActions.thunkRestoreUser()).then(() => {
       setIsLoaded(true);
+      dispatch(sessionActions.thunkLoadUserGroups());
+      dispatch(sessionActions.thunkLoadUserEvents());
     });
   }, [dispatch]);
 
@@ -59,12 +59,12 @@ const router = createBrowserRouter([
         element: <Outlet />,
         children: [
           {
-            path: ".",
-            element: <GroupList />,
+            index: true,
+            element: <GroupsList />,
           },
           {
-            path: "create",
-            element: <CreateGroup />,
+            path: "new",
+            element: <CreateGroupForm />,
           },
           {
             path: ":groupId",
@@ -76,13 +76,17 @@ const router = createBrowserRouter([
               },
               {
                 path: "edit",
-                element: <EditGroup />,
+                element: <EditGroupForm />,
+              },
+              {
+                path: "events/new",
+                element: <CreateEventForm />,
               },
             ],
           },
           {
             path: "current",
-            element: <ManageGroup />,
+            element: <ManageGroups />,
           },
         ],
       },
@@ -91,16 +95,13 @@ const router = createBrowserRouter([
         element: <Outlet />,
         children: [
           {
-            path: ".",
-            element: <ListEvents />,
-          },
-          {
-            path: "create",
-            element: <CreateEvent />,
+            index: true,
+            element: <EventsList />,
           },
           {
             path: ":eventId",
             element: <Outlet />,
+
             children: [
               {
                 index: true,
@@ -108,13 +109,13 @@ const router = createBrowserRouter([
               },
               {
                 path: "edit",
-                element: <EditEvent />,
+                element: <EditEventForm />,
               },
             ],
           },
           {
             path: "current",
-            element: <ManageEvent />,
+            element: <ManageEvents />,
           },
         ],
       },

@@ -52,7 +52,7 @@ h1 {
   padding: 10px;
   margin-top: 5px;
   color: black;
-  background-color: yellow; /* Default background */
+  background-color: #f2cb05; /* Default background */
   border: 1.5px solid black;
   box-shadow: 3px 3px black;
 }

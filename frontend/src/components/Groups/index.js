@@ -1,15 +1,15 @@
-import CreateGroup from "./CreateGroup";
-import DeleteGroup from "./DeleteGroup";
-import EditGroup from "./EditGroup";
-import GroupList from "./GroupList";
+import CreateGroupForm from "./CreateGroupForm";
+import DeleteGroupModal from "./DeleteGroupModal";
+import EditGroupForm from "./EditGroupForm";
 import GroupDetails from "./GroupDetails";
-import ManageGroup from "./ManageGroup";
+import GroupsList from "./GroupsList";
+import ManageGroups from "./ManageGroups";
 
 export {
-  CreateGroup,
-  DeleteGroup,
-  EditGroup,
-  GroupList,
+  CreateGroupForm,
+  DeleteGroupModal,
+  EditGroupForm,
   GroupDetails,
-  ManageGroup,
+  GroupsList,
+  ManageGroups,
 };

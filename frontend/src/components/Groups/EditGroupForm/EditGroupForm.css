@@ -1,0 +1,57 @@
+.edit-group-section {
+  width: 80%;
+  margin: 0 auto 5rem;
+}
+
+.edit-group-section h4 {
+  color: #ff6161;
+  font-family: "Bangers", cursive;
+}
+
+.edit-group-section div {
+  border-top: 1px solid #1e81b0;
+  margin-top: 1rem;
+}
+
+.edit-group-section button {
+  background-color: #f2cb05;
+  box-shadow: 3px 3px black;
+  color: black;
+  font-size: large;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  font-family: "Bangers", cursive;
+}
+
+.edit-group-section input,
+.edit-group-section select,
+.edit-group-section textarea {
+  border: 2px solid #1e81b0;
+  background-color: #fdfd96;
+  box-sizing: border-box;
+  padding: 0.25rem;
+}
+
+#edit-group-city,
+#edit-group-name,
+#edit-group-about,
+#edit-group-imageUrl {
+  width: 20rem;
+}
+
+#comma-span {
+  margin: 0 0.5rem 0 0.25rem;
+}
+
+#edit-group-state {
+  width: 3rem;
+}
+
+.placeholder-select {
+  color: lightgray;
+}
+
+.errors {
+  color: #e76f51;
+}

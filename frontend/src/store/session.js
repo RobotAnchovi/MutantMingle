@@ -63,9 +63,14 @@ export const thunkSignup = (user) => async (dispatch) => {
       password,
     }),
   });
-  const data = await response.json();
-  dispatch(loginUser(data.user));
-  return response;
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(loginUser(data.user));
+    return response;
+  } else {
+    const error = await response.json();
+    throw error; // Throws an error to be caught in the .catch block where the thunk is dispatched
+  }
 };
 
 export const thunkLogout = () => async (dispatch) => {

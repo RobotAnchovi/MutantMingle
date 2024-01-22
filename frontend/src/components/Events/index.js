@@ -1,17 +1,15 @@
-import CreateEvent from "./CreateEvent";
-import DeleteEvent from "./DeleteEvent";
-import EditEvent from "./EditEvent";
+import CreateEventForm from "./CreateEventForm";
+import DeleteEventModal from "./DeleteEventModal";
+import EditEventForm from "./EditEventForm";
 import EventDetails from "./EventDetails";
-import EventItem from "./EventItem";
-import ListEvents from "./ListEvents";
-import ManageEvent from "./ManageEvent";
+import EventsList from "./EventsList";
+import ManageEvents from "./ManageEvents";
 
 export {
-  CreateEvent,
-  DeleteEvent,
-  EditEvent,
+  CreateEventForm,
+  DeleteEventModal,
+  EditEventForm,
   EventDetails,
-  EventItem,
-  ListEvents,
-  ManageEvent,
+  EventsList,
+  ManageEvents,
 };

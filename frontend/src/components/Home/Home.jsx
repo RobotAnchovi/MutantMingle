@@ -1,8 +1,9 @@
 import "./Home.css";
-import { HomeCard } from "./HomeCard";
+import { HomeLinkCard } from "./HomeLinkCard";
 import OpenModalButton from "../OpenModalButton";
 import SignupFormModal from "../SignupFormModal";
 import { useSelector } from "react-redux";
+import landingImage from "/landing-page.png";
 
 const Home = () => {
   const user = useSelector((state) => state.session.user);
@@ -13,60 +14,55 @@ const Home = () => {
     <div className="content">
       <div className="landing">
         <div className="landing-info">
-          <h1>Welcome to MutantMingle - Unite Your Super Powers!</h1>
+          <h1>Welcome to MutantMingle - Where Mutants can Mingle!</h1>
           <p>
-            Whether you are a hero or villain, join forces with others who share
-            your super interests! From urban destruction to book club
-            discussions, discover Factions of every kind. Join the adventure and
-            create your own story in our world of MutantMingle.
+            Whether you&apos;re a hero or villain, join forces with others who
+            share your super interests! From bank robberies with villains to
+            book club discussions with the X-Men, discover Factions of every
+            kind. Join the adventure and create your own story in our world of
+            MutantMingle.
           </p>
         </div>
         <div className="landing-img">
-          <img src="#" alt="Comic Themed Illustration Placeholder" />
+          <img src={landingImage} alt="Heroes gathered in the city streets." />
         </div>
       </div>
       <div className="lower-landing">
-        <div className="how-it-works">
-          <h2>
-            Our Superpower is Uniting Heroes and Villains for Epic Campaigns
-          </h2>
+        <div className="how-works">
+          <h2>How MutantMingle works</h2>
           <p>
             Embark on quests, join Factions, and partake in epic Campaigns.
-            Whether you are rallying for a cause or sharing your extraordinary
-            skills, there is a place for every unique talent and interest in our
-            world of marvels and mysteries. (Unless you are from the DC
-            universe)
+            Whether you&apos;re rallying for a cause or sharing your
+            extraordinary skills, there&apos;s a place for every unique talent
+            and interest in our world of marvels and mysteries.
           </p>
         </div>
         <div className="cards">
-          <HomeCard
+          <HomeLinkCard
             image={"#"}
-            alt={"placeholder for Faction Img"}
+            alt={"Insert Pic"}
             path={`groups`}
-            linkText={`Discover Factions`}
-            description={"Find your Faction and join the adventure!"}
+            linkText={`See all Factions`}
           />
-          <HomeCard
+          <HomeLinkCard
             image={"#"}
-            alt={"placeholder for Campaign Img"}
+            alt={"Insert Pic"}
             path={`events`}
-            linkText={`Discover Campaigns`}
-            description={"Find a Campaign suited to your unique abilities!"}
+            linkText={`Find a Campaign`}
           />
-          <HomeCard
+          <HomeLinkCard
             activeLink={activeLink}
             image={"#"}
-            alt={"Placeholder for Create Faction Img"}
+            alt={"Insert Pic"}
             path={`groups/new`}
-            linkText={`Create Your Own Faction`}
-            description={"Assemble your own team of heroes or villains!"}
+            linkText={`Start a new Faction`}
           />
         </div>
       </div>
       {!user && (
         <div className="home-join-btn-div">
           <OpenModalButton
-            buttonText="Pursue Your Destiny: Join MutantMingle"
+            buttonText="Join MutantMingle"
             modalComponent={<SignupFormModal />}
           />
         </div>
