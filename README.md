@@ -26,7 +26,7 @@ MutantMerge is a full-stack, work-in-progress clone of Meetup, showcasing CRUD (
 
 ### Prerequisites
 
-Ensure you have Node.js and npm installed on your machine.
+Ensure you have Node.js and npm installed on your machine. Also, it's important to note that my database schema uses `Groups` and `Events` for the tables. This project is meant to be a clone of MeetUp, but to inject a little creativity I'm choosing to go with a comic book-centric theme. Therefore, within the file structure `Groups` will be `Factions` and `Events` will be `Campaigns`. Most of the internal functionality will still reflect `Groups` and `Events` for simplification of the coding process, but CSS tags and other design elements will reflect the `Factions` and `Campaigns`theme elements.
 
 ### To Launch
 
