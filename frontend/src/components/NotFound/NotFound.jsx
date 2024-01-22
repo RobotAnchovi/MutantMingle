@@ -7,8 +7,8 @@ function NotFound() {
         <h1>404 - Web Slinging Mishap!</h1>
         <h2>Oops! This Page Seems to Have Swung Away</h2>
         <p>
-          Your Spidey senses failed you. Sometimes even superheroes take a wrong
-          turn. Lets get you back on track!
+          Don’t worry, it’s not your Spidey senses failing you. Sometimes even
+          superheroes take a wrong turn. Let’s get you back on track!
         </p>
       </div>
     </div>

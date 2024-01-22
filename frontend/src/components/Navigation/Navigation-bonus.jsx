@@ -11,7 +11,7 @@
 //       <ul className="nav-list">
 //         <li>
 //           <NavLink to="/">
-//             <img src={"#"} alt="Offline" />
+//             <img src={"#"} alt="Home" />
 //           </NavLink>
 //         </li>
 //       </ul>

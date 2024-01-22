@@ -1,33 +1,41 @@
-//*====> frontend/src/store/csrf.js <====
-
 import Cookies from "js-cookie";
 
-export async function csrfFetch(url, options = {}) {
-  // set options.method to 'GET' if there is no method
-  options.method = options.method || "GET";
-  // set options.headers to an empty object if there is no headers
+export const csrfFetch = async (url, options = {}) => {
   options.headers = options.headers || {};
+  options.method = options.method || "GET";
 
-  // if the options.method is not 'GET', then set the "Content-Type" header to
-  // "application/json", and set the "XSRF-TOKEN" header to the value of the
-  // "XSRF-TOKEN" cookie
   if (options.method.toUpperCase() !== "GET") {
     options.headers["Content-Type"] =
       options.headers["Content-Type"] || "application/json";
     options.headers["XSRF-Token"] = Cookies.get("XSRF-TOKEN");
   }
-  // call the default window's fetch with the url and the options passed in
-  const res = await window.fetch(url, options);
 
-  // if the response status code is 400 or above, then throw an error with the
-  // error being the response
-  if (res.status >= 400) throw res;
+  try {
+    const res = await window.fetch(url, options);
+    return res;
+  } catch (error) {
+    return error;
+  }
 
-  // if the response status code is under 400, then return the response to the
-  // next promise chain
-  return res;
-}
+  // if using async await, comment out line 16
+  // easier to handle failures without throwing exceptions to async await
 
+  // if res status code is 400 or more, throw an error with the
+  // error being the res
+  // if (res.status >= 400) throw res;
+
+  // if response status code is under 400
+  // return the response to the next promise chain
+  // if (res.ok) {
+  //   const data = res.json()
+  //   return data;
+  // } else {
+  //   const errors = res.json()
+  //   return errors;
+  // }
+};
+
+// call this to get the "XSRF-TOKEN" cookie, should only be used in development
 export function restoreCSRF() {
   return csrfFetch("/api/csrf/restore");
 }

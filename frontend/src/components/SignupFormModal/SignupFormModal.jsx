@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useModal } from '../../context/Modal';
-import * as sessionActions from '../../store/session';
-import './SignupForm.css';
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useModal } from "../../context/Modal";
+import * as sessionActions from "../../store/session";
+import "./SignupForm.css";
 
 function SignupFormModal() {
   const dispatch = useDispatch();
@@ -15,97 +15,150 @@ function SignupFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
+  // const disableLogin =
+  //   email.length === 0 ||
+  //   username.length < 4 ||
+  //   firstName.length === 0 ||
+  //   lastName.length === 0 ||
+  //   password.length < 6 ||
+  //   confirmPassword.length === 0; // true or false based on required fields
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (password === confirmPassword) {
-      setErrors({});
+    let newErrors = {};
+
+    if (!email) {
+      newErrors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      newErrors.email = "Ummm...that doesn't look like an email address.";
+    }
+    if (username.length < 4)
+      newErrors.username =
+        "Username must be at least 4 characters. Sorry, Zod.";
+    if (firstName.length < 2 || !/[a-zA-Z]/.test(firstName)) {
+      newErrors.firstName =
+        "First Name is required, but promise we won't tell.";
+    }
+    if (lastName.length < 2 || !/[a-zA-Z]/.test(lastName)) {
+      newErrors.lastName = "Last Name is required, but promise we won't tell.";
+    }
+    if (password.length < 6)
+      newErrors.password =
+        "Passwords deserve more effort than that. Let's go for more than 6 characters.";
+    if (password !== confirmPassword)
+      newErrors.confirmPassword =
+        "Can't save the world if your passwords don't match!";
+
+    setErrors(newErrors); // Set errors immediately
+    console.log("Error State:", newErrors);
+    if (Object.keys(newErrors).length === 0) {
       return dispatch(
         sessionActions.signup({
           email,
           username,
           firstName,
           lastName,
-          password
+          password,
         })
       )
         .then(closeModal)
         .catch(async (res) => {
           const data = await res.json();
-          if (data?.errors) {
-            setErrors(data.errors);
-          }
+          if (data?.errors) setErrors(data.errors);
         });
     }
-    return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field"
-    });
   };
 
   return (
     <>
-      <h1>Sign Up</h1>
+      <h1>The World Needs You!</h1>
       <form onSubmit={handleSubmit}>
-        <label>
+        <label className="pop-up-label">
           Email
           <input
             type="text"
+            className="pop-up-input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            placeholder="Ex. spiderman@marvel.io"
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
-        <label>
+        {errors.email && <p className="error">{errors.email}</p>}
+        <label className="pop-up-label">
           Username
           <input
             type="text"
+            className="pop-up-input"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+            placeholder="Ex. Spidey-Tingles62"
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
-        <label>
+        {errors.username && <p className="error">{errors.username}</p>}
+        <label className="pop-up-label">
           First Name
           <input
             type="text"
+            className="pop-up-input"
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
+            placeholder="Ex. Peter"
           />
         </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
-        <label>
+        {errors.firstName && <p className="error">{errors.firstName}</p>}
+        <label className="pop-up-label">
           Last Name
           <input
             type="text"
+            className="pop-up-input"
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
+            placeholder="Ex. Parker"
           />
         </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
-        <label>
+        {errors.lastName && <p className="error">{errors.lastName}</p>}
+        <label className="pop-up-label">
           Password
           <input
             type="password"
+            className="pop-up-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            placeholder="Ex. DocOckStinks123"
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
-        <label>
+        {errors.password && <p className="error">{errors.password}</p>}
+        <label className="pop-up-label">
           Confirm Password
           <input
             type="password"
+            className="pop-up-input"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
+            placeholder="Do the same thing you did above"
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
+        {errors.confirmPassword && (
+          <p className="error">{errors.confirmPassword}</p>
+        )}
+        {/* {Object.values(errors).map((error, idx) => (
+          <div key={idx} className="error">
+            {error}
+          </div>
+        ))} */}
+        <button
+          type="submit"
+          // disabled={disableLogin}
+          className="pop-up-submit-button"
+        >
+          Enlist!
+        </button>
       </form>
     </>
   );

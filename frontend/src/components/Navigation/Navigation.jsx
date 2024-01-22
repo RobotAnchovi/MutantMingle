@@ -1,50 +1,11 @@
-// import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import ProfileButton from "./ProfileButton";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
+import ProfileButton from "./ProfileButton";
 import { Link } from "react-router-dom";
-import cyclopsLogo from "../../../public/cyclopsLogo.png";
 import "./Navigation.css";
-
-// function Navigation({ isLoaded }) {
-//   const sessionUser = useSelector((state) => state.session.user);
-
-//   const sessionLinks = sessionUser ? (
-//     <li>
-//       <ProfileButton user={sessionUser} />
-//     </li>
-//   ) : (
-//     <>
-//       <li>
-//         <OpenModalButton
-//           buttonText="Enter your Faction"
-//           modalComponent={<LoginFormModal />}
-//         />
-//         {/* <NavLink to="/login">Log In</NavLink> */}
-//       </li>
-//       <li>
-//         <OpenModalButton
-//           buttonText="Enlist Today!"
-//           modalComponent={<SignupFormModal />}
-//         />
-//         {/* <NavLink to="/signup">Sign Up</NavLink> */}
-//       </li>
-//     </>
-//   );
-
-//   return (
-//     <ul>
-//       <li>
-//         <NavLink to="/">Home</NavLink>
-//       </li>
-//       {isLoaded && sessionLinks}
-//     </ul>
-//   );
-// }
-
-// export default Navigation;
+import cyclopsLogo from "/cyclopsLogo.png";
 
 function Navigation() {
   const sessionUser = useSelector((state) => state.session.user);
@@ -52,15 +13,14 @@ function Navigation() {
     <nav>
       <div className="nav-bar-logo">
         <Link to="/">
-          <img id="logo" src={cyclopsLogo} alt="Home" />
-          <span className="logo-text">MutantMingle</span>
+          <img id="logo" src={cyclopsLogo} alt="Pic" />
         </Link>
       </div>
 
       {sessionUser ? (
         <div className="nav-bar-user-links">
           <Link to={"/groups/new"} className="link">
-            Start a new faction!
+            Start a new group
           </Link>
           <ProfileButton user={sessionUser} />
         </div>
