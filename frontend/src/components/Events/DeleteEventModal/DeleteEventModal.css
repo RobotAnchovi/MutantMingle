@@ -1,0 +1,34 @@
+/*
+.delete-event-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.delete-event-modal h1,
+.delete-event-modal h4 {
+  margin: 0.5rem 0;
+  text-align: center;
+  font-family: "Bangers", cursive;
+  color: #ff6161;
+}
+
+.delete-event-modal button {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.3rem;
+  cursor: pointer;
+  font-family: "Bangers", cursive;
+}
+
+#event-delete-yes-btn {
+  color: white;
+  background-color: #ff6161;
+  box-shadow: 3px 3px black;
+}
+
+#event-delete-no-btn {
+  color: white;
+  background-color: #1e81b0;
+  box-shadow: 3px 3px black;
+}
