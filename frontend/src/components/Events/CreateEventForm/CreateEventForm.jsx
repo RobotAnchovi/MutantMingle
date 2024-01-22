@@ -85,17 +85,17 @@ const CreateEventForm = () => {
   };
 
   return (
-    <form className="event-form" onSubmit={handleSubmit}>
-      <div id="event-top-div">
-        <h1>Create a new event for {group?.name}</h1>
-        <label htmlFor="event-name">
-          <p>What is the name of your event?</p>
+    <form className="campaign-form" onSubmit={handleSubmit}>
+      <div id="campaign-top-div">
+        <h1>Assemble a new campaign for {group?.name}</h1>
+        <label htmlFor="campaign-name">
+          <p>What shall we call this campaign?</p>
         </label>
         <input
-          name="event-name"
-          id="event-input-name"
+          name="campaign-name"
+          id="campaign-input-name"
           type="text"
-          placeholder="Event Name"
+          placeholder="campaign Name"
           value={name}
           onChange={(e) => setName(e.target.value)}
         />
@@ -105,7 +105,10 @@ const CreateEventForm = () => {
       </div>
       <div>
         <label htmlFor="">
-          <p>Is this an in person or online event?</p>
+          <p>
+            Will this campaign take place privately in the shadows of the
+            interwebs or publicly in the streets?
+          </p>
         </label>
         <select value={type} onChange={(e) => setType(e.target.value)}>
           <option disabled value="select-one">
@@ -118,11 +121,11 @@ const CreateEventForm = () => {
           <p className="errors">{validationErrors.type}</p>
         )}
         <label htmlFor="">
-          <p>What is the capacity of the event?</p>
+          <p>How many heroes will be allowed?</p>
         </label>
         <input
           type="number"
-          id="event-input-capacity"
+          id="campaign-input-capacity"
           placeholder="Capacity"
           min={0}
           value={capacity}
@@ -132,12 +135,12 @@ const CreateEventForm = () => {
           <p className="errors">{validationErrors.capacity}</p>
         )}
         <label htmlFor="price">
-          <p>What is the price for your event?</p>
+          <p>Will this campaign require a monetary tribute?</p>
         </label>
-        <div id="event-div-price">
+        <div id="campaign-div-price">
           <i className="fa-solid fa-dollar-sign"></i>
           <input
-            id="event-input-price"
+            id="campaign-input-price"
             step="0.01"
             name="price"
             type="number"
@@ -154,7 +157,7 @@ const CreateEventForm = () => {
       </div>
       <div>
         <label htmlFor="">
-          <p>When does your event start?</p>
+          <p>When does your campaign commence?</p>
         </label>
         <input
           type="datetime-local"
@@ -165,7 +168,7 @@ const CreateEventForm = () => {
           <p className="errors">{validationErrors.startDate}</p>
         )}
         <label htmlFor="">
-          <p>When does your event end?</p>
+          <p>When does your campaign end?</p>
         </label>
         <input
           type="datetime-local"
@@ -178,7 +181,7 @@ const CreateEventForm = () => {
       </div>
       <div>
         <label htmlFor="imageUrl">
-          <p>Please add an image url for your event below:</p>
+          <p>Add an campaign intel image below </p>
         </label>
         <input
           type="url"
@@ -194,14 +197,14 @@ const CreateEventForm = () => {
       </div>
       <div>
         <label htmlFor="description">
-          <p>Please describe your event:</p>
+          <p>Share critical intel for this campaign:</p>
         </label>
         <textarea
           name="description"
-          id="event-input-description"
+          id="campaign-input-description"
           cols="30"
           rows="10"
-          placeholder="Please include at least 30 characters"
+          placeholder="Critical intel requires more than 30 characters."
           value={description}
           onChange={(e) => setDescription(e.target.value)}
         ></textarea>
@@ -209,7 +212,7 @@ const CreateEventForm = () => {
           <p className="errors">{validationErrors.description}</p>
         )}
       </div>
-      <button>Create Event</button>
+      <button>Activate Campaign</button>
     </form>
   );
 };

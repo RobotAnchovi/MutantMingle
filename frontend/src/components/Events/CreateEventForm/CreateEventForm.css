@@ -1,34 +1,33 @@
-/*
-.event-form {
+.campaign-form {
   width: 50%;
   margin: 0 auto;
 }
 
-.event-form div {
+.campaign-form div {
   border-top: 1px solid #1e81b0;
   margin-top: 1rem;
 }
 
-.event-form input,
-.event-form select,
-.event-form textarea {
+.campaign-form input,
+.campaign-form select,
+.campaign-form textarea {
   border: 2px solid #1e81b0;
   background-color: #fdfd96;
   box-sizing: border-box;
   padding: 0.25rem;
 }
 
-.event-form p {
+.campaign-form p {
   margin: 0.5rem 0;
   font-family: "Bangers", cursive;
 }
 
-.event-form .errors {
+.campaign-form .errors {
   margin: 0;
   color: #ff6161;
 }
 
-.event-form button {
+.campaign-form button {
   background-color: #f2cb05;
   box-shadow: 3px 3px black;
   color: black;
@@ -40,18 +39,18 @@
   font-family: "Bangers", cursive;
 }
 
-#event-top-div {
+#campaign-top-div {
   border: none;
 }
 
-#event-input-name,
-#event-input-imageUrl,
-#event-input-description {
+#campaign-input-name,
+#campaign-input-imageUrl,
+#campaign-input-description {
   width: 30rem;
 }
 
-#event-div-price,
-#event-input-capacity {
+#campaign-div-price,
+#campaign-input-capacity {
   border: 2px solid #1e81b0;
   background-color: #fdfd96;
   width: fit-content;
@@ -59,12 +58,12 @@
   margin: 0;
 }
 
-#event-input-price {
+#campaign-input-price {
   border: none;
   width: 75px;
   background-color: transparent;
 }
 
-#event-input-price:focus {
+#campaign-input-price:focus {
   outline: none;
 }
