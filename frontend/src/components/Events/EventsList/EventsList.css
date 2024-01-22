@@ -1,5 +1,4 @@
-/*
-.events-list-page {
+.campaign-list-page {
   margin: auto;
   width: 60%;
 }
@@ -23,32 +22,32 @@
   font-family: "Bangers", cursive;
 }
 
-.events-list {
+.campaign-list {
   padding-left: 0;
 }
 
-.events-list li {
+.campaign-list li {
   border-top: 2px solid #f2cb05;
   padding: 1rem 0;
   background-color: #fdfd96;
 }
 
-.events-list-item {
+.campaign-list-item {
   display: flex;
 }
 
-.events-list-image {
+.campaign-list-image {
   max-width: 300px;
   max-height: 300px;
 }
 
-.events-list-info {
+.campaign-list-info {
   margin-left: 1.5rem;
 }
 
-.events-list-info h2,
-.events-list-info h3,
-.events-list-info h4 {
+.campaign-list-info h2,
+.campaign-list-info h3,
+.campaign-list-info h4 {
   margin: 0;
   color: #ff6161;
   font-family: "Bangers", cursive;

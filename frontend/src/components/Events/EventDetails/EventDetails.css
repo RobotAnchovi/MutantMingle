@@ -1,12 +1,10 @@
-
-/*
-#back-to-events {
+#back-to-campaigns {
   color: #1e81b0;
   text-decoration: underline;
   padding-left: 5px;
 }
 
-.event-heading {
+.campaign-heading {
   padding-top: 2rem;
   width: 80%;
   margin: 0 auto;
@@ -19,36 +17,36 @@ h4 {
   font-family: "Bangers", cursive;
 }
 
-.event-section {
+.campaign-section {
   background-color: #fdfd96;
 }
 
-.event-detail {
+.campaign-detail {
   width: 80%;
   margin: 0 auto;
   padding-top: 2rem;
   display: flex;
 }
 
-.event-img {
+.campaign-img {
   max-width: 500px;
   min-width: 500px;
   background-color: white;
   border-radius: 15px;
 }
 
-.event-img img {
+.campaign-img img {
   max-width: 500px;
   max-height: 500px;
   border-radius: 15px;
 }
 
-.event-stats-section {
+.campaign-stats-section {
   margin-left: 1.5rem;
   width: 100%;
 }
 
-.event-group-card {
+.campaign-group-card {
   background-color: white;
   display: flex;
   padding: 2rem;
@@ -56,16 +54,16 @@ h4 {
   margin-bottom: 1rem;
 }
 
-.event-group-image img {
+.campaign-group-image img {
   max-width: 200px;
   max-height: 200px;
 }
 
-.event-group-info {
+.campaign-group-info {
   padding-left: 1rem;
 }
 
-.event-stats {
+.campaign-stats {
   background-color: white;
   border-radius: 15px;
   padding: 2rem;
@@ -73,16 +71,16 @@ h4 {
   flex-direction: column;
 }
 
-.event-stats > div {
+.campaign-stats > div {
   margin: 0.5rem 0;
 }
 
-.event-stats span,
-.event-stats i {
+.campaign-stats span,
+.campaign-stats i {
   color: grey;
 }
 
-.event-stats i {
+.campaign-stats i {
   font-size: larger;
 }
 
@@ -90,29 +88,29 @@ h4 {
   width: 1.5rem;
 }
 
-.event-stats p {
+.campaign-stats p {
   color: #2a9d8f;
 }
 
 .times,
-.event-price,
-.event-type {
+.campaign-price,
+.campaign-type {
   display: flex;
   align-items: center;
   width: 100%;
 }
 
 .times-headers,
-.event-price-stat,
-.event-type-stat {
+.campaign-price-stat,
+.campaign-type-stat {
   margin-left: 1rem;
 }
 
-.event-details-user-buttons {
+.campaign-details-user-buttons {
   margin-left: auto;
 }
 
-.event-type button {
+.campaign-type button {
   color: white;
   background-color: #e76f51;
   box-shadow: 3px 3px black;
@@ -120,7 +118,7 @@ h4 {
   cursor: pointer;
 }
 
-.event-description {
+.campaign-description {
   width: 80%;
   margin: 0 auto;
   padding-bottom: 3rem;

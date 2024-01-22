@@ -23,14 +23,14 @@ const DeleteEventModal = ({ event }) => {
   };
 
   return (
-    <div className="delete-event-modal">
-      <h1>Confirm Delete</h1>
-      <h4>Are you sure you want to remove this event?</h4>
-      <button id="event-delete-yes-btn" onClick={handleDelete}>
-        Yes (Delete Event)
+    <div className="delete-campaign-modal">
+      <h1>Abort Campaign</h1>
+      <h4>Sure you want to abort campaign? Think of the children!</h4>
+      <button id="campaign-delete-yes-btn" onClick={handleDelete}>
+        Abort (Delete campaign)
       </button>
-      <button id="event-delete-no-btn" onClick={handleCancel}>
-        No (Keep Event)
+      <button id="campaign-delete-no-btn" onClick={handleCancel}>
+        Keep Pushing! (Keep campaign)
       </button>
     </div>
   );

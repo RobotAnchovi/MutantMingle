@@ -20,13 +20,13 @@ const ManageEvents = () => {
 
   return (
     <div className="user-groups-content">
-      <h2>Manage Events</h2>
+      <h2>Manage Campaigns</h2>
 
-      <h4>Your events in MutantMingle</h4>
+      <h4>Your campaigns in MutantMingle</h4>
 
       {ownedEvents?.length ? (
         <div>
-          <h2>Events that you manage:</h2>
+          <h2>Campaigns you lead:</h2>
           <ul>
             {ownedEvents.map((event) => (
               <EventsListItem event={event} eventId={event.id} key={event.id} />
@@ -34,11 +34,11 @@ const ManageEvents = () => {
           </ul>
         </div>
       ) : (
-        <h2>You do not manage any events yet!</h2>
+        <h2>You have no campaigns yet!</h2>
       )}
       {attendingEvents?.length ? (
         <div>
-          <h2>Events that you are attending:</h2>
+          <h2>Campaigns that you are attending:</h2>
           <ul>
             {attendingEvents.map((event) => (
               <EventsListItem event={event} eventId={event.id} key={event.id} />
@@ -46,7 +46,7 @@ const ManageEvents = () => {
           </ul>
         </div>
       ) : (
-        <h2>You are not attending any events yet!</h2>
+        <h2>You&apos;re just not cool enough for campaigns yet.</h2>
       )}
     </div>
   );

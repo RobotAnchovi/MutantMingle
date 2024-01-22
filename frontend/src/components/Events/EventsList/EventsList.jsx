@@ -19,22 +19,22 @@ const EventsList = () => {
   });
 
   return (
-    <div className="events-list-page">
+    <div className="campaigns-list-page">
       <section>
         <div className="page-links">
-          <NavLink to="/events">Events</NavLink>
-          <NavLink to="/groups">Groups</NavLink>
+          <NavLink to="/events">Campaigns</NavLink>
+          <NavLink to="/groups">Factions</NavLink>
         </div>
         <div>
-          <span>Events in MutantMingle</span>
+          <span>Campaigns in MutantMingle</span>
         </div>
       </section>
       <section>
-        <ul className="events-list">
+        <ul className="campaigns-list">
           {upcoming?.map((event) => (
             <EventsListItem eventId={event.id} key={event.id} />
           ))}
-          {past.length > 0 && <h2>Past Events</h2>}
+          {past.length > 0 && <h2>Past Campaigns</h2>}
           {past.length > 0 &&
             past.map((event) => (
               <EventsListItem eventId={event.id} key={event.id} />

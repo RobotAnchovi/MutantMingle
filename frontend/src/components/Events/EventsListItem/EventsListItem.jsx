@@ -58,7 +58,7 @@ const EventsListItem = ({ eventId }) => {
                 {event.Venue?.city}, {event.Venue?.state}
               </h4>
             ) : (
-              <h4>No location</h4>
+              <h4>Location redacted..or online</h4>
             )}
           </div>
         </div>
