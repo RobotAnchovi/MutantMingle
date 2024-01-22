@@ -67,15 +67,15 @@ const EditGroupForm = () => {
 
   return (
     <section className="group-section">
-      <h4>UPDATE YOUR GROUP&apos;S INFORMATION</h4>
-      <h2>Update your Group</h2>
+      <h4>UPDATE YOUR FACTION&apos;S INFORMATION</h4>
+      <h2>Update your Faction</h2>
       <form onSubmit={handleSubmit}>
         <div>
-          <h2>Set your group&apos;s location</h2>
+          <h2>Set your faction&apos;s location</h2>
           <p>
-            MutantMingle groups meet locally, in person and online.
+            MutantMingle factions meet locally, in person and online.
             <br />
-            We&apos;ll connect you with people in your area.
+            We&apos;ll connect you with heroes or villains in your area.
           </p>
           <label>
             <input
@@ -104,13 +104,13 @@ const EditGroupForm = () => {
           )}
         </div>
         <div>
-          <h2>What will your group&apos;s name be?</h2>
+          <h2>What will your faction&apos;s name be?</h2>
           <p>
-            Choose a name that will give people a clear idea of what the group
-            is about.
+            Choose a name that will strike fear in the hearts of citizens or
+            villains.
             <br />
-            Feel free to get creative! You can edit this later if you change
-            your mind.
+            Be creative! Your faction name is critical! You can always change it
+            later.
           </p>
           <label>
             <input
@@ -126,18 +126,18 @@ const EditGroupForm = () => {
           )}
         </div>
         <div>
-          <h2>Describe the purpose of your group.</h2>
+          <h2>Describe the destiny of your faction.</h2>
           <label>
             <p>
-              People will see this when we promote your group, but you&apos;ll
-              be able to add to it later, too.
+              Other Heroes will see this when we promote your faction, but
+              you&apos;ll be able to add to it later, too.
               <br />
               <br />
-              1. What&apos;s the purpose of the group?
+              1. What&apos;s the purpose of the faction?
               <br />
               2. Who should join?
               <br />
-              3. What will you do at your events?
+              3. What will you do at your campaigns?
             </p>
           </label>
           <textarea
@@ -156,7 +156,7 @@ const EditGroupForm = () => {
         <div id="final-steps-div">
           <h2>Final steps...</h2>
           <label htmlFor="type">
-            <p>Is this an in person or online group?</p>
+            <p>Is this an in person or online faction?</p>
             <select
               name="type"
               value={type}
@@ -177,7 +177,7 @@ const EditGroupForm = () => {
             <p className="errors">{validationErrors.type}</p>
           )}
           <label htmlFor="privacy">
-            <p>Is this group private or public?</p>
+            <p>Is this faction private or public?</p>
             <select
               value={privacy}
               onChange={(e) => setPrivacy(e.target.value)}
@@ -198,7 +198,7 @@ const EditGroupForm = () => {
           )}
         </div>
         <div>
-          <button onSubmit={handleSubmit}>Update group</button>
+          <button onSubmit={handleSubmit}>Re-Assemble Faction!</button>
         </div>
       </form>
     </section>

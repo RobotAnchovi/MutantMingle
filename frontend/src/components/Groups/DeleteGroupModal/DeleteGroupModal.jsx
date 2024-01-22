@@ -24,12 +24,14 @@ const DeleteGroupModal = ({ group }) => {
   return (
     <div className="delete-group-modal">
       <h1>Confirm Delete</h1>
-      <h4>Are you sure you want to remove this group?</h4>
+      <h4>
+        Are you sure you want to remove this faction? Think of the children!
+      </h4>
       <button id="group-delete-yes-btn" onClick={handleDelete}>
-        Yes (Delete Group)
+        Yes, I&apos;m ashamed (Delete Faction)
       </button>
       <button id="group-delete-no-btn" onClick={handleCancel}>
-        No (Keep Group)
+        No, I must fight on! (Keep Faction)
       </button>
     </div>
   );

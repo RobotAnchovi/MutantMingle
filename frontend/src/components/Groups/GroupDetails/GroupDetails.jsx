@@ -39,7 +39,7 @@ const GroupDetails = () => {
       <div className="back-link">
         <span>{"<"}</span>
         <Link id="back-to-groups" to={"/groups"}>
-          Groups
+          Factions
         </Link>
       </div>
       <section className="group-landing">
@@ -54,12 +54,11 @@ const GroupDetails = () => {
               {group?.city}, {group?.state}
             </h4>
             <h4>
-              {events?.length ? events?.length : 0} events ·{" "}
+              {events?.length ? events?.length : 0} Campaigns ·{" "}
               {group?.private ? "Private" : "Public"}
             </h4>
             <h4>
-              Organized by {group?.Organizer?.firstName}{" "}
-              {group?.Organizer?.lastName}
+              Led by {group?.Organizer?.firstName} {group?.Organizer?.lastName}
             </h4>
           </div>
           <div className="group-info-buttons">
@@ -68,17 +67,17 @@ const GroupDetails = () => {
                 id="join-group"
                 onClick={() => alert("Feature Coming Soon...")}
               >
-                Join this group
+                Join this Faction!
               </button>
             )}
             {user?.id == group?.organizerId && (
               <button onClick={() => navigate(`/groups/${groupId}/events/new`)}>
-                Create event
+                Initialize New Campaign
               </button>
             )}
             {user?.id == group?.organizerId && (
               <button onClick={() => navigate(`/groups/${groupId}/edit`)}>
-                Update
+                Update Faction Intel
               </button>
             )}
             {user?.id == group?.organizerId && (
@@ -93,17 +92,17 @@ const GroupDetails = () => {
       <section className="group-events-section">
         <div className="group-events">
           <div>
-            <h2>Organizer</h2>
+            <h2>Leader</h2>
             <h4>
               {group?.Organizer?.firstName} {group?.Organizer?.lastName}
             </h4>
             <h2>What we&apos;re about</h2>
             <p>{group?.about}</p>
           </div>
-          {!upcoming.length && !past.length && <h2>No Upcoming Events</h2>}
+          {!upcoming.length && !past.length && <h2>No Upcoming Campaigns</h2>}
           {upcoming.length != 0 && (
             <div className="upcoming-events">
-              <h2>Upcoming Events ({upcoming.length})</h2>
+              <h2>Upcoming Campaigns ({upcoming.length})</h2>
               <ul>
                 {upcoming.map((event) => (
                   <EventsListItem key={event.id} eventId={event.id} />
@@ -113,7 +112,7 @@ const GroupDetails = () => {
           )}
           {past.length != 0 && (
             <div className="past-events">
-              <h2>Past Events ({past.length})</h2>
+              <h2>Past Campaigns ({past.length})</h2>
               <ul>
                 {past.map((event) => (
                   <EventsListItem key={event.id} eventId={event.id} />

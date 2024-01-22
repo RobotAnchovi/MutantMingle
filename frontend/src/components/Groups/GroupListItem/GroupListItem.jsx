@@ -34,7 +34,7 @@ const GroupListItem = ({ group, isOwner, isMember }) => {
             <p>{group.about}</p>
             <div className="group-list-item-lowest-container">
               <div className="group-events-type-container">
-                <span>{groupEvents?.length} Events</span>
+                <span>{groupEvents?.length} Campaigns</span>
                 <span> · </span>
                 <span>{group.private ? "Private" : "Public"}</span>
               </div>
@@ -45,7 +45,7 @@ const GroupListItem = ({ group, isOwner, isMember }) => {
       <div className="group-management-btns-container">
         {isOwner && (
           <button onClick={() => navigate(`/groups/${group.id}/edit`)}>
-            Update
+            Update Faction Intel
           </button>
         )}
         {isOwner && (
@@ -56,10 +56,10 @@ const GroupListItem = ({ group, isOwner, isMember }) => {
         )}
         {isMember && (
           <button
-            id="unjoin-btn"
+            id="un-join-btn"
             onClick={() => alert("Feature coming soon...")}
           >
-            Unjoin
+            Leave Faction (Traitor!)
           </button>
         )}
       </div>

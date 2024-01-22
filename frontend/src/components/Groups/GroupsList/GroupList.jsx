@@ -30,7 +30,7 @@ const GroupList = () => {
   }, [dispatch]);
 
   return (
-    <div className="faction-list-page">
+    <div className="group-list-page">
       <section>
         <div className="page-links">
           <NavLink className="" to="/events">
@@ -41,11 +41,11 @@ const GroupList = () => {
           </NavLink>
         </div>
         <div>
-          <span>Factions on MutantMingle</span>
+          <span> Active Factions on MutantMingle</span>
         </div>
       </section>
       <section>
-        <ul className="faction-list">
+        <ul className="group-list">
           {groups.map((group) => (
             <ListGroupItem group={group} key={group.id} />
           ))}

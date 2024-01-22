@@ -12,9 +12,9 @@ const ManageGroups = () => {
 
   return (
     <div className="user-groups-content">
-      <h2>Manage Groups</h2>
+      <h2>Manage Factions</h2>
 
-      <h4>Your groups in MutantMingle</h4>
+      <h4>Your Factions in MutantMingle</h4>
       <div>
         <ul>
           {userGroups?.length ? (
@@ -27,7 +27,9 @@ const ManageGroups = () => {
               />
             ))
           ) : (
-            <h2>You are not part of any groups yet!</h2>
+            <h2>
+              Ah..Lone-Wolf, I see. You aren&apos;t part of any factions yet!
+            </h2>
           )}
         </ul>
       </div>
