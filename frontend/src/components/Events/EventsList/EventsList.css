@@ -1,4 +1,4 @@
-.campaign-list-page {
+.campaigns-list-page {
   margin: auto;
   width: 60%;
 }
@@ -8,15 +8,8 @@
   margin-bottom: 1rem;
 }
 
-span {
-  font-size: large;
-  padding-right: 1.5rem;
-  color: red;
-  font-family: "Bangers", cursive;
-}
-
 .page-links .active {
-  color: #ff6161;
+  color: red;
   text-decoration: underline;
   pointer-events: none;
   font-family: "Bangers", cursive;
@@ -29,33 +22,56 @@ span {
   font-family: "Bangers", cursive;
 }
 
-.campaign-list {
+.campaigns-list {
   padding-left: 0;
 }
 
-.campaign-list li {
+.campaigns-list li {
   border-top: 2px solid #f2cb05;
   padding: 1rem 0;
   background-color: #fdfd96;
 }
 
-.campaign-list-item {
+.campaigns-list-item {
   display: flex;
 }
 
-.campaign-list-image {
+.campaigns-list-image-div {
+  min-width: 300px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  background-color: red;
+}
+
+.campaigns-list-image {
   max-width: 300px;
-  max-height: 300px;
+  max-height: 200px;
+  object-fit: contain;
 }
 
-.campaign-list-info {
+.campaigns-list {
+  display: flex;
+  flex-direction: column;
   margin-left: 1.5rem;
+  width: 455px;
+  flex-grow: 1;
+  max-height: 200px;
 }
 
-.campaign-list-info h2,
-.campaign-list-info h3,
-.campaign-list-info h4 {
+.campaigns-list h2 {
   margin: 0;
-  color: #ff6161;
+  font-family: "Bangers", cursive;
+}
+
+.campaigns-list h4 {
+  color: red;
+  margin: 0.5rem 0;
+}
+
+span {
+  font-size: large;
+  padding-right: 1.5rem;
+  color: red;
   font-family: "Bangers", cursive;
 }

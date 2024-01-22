@@ -19,6 +19,7 @@
   font-size: x-large;
   padding-right: 1.5rem;
   color: #1e81b0;
+  font-family: "Bangers", cursive;
 }
 
 .group-list {
@@ -66,4 +67,11 @@
 .group-list-info h4 {
   color: red;
   margin: 0.5rem 0;
+}
+
+span {
+  font-size: large;
+  padding-right: 1.5rem;
+  color: red;
+  font-family: "Bangers", cursive;
 }

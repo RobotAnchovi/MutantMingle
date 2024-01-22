@@ -26,7 +26,7 @@ const EventsList = () => {
           <NavLink to="/groups">Factions</NavLink>
         </div>
         <div>
-          <span>Campaigns in MutantMingle</span>
+          <span> All Campaigns in MutantMingle</span>
         </div>
       </section>
       <section>
