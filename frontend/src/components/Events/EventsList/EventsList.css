@@ -8,6 +8,13 @@
   margin-bottom: 1rem;
 }
 
+span {
+  font-size: large;
+  padding-right: 1.5rem;
+  color: red;
+  font-family: "Bangers", cursive;
+}
+
 .page-links .active {
   color: #ff6161;
   text-decoration: underline;
