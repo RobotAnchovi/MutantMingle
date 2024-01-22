@@ -14,8 +14,9 @@ module.exports = {
         {
           venueId: 1, // valid venue IDs
           groupId: 1, // valid group IDs
-          name: "Tech Conference 2021",
-          description: "An annual conference for tech enthusiasts.",
+          name: "Jewel Conference 2021",
+          description:
+            "An annual conference for jewelers, rich people and gold enthusiasts.",
           type: "In person",
           capacity: 500,
           price: 299.4,
@@ -65,7 +66,7 @@ module.exports = {
         },
         {
           venueId: 2,
-          groupId: 4,
+          groupId: 5,
           name: "Cooking Masterclass",
           description: "Cooking class by renowned chef.",
           type: "Online",
@@ -73,6 +74,50 @@ module.exports = {
           price: 100,
           startDate: new Date(2022, 1, 20),
           endDate: new Date(2022, 1, 20),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          venueId: 1,
+          groupId: 1,
+          name: "Gemstone Gala 2020",
+          description:
+            "A spectacular gathering for gemstone aficionados and luxury collectors.",
+          type: "In person",
+          capacity: 450,
+          price: 350.0,
+          startDate: new Date(2020, 8, 15), // September 15, 2020
+          endDate: new Date(2020, 8, 17), // September 17, 2020
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+
+        {
+          venueId: 1,
+          groupId: 1,
+          name: "Diamonds & Designs 2019",
+          description:
+            "An exclusive event showcasing the latest trends in diamond jewelry and design.",
+          type: "In person",
+          capacity: 400,
+          price: 400.0,
+          startDate: new Date(2019, 10, 10), // November 10, 2019
+          endDate: new Date(2019, 10, 12), // November 12, 2019
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+
+        {
+          venueId: 1,
+          groupId: 1,
+          name: "Luxury Watch Expo 2022",
+          description:
+            "A premier expo for luxury watch enthusiasts, featuring world-renowned brands.",
+          type: "In person",
+          capacity: 500,
+          price: 250.0,
+          startDate: new Date(2022, 5, 20), // June 20, 2022
+          endDate: new Date(2022, 5, 22), // June 22, 2022
           createdAt: new Date(),
           updatedAt: new Date(),
         },

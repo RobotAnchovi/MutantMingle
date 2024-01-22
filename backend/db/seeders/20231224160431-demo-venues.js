@@ -86,8 +86,8 @@ module.exports = {
           address: "505 Virtual Vistas",
           city: "Virtual Town",
           state: "Simulatia",
-          lat: 38.907192,
-          lng: -77.036873, // Coordinates for Washington D.C.
+          lat: 36.162664,
+          lng: -86.781602, // coordinates for Nashville
           createdAt: new Date(),
           updatedAt: new Date(),
         },
