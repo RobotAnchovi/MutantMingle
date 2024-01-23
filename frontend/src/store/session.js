@@ -2,8 +2,8 @@ import { csrfFetch } from "./csrf";
 
 export const LOGIN_USER = "session/LOGIN_USER";
 export const REMOVE_USER = "session/REMOVE_USER";
-export const LOAD_USER_GROUPS = "session/LOAD_USER_GROUPS";
-export const LOAD_USER_EVENTS = "session/LOAD_USER_EVENTS";
+// export const LOAD_USER_GROUPS = "session/LOAD_USER_GROUPS";
+// export const LOAD_USER_EVENTS = "session/LOAD_USER_EVENTS";
 
 export const loginUser = (user) => ({
   type: LOGIN_USER,
@@ -14,15 +14,15 @@ export const removeUser = () => ({
   type: REMOVE_USER,
 });
 
-export const loadUserGroups = (groups) => ({
-  type: LOAD_USER_GROUPS,
-  groups,
-});
+// export const loadUserGroups = (groups) => ({ //~Relocating
+//   type: LOAD_USER_GROUPS,
+//   groups,
+// });
 
-export const loadUserEvents = (events) => ({
-  type: LOAD_USER_EVENTS,
-  events,
-});
+// export const loadUserEvents = (events) => ({ //~Relocating
+//   type: LOAD_USER_EVENTS,
+//   events,
+// });
 
 //*====> Session Thunks <====
 export const thunkLoginUser = (user) => async (dispatch) => {
@@ -81,31 +81,31 @@ export const thunkLogout = () => async (dispatch) => {
   return response;
 };
 
-export const thunkLoadUserGroups = () => async (dispatch) => {
-  const response = await csrfFetch("/api/groups/current");
+// export const thunkLoadUserGroups = () => async (dispatch) => {
+//   const response = await csrfFetch("/api/groups/current");
 
-  if (response.ok) {
-    const groups = await response.json();
-    dispatch(loadUserGroups(groups));
-    return groups;
-  } else {
-    const error = await response.json();
-    return error;
-  }
-};
+//   if (response.ok) {
+//     const groups = await response.json();
+//     dispatch(loadUserGroups(groups));
+//     return groups;
+//   } else {
+//     const error = await response.json();
+//     return error;
+//   }
+// };
 
-export const thunkLoadUserEvents = () => async (dispatch) => {
-  const response = await csrfFetch(`/api/events/current`);
+// export const thunkLoadUserEvents = () => async (dispatch) => {
+//   const response = await csrfFetch(`/api/events/current`);
 
-  if (response.ok) {
-    const events = await response.json();
-    dispatch(loadUserEvents(events));
-    return events;
-  } else {
-    const error = await response.json();
-    return error;
-  }
-};
+//   if (response.ok) {
+//     const events = await response.json();
+//     dispatch(loadUserEvents(events));
+//     return events;
+//   } else {
+//     const error = await response.json();
+//     return error;
+//   }
+// };
 
 //*====> Session Reducer <====
 const initialState = { user: null };
@@ -115,40 +115,41 @@ const sessionReducer = (state = initialState, action) => {
       return { ...state, user: action.user };
     }
     case REMOVE_USER: {
-      return { ...state, user: null };
+      // return { ...state, user: null };
+      return initialState;
     }
-    case LOAD_USER_GROUPS: {
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          ...action.groups,
-        },
-      };
-    }
-    case LOAD_USER_EVENTS: {
-      const ownedEvents = {};
-      const attendingEvents = {};
-      action.events.ownedEvents.forEach((event) => {
-        ownedEvents[event.id] = event;
-      });
-      action.events.attendingEvents.forEach((event) => {
-        attendingEvents[event.id] = event;
-      });
+    // case LOAD_USER_GROUPS: {
+    //   return {
+    //     ...state,
+    //     user: {
+    //       ...state.user,
+    //       ...action.groups,
+    //     },
+    //   };
+    // }
+    // case LOAD_USER_EVENTS: {
+    //   const ownedEvents = {};
+    //   const attendingEvents = {};
+    //   action.events.ownedEvents.forEach((event) => {
+    //     ownedEvents[event.id] = event;
+    //   });
+    //   action.events.attendingEvents.forEach((event) => {
+    //     attendingEvents[event.id] = event;
+    //   });
 
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          Events: {
-            ownedEvents,
-            attendingEvents,
-          },
-        },
-      };
-    }
-    default:
-      return state;
+    //   return {
+    //     ...state,
+    //     user: {
+    //       ...state.user,
+    //       Events: {
+    //         ownedEvents,
+    //         attendingEvents,
+    //       },
+    //     },
+    //   };
+    // }
+    // default:
+    //   return state;
   }
 };
 
