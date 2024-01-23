@@ -4,6 +4,11 @@
   margin-top: auto;
 }
 
+.group-list-item p {
+  max-height: 100px; /* Adjust as needed */
+  overflow-y: auto;
+}
+
 .group-events-type-container {
   display: flex;
 }
@@ -29,7 +34,7 @@
 
 #un-join-btn {
   color: white;
-  background-color: #e76f51;
+  background-color: red;
   box-shadow: 3px 3px black;
   cursor: pointer;
   font-family: "Bangers", cursive;

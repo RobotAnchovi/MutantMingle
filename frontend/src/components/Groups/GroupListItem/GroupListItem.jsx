@@ -50,6 +50,7 @@ const GroupListItem = ({ group, isOwner, isMember }) => {
         )}
         {isOwner && (
           <OpenModalButton
+            className="delete-group-btn"
             buttonText="Delete"
             modalComponent={<DeleteGroupModal group={group} />}
           />

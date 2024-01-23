@@ -20,7 +20,7 @@ const CreateEventForm = () => {
   const [url, setUrl] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
   const group = useSelector((state) => state.groups[groupId]);
-  const [isFree, setIsFree] = useState(false);
+  // const [isFree, setIsFree] = useState(false);
 
   useEffect(() => {
     dispatch(thunkGroupDetails(groupId));
@@ -157,11 +157,11 @@ const CreateEventForm = () => {
             type="number"
             placeholder="0.00"
             min={0}
-            value={isFree ? 0 : price}
+            value={price}
             onChange={(e) => setPrice(e.target.value)}
           />
         </div>
-        <div id="campaign-div-free">
+        {/* <div id="campaign-div-free">
           <input
             id="campaign-input-free"
             type="checkbox"
@@ -169,7 +169,7 @@ const CreateEventForm = () => {
             onChange={(e) => setIsFree(e.target.checked)}
           />
           <label htmlFor="campaign-input-free">Free event</label>
-        </div>
+        </div> */}
 
         {"price" in validationErrors && (
           <p className="errors">{validationErrors.price}</p>

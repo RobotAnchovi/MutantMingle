@@ -5,7 +5,7 @@ import {
   thunkLoadGroupEvents,
   thunkLoadMembers,
 } from "../../../store/groups";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import EventsListItem from "../../Events/EventsListItem/";
 import OpenModalButton from "../../OpenModalButton";
 import DeleteGroupModal from "../DeleteGroupModal";
@@ -18,13 +18,35 @@ const GroupDetails = () => {
   const user = useSelector((state) => state.session.user);
   const group = useSelector((state) => state.groups[groupId]);
   const eventsState = useSelector((state) => state.events);
-  let events = useSelector((state) => state.groups[groupId]?.Events);
+  const events = useSelector((state) => state.groups[groupId]?.Events);
+
+  const [upcoming, setUpcoming] = useState([]);
+  const [past, setPast] = useState([]);
 
   useEffect(() => {
+    // console.log("LOADED EVENTS: ", events);
     dispatch(thunkGroupDetails(groupId));
     dispatch(thunkLoadGroupEvents(groupId));
     dispatch(thunkLoadMembers(groupId));
   }, [dispatch, groupId]);
+
+  useEffect(() => {
+    if (events) {
+      const now = new Date();
+      const sortedEvents = [...events].sort(
+        (a, b) => new Date(a.startDate) - new Date(b.startDate)
+      );
+      const upcomingEvents = sortedEvents.filter(
+        (event) => new Date(event.startDate) >= now
+      );
+      const pastEvents = sortedEvents.filter(
+        (event) => new Date(event.startDate) < now
+      );
+
+      setUpcoming(upcomingEvents);
+      setPast(pastEvents);
+    }
+  }, [events]);
 
   if (!eventsState) return null;
 
@@ -40,8 +62,8 @@ const GroupDetails = () => {
   }
 
   const now = new Date();
-  const upcoming = [];
-  const past = [];
+  // const upcoming = [];
+  // const past = [];
 
   events?.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
 
@@ -81,6 +103,16 @@ const GroupDetails = () => {
             </h4>
           </div>
           <div className="group-info-buttons">
+            {/* If the user is not logged in, show the "Join this Faction!" button */}
+            {!user && (
+              <button
+                id="join-group"
+                onClick={() => alert("Feature Coming Soon...")}
+              >
+                Join this Faction!
+              </button>
+            )}
+            {/* If the user is logged in and not the owner and not a member, show the "Join this Faction!" button */}
             {user && !isOwner && !isMember && (
               <button
                 id="join-group"
@@ -89,29 +121,38 @@ const GroupDetails = () => {
                 Join this Faction!
               </button>
             )}
-            {user && !isOwner && !isMember && (
-              <button
-                id="leave-group"
-                onClick={() => alert("Feature Coming Soon...")}
-              >
-                Abandon this Faction!
-              </button>
+            {/* If the user is logged in and not the owner and is a member, show the "Abandon this Faction!" and "Initialize New Campaign" buttons */}
+            {user && !isOwner && isMember && (
+              <>
+                <button
+                  id="leave-group"
+                  onClick={() => alert("Feature Coming Soon...")}
+                >
+                  Abandon this Faction!
+                </button>
+                <button
+                  onClick={() => navigate(`/groups/${groupId}/events/new`)}
+                >
+                  Initialize New Campaign
+                </button>
+              </>
             )}
-            {user && !isOwner && !isMember && (
-              <button onClick={() => navigate(`/groups/${groupId}/events/new`)}>
-                Initialize New Campaign
-              </button>
-            )}
-            {isOwner && (
-              <button onClick={() => navigate(`/groups/${groupId}/edit`)}>
-                Update Faction Intel
-              </button>
-            )}
-            {isOwner && (
-              <OpenModalButton
-                buttonText="Delete"
-                modalComponent={<DeleteGroupModal group={group} />}
-              />
+            {/* If the user is logged in and is the owner, show the "Update Faction Intel", "Delete", and "Initialize New Campaign" buttons */}
+            {user && isOwner && (
+              <>
+                <button onClick={() => navigate(`/groups/${groupId}/edit`)}>
+                  Update Faction Intel
+                </button>
+                <OpenModalButton
+                  buttonText="Delete"
+                  modalComponent={<DeleteGroupModal group={group} />}
+                />
+                <button
+                  onClick={() => navigate(`/groups/${groupId}/events/new`)}
+                >
+                  Initialize New Campaign
+                </button>
+              </>
             )}
           </div>
         </div>
