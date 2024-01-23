@@ -4,6 +4,9 @@ import OpenModalButton from "../OpenModalButton";
 import SignupFormModal from "../SignupFormModal";
 import { useSelector } from "react-redux";
 import landingImage from "/landing-page.png";
+import happyMutants from "/happy-mutant-faction.png";
+import mutantCampaign from "/mutant-campaign.png";
+import newFaction from "/new-faction.png";
 
 const Home = () => {
   const user = useSelector((state) => state.session.user);
@@ -39,23 +42,26 @@ const Home = () => {
         </div>
         <div className="cards">
           <HomeLinkCard
-            image={"#"}
-            alt={"Insert Pic"}
+            image={happyMutants}
+            alt={"Mutants jumping into action."}
             path={`groups`}
             linkText={`See all Factions`}
+            pLinkText={"Find a Faction that suits your interests."}
           />
           <HomeLinkCard
-            image={"#"}
-            alt={"Insert Pic"}
+            image={mutantCampaign}
+            alt={"Group of mutants gathered in a command center."}
             path={`events`}
             linkText={`Find a Campaign`}
+            pLinkText={"Join a Campaign and start your adventure!"}
           />
           <HomeLinkCard
             activeLink={activeLink}
-            image={"#"}
-            alt={"Insert Pic"}
+            image={newFaction}
+            alt={"Group of mutants sitting around a table."}
             path={`groups/new`}
             linkText={`Start a new Faction`}
+            pLinkText={"Create a Faction and recruit new members!"}
           />
         </div>
       </div>

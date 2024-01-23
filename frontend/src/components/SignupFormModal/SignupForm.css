@@ -9,6 +9,8 @@
   flex-direction: column;
   align-items: stretch;
   width: 100%;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 .sign-up-form input {
@@ -26,6 +28,8 @@
   font-family: "Bangers", cursive; /* Comic book font */
   margin: 5px 0;
   text-align: center;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 .pop-up-label {
   display: flex;
@@ -33,6 +37,8 @@
   margin-bottom: 15px; /* Adds space between each label */
   font-family: "Bangers", cursive; /* Comic book font */
   color: #1e81b0; /* Bright blue for label text */
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 .pop-up-input {

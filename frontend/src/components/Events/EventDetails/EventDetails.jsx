@@ -1,6 +1,6 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { thunkEventDetails } from "../../../store/events";
 import { thunkGroupDetails } from "../../../store/groups";
 import OpenModalButton from "../../OpenModalButton";
@@ -14,20 +14,12 @@ const EventDetails = () => {
   const user = useSelector((state) => state.session.user);
   const event = useSelector((state) => state.events[eventId]);
   const group = useSelector((state) => state.groups[event?.groupId]);
-  const [ueRan, setUeRan] = useState(false);
   const isUserOwner = group?.organizerId == user?.id;
 
   useEffect(() => {
-    const helper = async () => {
-      await dispatch(thunkEventDetails(eventId));
-      setUeRan(true);
-    };
-    if (ueRan) {
-      dispatch(thunkGroupDetails(group?.id));
-    } else {
-      helper();
-    }
-  }, [dispatch, ueRan, eventId, group?.id]);
+    if (!event?.EventImages) dispatch(thunkEventDetails(eventId));
+    if (group && !group.Organizer) dispatch(thunkGroupDetails(group?.id));
+  }, [dispatch, eventId, group, group?.id, event?.EventImages]);
 
   let eventImagesPreview;
   if (event?.previewImage) {

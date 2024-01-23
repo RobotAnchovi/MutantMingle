@@ -37,9 +37,12 @@ h1 {
 }
 
 .how-works {
+  font-size: large;
   margin: 0 auto;
-  width: 30%;
+  width: 50%;
   color: red;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 .how-works p,
@@ -63,6 +66,8 @@ h1 {
   font-size: large;
   cursor: pointer;
   text-decoration: underline;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
   margin: 0;
 }
 

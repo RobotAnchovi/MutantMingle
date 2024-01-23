@@ -1,4 +1,3 @@
-/*
 .home-link-card {
   display: flex;
   flex-direction: column;
@@ -14,5 +13,7 @@
 
 .home-link-card p {
   text-align: center;
-  color: #ff6161;
+  color: red;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
 }

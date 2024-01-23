@@ -26,6 +26,8 @@ h1 {
 .log-in form label {
   align-self: flex-start;
   color: red;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 /* #login-button-,
@@ -77,6 +79,8 @@ h1 {
   padding: 15px 0px;
   font-size: large;
   color: red;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 .error {
   color: red;
