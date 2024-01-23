@@ -1,6 +1,7 @@
 .campaigns-list-page {
   margin: auto;
   width: 60%;
+  font-family: "Bangers", cursive;
 }
 
 .page-links {
@@ -36,7 +37,7 @@
   display: flex;
 }
 
-.campaigns-list-image-div {
+div.campaign-card-img {
   min-width: 300px;
   height: 200px;
   display: flex;
@@ -44,13 +45,13 @@
   background-color: red;
 }
 
-.campaigns-list-image {
+/* .campaigns-list-image {
   max-width: 300px;
   max-height: 200px;
   object-fit: contain;
-}
+} */
 
-.campaigns-list {
+.campaigns-list-info {
   display: flex;
   flex-direction: column;
   margin-left: 1.5rem;
@@ -59,12 +60,12 @@
   max-height: 200px;
 }
 
-.campaigns-list h2 {
+.campaigns-list-info h2 {
   margin: 0;
   font-family: "Bangers", cursive;
 }
 
-.campaigns-list h4 {
+.campaigns-list-info h4 {
   color: red;
   margin: 0.5rem 0;
 }
@@ -76,7 +77,7 @@
   font-family: "Bangers", cursive;
 }
 
-p {
+.campaigns-list-page p {
   font-size: large;
   padding-right: 1.5rem;
   color: #1e81b0;

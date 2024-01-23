@@ -33,20 +33,20 @@ const EventsListItem = ({ eventId }) => {
   return (
     <Link to={`/events/${event.id}`} event={event}>
       <li>
-        <div className="events-list-item">
-          <div className="event-card-img">
+        <div className="campaigns-list-item">
+          <div className="campaign-card-img">
             {preview && (
-              <img className="events-list-image" src={preview} alt="" />
+              <img className="campaigns-list-image" src={preview} alt="" />
             )}
             {eventImagesPreview && (
               <img
-                className="events-list-image"
+                className="campaigns-list-image"
                 src={eventImagesPreview.url}
                 alt=""
               />
             )}
           </div>
-          <div className="events-list-info">
+          <div className="campaigns-list-info">
             <h3>
               {date} · {"<"}
               {time}
@@ -62,7 +62,7 @@ const EventsListItem = ({ eventId }) => {
             )}
           </div>
         </div>
-        <div className="event-card-about">
+        <div className="campaign-card-about">
           <p>{event.description}</p>
         </div>
       </li>
