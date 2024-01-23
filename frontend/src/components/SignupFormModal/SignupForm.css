@@ -1,7 +1,9 @@
 .sign-up-form-container h1 {
   text-align: center;
   font-family: "Bangers", cursive; /* Comic book font for heading */
-  color: #ff6161; /* Bright red for the heading */
+  color: red; /* Bright red for the heading */
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 .sign-up-form {
@@ -24,7 +26,7 @@
 }
 
 .error {
-  color: #ff6161; /* Bright red for errors */
+  color: red; /* Bright red for errors */
   font-family: "Bangers", cursive; /* Comic book font */
   margin: 5px 0;
   text-align: center;

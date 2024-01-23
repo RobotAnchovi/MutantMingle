@@ -2,7 +2,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Bangers&display=swap");
 
 body {
-  background-image: url("../public/comic-skyline-bg.png");
+  background-image: url("./comic-skyline-bg.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;

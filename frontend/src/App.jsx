@@ -46,83 +46,116 @@ function Layout() {
   );
 }
 
+// const router = createBrowserRouter([
+//   {
+//     element: <Layout />,
+//     children: [
+//       {
+//         path: "/",
+//         element: <Home />,
+//       },
+//       {
+//         path: "groups",
+//         element: <Outlet />,
+//         children: [
+//           {
+//             index: true,
+//             element: <GroupsList />,
+//           },
+//           {
+//             path: "new",
+//             element: <CreateGroupForm />,
+//           },
+//           {
+//             path: ":groupId",
+//             element: <Outlet />,
+//             children: [
+//               {
+//                 index: true,
+//                 element: <GroupDetails />,
+//               },
+//               {
+//                 path: "edit",
+//                 element: <EditGroupForm />,
+//               },
+//               {
+//                 path: "events/new",
+//                 element: <CreateEventForm />,
+//               },
+//             ],
+//           },
+//           {
+//             path: "current",
+//             element: <ManageGroups />,
+//           },
+//         ],
+//       },
+//       {
+//         path: "events",
+//         element: <Outlet />,
+//         children: [
+//           {
+//             index: true,
+//             element: <EventsList />,
+//           },
+//           {
+//             path: ":eventId",
+//             element: <Outlet />,
+
+//             children: [
+//               {
+//                 index: true,
+//                 element: <EventDetails />,
+//               },
+//               {
+//                 path: "edit",
+//                 element: <EditEventForm />,
+//               },
+//             ],
+//           },
+//           {
+//             path: "current",
+//             element: <ManageEvents />,
+//           },
+//         ],
+//       },
+//       {
+//         path: "*",
+//         element: <NotFound />,
+//       },
+//     ],
+//   },
+// ]);
+
+// function App() {
+//   return <RouterProvider router={router} />;
+// }
+
+// export default App;
+
+//~ More concise Routing
+
 const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
+      { path: "/", element: <Home /> },
+      { path: "groups", element: <GroupsList /> },
+      { path: "groups/current", element: <ManageGroups /> },
+      { path: "groups/new", element: <CreateGroupForm /> },
       {
-        path: "/",
-        element: <Home />,
-      },
-      {
-        path: "groups",
-        element: <Outlet />,
+        path: "groups/:groupId",
+        element: <GroupDetails />,
         children: [
-          {
-            index: true,
-            element: <GroupsList />,
-          },
-          {
-            path: "new",
-            element: <CreateGroupForm />,
-          },
-          {
-            path: ":groupId",
-            element: <Outlet />,
-            children: [
-              {
-                index: true,
-                element: <GroupDetails />,
-              },
-              {
-                path: "edit",
-                element: <EditGroupForm />,
-              },
-              {
-                path: "events/new",
-                element: <CreateEventForm />,
-              },
-            ],
-          },
-          {
-            path: "current",
-            element: <ManageGroups />,
-          },
+          { path: "edit", element: <EditGroupForm /> },
+          { path: "events/new", element: <CreateEventForm /> },
         ],
       },
-      {
-        path: "events",
-        element: <Outlet />,
-        children: [
-          {
-            index: true,
-            element: <EventsList />,
-          },
-          {
-            path: ":eventId",
-            element: <Outlet />,
-
-            children: [
-              {
-                index: true,
-                element: <EventDetails />,
-              },
-              {
-                path: "edit",
-                element: <EditEventForm />,
-              },
-            ],
-          },
-          {
-            path: "current",
-            element: <ManageEvents />,
-          },
-        ],
-      },
-      {
-        path: "*",
-        element: <NotFound />,
-      },
+      { path: "events", element: <EventsList /> },
+      { path: "events/current", element: <ManageEvents /> },
+      { path: "events/:eventId", element: <EventDetails /> },
+      { path: "events/:eventId/edit", element: <EditEventForm /> },
+      { path: "*", element: <NotFound /> },
     ],
   },
 ]);

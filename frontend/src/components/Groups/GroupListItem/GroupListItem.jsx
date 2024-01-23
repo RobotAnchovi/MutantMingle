@@ -11,9 +11,14 @@ const GroupListItem = ({ group, isOwner, isMember }) => {
   const navigate = useNavigate();
   const groupEvents = useSelector((state) => state.groups[group.id].Events);
 
+  // useEffect(() => {
+  //   dispatch(thunkLoadGroupEvents(group.id));
+  // }, [dispatch, group]);
   useEffect(() => {
-    dispatch(thunkLoadGroupEvents(group.id));
-  }, [dispatch, group]);
+    if (!groupEvents || groupEvents.length === 0) {
+      dispatch(thunkLoadGroupEvents(group.id));
+    }
+  }, [dispatch, group.id]); //removed groupEvents from dependency array
 
   return (
     <li>
@@ -22,8 +27,8 @@ const GroupListItem = ({ group, isOwner, isMember }) => {
           <div className="group-list-image-div">
             <img
               className="group-list-image"
-              src={group.previewImage || group.GroupImages[0].url}
-              alt=""
+              src={group?.previewImage || group?.GroupImages?.[0]?.url}
+              alt="{group.name}"
             />
           </div>
           <div className="group-list-info">
