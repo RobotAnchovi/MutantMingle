@@ -1,6 +1,10 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkGroupDetails, thunkLoadGroupEvents } from "../../../store/groups";
+import {
+  thunkGroupDetails,
+  thunkLoadGroupEvents,
+  thunkLoadMembers,
+} from "../../../store/groups";
 import { useEffect } from "react";
 import EventsListItem from "../../Events/EventsListItem/";
 import OpenModalButton from "../../OpenModalButton";
@@ -13,9 +17,29 @@ const GroupDetails = () => {
   const { groupId } = useParams();
   const user = useSelector((state) => state.session.user);
   const group = useSelector((state) => state.groups[groupId]);
-  let events = useSelector((state) => state.groups[groupId].Events);
-  const now = new Date();
+  const eventsState = useSelector((state) => state.events);
+  let events = useSelector((state) => state.groups[groupId]?.Events);
 
+  useEffect(() => {
+    dispatch(thunkGroupDetails(groupId));
+    dispatch(thunkLoadGroupEvents(groupId));
+    dispatch(thunkLoadMembers(groupId));
+  }, [dispatch, groupId]);
+
+  if (!eventsState) return null;
+
+  const isOwner = user?.id == group?.organizerId;
+  let isMember;
+  if (group?.Members) {
+    const members = Object.values(group?.Members);
+
+    isMember =
+      members.filter((member) => {
+        return member.id == user.id;
+      }).length > 0;
+  }
+
+  const now = new Date();
   const upcoming = [];
   const past = [];
 
@@ -24,11 +48,6 @@ const GroupDetails = () => {
   events?.forEach((event) => {
     new Date(event.startDate) < now ? past.push(event) : upcoming.push(event);
   });
-
-  useEffect(() => {
-    dispatch(thunkGroupDetails(groupId));
-    dispatch(thunkLoadGroupEvents(groupId));
-  }, [dispatch, groupId]);
 
   const groupPreviewImage = group?.GroupImages?.find(
     (image) => image.preview == true
@@ -62,7 +81,7 @@ const GroupDetails = () => {
             </h4>
           </div>
           <div className="group-info-buttons">
-            {user && user?.id !== group?.organizerId && (
+            {user && !isOwner && !isMember && (
               <button
                 id="join-group"
                 onClick={() => alert("Feature Coming Soon...")}
@@ -70,17 +89,25 @@ const GroupDetails = () => {
                 Join this Faction!
               </button>
             )}
-            {user?.id == group?.organizerId && (
+            {user && !isOwner && !isMember && (
+              <button
+                id="leave-group"
+                onClick={() => alert("Feature Coming Soon...")}
+              >
+                Abandon this Faction!
+              </button>
+            )}
+            {user && !isOwner && !isMember && (
               <button onClick={() => navigate(`/groups/${groupId}/events/new`)}>
                 Initialize New Campaign
               </button>
             )}
-            {user?.id == group?.organizerId && (
+            {isOwner && (
               <button onClick={() => navigate(`/groups/${groupId}/edit`)}>
                 Update Faction Intel
               </button>
             )}
-            {user?.id == group?.organizerId && (
+            {isOwner && (
               <OpenModalButton
                 buttonText="Delete"
                 modalComponent={<DeleteGroupModal group={group} />}
@@ -92,7 +119,7 @@ const GroupDetails = () => {
       <section className="group-events-section">
         <div className="group-events">
           <div>
-            <h2>Leader</h2>
+            <h2>Campaign Leader</h2>
             <h4>
               {group?.Organizer?.firstName} {group?.Organizer?.lastName}
             </h4>

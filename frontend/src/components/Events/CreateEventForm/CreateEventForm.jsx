@@ -20,6 +20,7 @@ const CreateEventForm = () => {
   const [url, setUrl] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
   const group = useSelector((state) => state.groups[groupId]);
+  const [isFree, setIsFree] = useState(false);
 
   useEffect(() => {
     dispatch(thunkGroupDetails(groupId));
@@ -35,22 +36,29 @@ const CreateEventForm = () => {
     const urlEnding4 = url.slice(-5);
 
     const errors = {};
-    if (!name) errors.name = "Name is required";
-    if (name.length < 5) errors.name = "Name must be at least 5 characters";
-    if (type == "select-one") errors.type = "Event Type is required";
+    if (!name) errors.name = "Real Name is required. No aliases.";
+    if (name.length < 5)
+      errors.name = "Name must be at least 5 characters. Sorry, Hulk.";
+    if (type == "select-one") errors.type = "Campaign Type is required";
     if (capacity == "placeholder" || !capacity)
-      errors.capacity = "Event capacity is required";
-    if (price == "placeholder" || !price) errors.price = "Price is required";
-    if (!startDate) errors.startDate = "Event start is required";
+      errors.capacity =
+        "Campaign capacity is required. I guess you could try to do it alone...";
+    if (price == "placeholder" || !price)
+      errors.price = "Price is required. Do I need to rob a bank?";
+    if (!startDate) errors.startDate = "Campaign start date is required";
     if (new Date(startDate).getTime() <= new Date().getTime())
-      errors.startDate = "Event start must be in the future";
+      errors.startDate =
+        "Campaign start date must be in the future. Unless, you have a Time Stone.";
     if (new Date(startDate).getTime() > new Date(endDate).getTime())
-      errors.endDate = "Event end must be after the start";
-    if (!endDate) errors.endDate = "Event end is required";
+      errors.endDate =
+        "Campaign end date must be after the start. Unless you have a Time Stone.";
+    if (!endDate)
+      errors.endDate = "Campaign end is required. Nothing lasts forever!";
     if (!urlEndings.includes(urlEnding3) && !urlEndings.includes(urlEnding4))
       errors.imageUrl = "Image URL must end in .png, .jpg, or .jpeg";
     if (description.length < 30)
-      errors.description = "Description must be at least 30 characters long";
+      errors.description =
+        "Tell other heroes what to expect! Description must be at least 30 characters long";
 
     if (Object.values(errors).length) {
       setValidationErrors(errors);
@@ -72,15 +80,16 @@ const CreateEventForm = () => {
         preview: true,
       };
 
-      const createdEvent = await dispatch(
-        thunkCreateEvent(groupId, newEventReqBody)
-      );
-      if (createdEvent.errors) {
-        setValidationErrors(createdEvent.errors);
-      } else {
-        await dispatch(thunkAddEventImage(createdEvent.id, newEventImgBody));
-        navigate(`/events/${createdEvent.id}`);
-      }
+      await dispatch(thunkCreateEvent(groupId, newEventReqBody))
+        .then(async (createdEvent) => {
+          await dispatch(thunkAddEventImage(createdEvent.id, newEventImgBody));
+          navigate(`/events/${createdEvent.id}`);
+        })
+        .catch(async (res) => {
+          console.log(res);
+          const data = await res.json();
+          setValidationErrors(data.errors);
+        });
     }
   };
 
@@ -114,14 +123,14 @@ const CreateEventForm = () => {
           <option disabled value="select-one">
             (select one)
           </option>
-          <option value="In person">In person</option>
+          <option value="In person">In Person</option>
           <option value="Online">Online</option>
         </select>
         {"type" in validationErrors && (
           <p className="errors">{validationErrors.type}</p>
         )}
         <label htmlFor="">
-          <p>How many heroes will be allowed?</p>
+          <p>How many heroes (or villains) will be allowed?</p>
         </label>
         <input
           type="number"
@@ -135,7 +144,9 @@ const CreateEventForm = () => {
           <p className="errors">{validationErrors.capacity}</p>
         )}
         <label htmlFor="price">
-          <p>Will this campaign require a monetary tribute?</p>
+          <p>
+            Will this campaign require a monetary tribute for participation?
+          </p>
         </label>
         <div id="campaign-div-price">
           <i className="fa-solid fa-dollar-sign"></i>
@@ -146,9 +157,18 @@ const CreateEventForm = () => {
             type="number"
             placeholder="0.00"
             min={0}
-            value={price}
+            value={isFree ? 0 : price}
             onChange={(e) => setPrice(e.target.value)}
           />
+        </div>
+        <div id="campaign-div-free">
+          <input
+            id="campaign-input-free"
+            type="checkbox"
+            checked={isFree}
+            onChange={(e) => setIsFree(e.target.checked)}
+          />
+          <label htmlFor="campaign-input-free">Free event</label>
         </div>
 
         {"price" in validationErrors && (
