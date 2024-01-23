@@ -1,0 +1,16 @@
+.user-groups-content {
+  width: 60%;
+  margin: 0 auto;
+}
+
+.user-groups-content ul {
+  padding-left: 0;
+}
+
+.user-groups-content li {
+  border-top: 2px solid #1e81b0;
+  padding: 1rem 0;
+  position: relative;
+  background-color: #fdfd96;
+  font-family: "Bangers", cursive;
+}
