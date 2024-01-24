@@ -19,6 +19,7 @@ const EventsListItem = ({ eventId }) => {
 
   useEffect(() => {
     dispatch(EventDetails(eventId));
+    console.log(`EVENT: `, eventId);
   }, [dispatch, eventId]);
 
   let date;

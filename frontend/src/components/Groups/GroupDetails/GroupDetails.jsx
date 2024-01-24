@@ -6,7 +6,7 @@ import {
   LoadMembers,
 } from "../../../store/groups";
 import { useEffect, useState } from "react";
-import EventsListItem from "../../Events/EventsListItem/";
+// import EventsListItem from "../../Events/EventsListItem/";
 import OpenModalButton from "../../OpenModalButton";
 import DeleteGroupModal from "../DeleteGroupModal";
 import "./GroupDetails.css";
@@ -17,40 +17,32 @@ const FetchGroupDetails = () => {
   const { groupId } = useParams();
   const user = useSelector((state) => state.session.user);
   const group = useSelector((state) => state.groups[groupId]);
-  const eventsState = useSelector((state) => state.events);
-  const events = useSelector((state) => state.groups[groupId]?.Events);
-
+  // const eventsState = useSelector((state) => state.events);
+  let events = useSelector((state) => state.groups[groupId]?.Events);
   const [upcoming, setUpcoming] = useState([]);
   const [past, setPast] = useState([]);
 
-  useEffect(() => {
-    // console.log("LOADED EVENTS: ", events);
-    dispatch(GroupDetails(groupId));
-    dispatch(LoadGroupEvents(groupId));
-    dispatch(LoadMembers(groupId));
-  }, [dispatch, groupId]);
+  // useEffect(() => {
+  //   dispatch(GroupDetails(groupId));
+  //   dispatch(LoadGroupEvents(groupId));
+  //   dispatch(LoadMembers(groupId));
+  // }, [dispatch, groupId, group]);
 
   useEffect(() => {
-    if (events) {
+    if (group?.Events) {
       const now = new Date();
-      const sortedEvents = [...events].sort(
-        (a, b) => new Date(a.startDate) - new Date(b.startDate)
-      );
-      const upcomingEvents = sortedEvents.filter(
-        (event) => new Date(event.startDate) >= now
-      );
-      const pastEvents = sortedEvents.filter(
-        (event) => new Date(event.startDate) < now
-      );
-
-      setUpcoming(upcomingEvents);
-      setPast(pastEvents);
+      group.Events.forEach((event) => {
+        const startDate = new Date(event.startDate);
+        if (startDate >= now) {
+          setUpcoming((prev) => [...prev, event]);
+        } else {
+          setPast((prev) => [...prev, event]);
+        }
+      });
     }
-  }, [events]);
+  }, [group?.Events]);
 
-  if (!eventsState) return null;
-
-  const isOwner = user?.id == group?.organizerId;
+  const isOrganizer = user?.id == group?.organizerId;
   let isMember;
   if (group?.Members) {
     const members = Object.values(group?.Members);
@@ -60,16 +52,6 @@ const FetchGroupDetails = () => {
         return member.id == user.id;
       }).length > 0;
   }
-
-  const now = new Date();
-  // const upcoming = [];
-  // const past = [];
-
-  events?.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
-
-  events?.forEach((event) => {
-    new Date(event.startDate) < now ? past.push(event) : upcoming.push(event);
-  });
 
   const groupPreviewImage = group?.GroupImages?.find(
     (image) => image.preview == true
@@ -112,8 +94,8 @@ const FetchGroupDetails = () => {
                 Join this Faction!
               </button>
             )}
-            {/* If the user is logged in and not the owner and not a member, show the "Join this Faction!" button */}
-            {user && !isOwner && !isMember && (
+            {/* If the user is logged in and not the Organizer and not a member, show the "Join this Faction!" button */}
+            {user && !isOrganizer && !isMember && (
               <button
                 id="join-group"
                 onClick={() => alert("Feature Coming Soon...")}
@@ -121,8 +103,8 @@ const FetchGroupDetails = () => {
                 Join this Faction!
               </button>
             )}
-            {/* If the user is logged in and not the owner and is a member, show the "Abandon this Faction!" and "Initialize New Campaign" buttons */}
-            {user && !isOwner && isMember && (
+            {/* If the user is logged in and not the Organizer and is a member, show the "Abandon this Faction!" and "Initialize New Campaign" buttons */}
+            {user && !isOrganizer && isMember && (
               <>
                 <button
                   id="leave-group"
@@ -137,8 +119,8 @@ const FetchGroupDetails = () => {
                 </button>
               </>
             )}
-            {/* If the user is logged in and is the owner, show the "Update Faction Intel", "Delete", and "Initialize New Campaign" buttons */}
-            {user && isOwner && (
+            {/* If the user is logged in and is the Organizer, show the "Update Faction Intel", "Delete", and "Initialize New Campaign" buttons */}
+            {user && isOrganizer && (
               <>
                 <button onClick={() => navigate(`/groups/${groupId}/edit`)}>
                   Update Faction Intel
@@ -173,7 +155,11 @@ const FetchGroupDetails = () => {
               <h2>Upcoming Campaigns ({upcoming.length})</h2>
               <ul>
                 {upcoming.map((event) => (
-                  <EventsListItem key={event.id} eventId={event.id} />
+                  <li key={event.id}>
+                    {/* Render event details here */}
+                    {event.name} -{" "}
+                    {new Date(event.startDate).toLocaleDateString()}
+                  </li>
                 ))}
               </ul>
             </div>
@@ -183,7 +169,11 @@ const FetchGroupDetails = () => {
               <h2>Past Campaigns ({past.length})</h2>
               <ul>
                 {past.map((event) => (
-                  <EventsListItem key={event.id} eventId={event.id} />
+                  <li key={event.id}>
+                    {/* Render event details here */}
+                    {event.name} -{" "}
+                    {new Date(event.startDate).toLocaleDateString()}
+                  </li>
                 ))}
               </ul>
             </div>

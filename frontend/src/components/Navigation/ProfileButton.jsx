@@ -34,7 +34,7 @@ function ProfileButton({ user }) {
 
   const logout = (e) => {
     e.preventDefault();
-    dispatch(sessionActions.thunkLogout());
+    dispatch(sessionActions.Logout());
     navigate("/");
   };
 
