@@ -32,14 +32,22 @@ const EditGroupForm = () => {
 
     const errors = {};
 
-    if (!city) errors.city = "City is required";
-    if (!state) errors.state = "State is required";
-    if (!name) errors.name = "Name is required";
+    if (!city)
+      errors.city =
+        "City is required (If from another planet: Use the city you landed in)";
+    if (!state)
+      errors.state =
+        "State is required, and we aren't talking about Meta-physical states...";
+    if (state.length < 2 || state.length > 2)
+      errors.state = "State must be 2 characters long";
+    if (!name) errors.name = "Actual Name is required. No aliases allowed";
     if (about.length < 30)
-      errors.about = "Description must be at least 30 characters long";
-    if (type == "placeholder" || !type) errors.type = "Group Type is required";
-    if (privacy == "placeholder")
-      errors.privacy = "Visibility Type is required";
+      errors.about =
+        "Less than 30 characters to describe your faction? You're that famous, huh?";
+    if (type == "placeholder" || !type)
+      errors.type = "Faction Type is required for authorization";
+    if (privacy == "placeholder" || !privacy)
+      errors.privacy = "Visibility Type is required even if you're invisible";
 
     setValidationErrors(errors);
 
@@ -71,9 +79,11 @@ const EditGroupForm = () => {
         <div>
           <h2>Set your faction&apos;s location</h2>
           <p>
-            MutantMingle factions meet locally, in person and online.
+            MutantMingle factions assemble locally, in person and online.
             <br />
             We&apos;ll connect you with heroes or villains in your area.
+            <br />
+            (Galactic locations are not supported at this time)
           </p>
           <label>
             <input
@@ -102,19 +112,21 @@ const EditGroupForm = () => {
           )}
         </div>
         <div>
-          <h2>What will your faction&apos;s name be?</h2>
+          <h2>
+            How will your Faction&apos;s name be seen by your enemies and fans?
+          </h2>
           <p>
-            Choose a name that will strike fear in the hearts of citizens or
-            villains.
+            Choose a name that will strike fear in your enemies and cheered by
+            your fans.
             <br />
             Be creative! Your faction name is critical! You can always change it
-            later.
+            later. (Avengers is already taken)
           </p>
           <label>
             <input
               type="text"
               id="group-name"
-              placeholder="What is your group name?"
+              placeholder="What is your faction's name?"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -125,21 +137,18 @@ const EditGroupForm = () => {
         </div>
         <div>
           <h2>Describe the destiny of your faction.</h2>
-          <label>
-            <p>
-              Other Heroes will see this when we promote your faction, but
-              you&apos;ll be able to add to it later, too.
-              <br />
-              <br />
-              1. What&apos;s the purpose of the faction?
-              <br />
-              2. Who should join?
-              <br />
-              3. What will you do at your campaigns?
-            </p>
-          </label>
+          <p>
+            Other Heroes will see this when we promote your faction, but
+            you&apos;ll be able to add to it later, too.
+            <br />
+            <br />
+            1. What&apos;s the purpose of the faction?
+            <br />
+            2. Who should join?
+            <br />
+            3. What will you do at your campaigns?
+          </p>
           <textarea
-            name=""
             id="group-about"
             cols="30"
             rows="10"
@@ -157,6 +166,7 @@ const EditGroupForm = () => {
             <p>Is this an in person or online faction?</p>
             <select
               name="type"
+              id="type"
               value={type}
               onChange={(e) => setType(e.target.value)}
             >
@@ -175,8 +185,13 @@ const EditGroupForm = () => {
             <p className="errors">{validationErrors.type}</p>
           )}
           <label htmlFor="privacy">
-            <p>Is this faction private or public?</p>
+            <p>
+              Is this faction a private underground syndicate or a public entity
+              for gifted mutants?
+            </p>
             <select
+              name="privacy"
+              id="privacy"
               value={privacy}
               onChange={(e) => setPrivacy(e.target.value)}
             >
@@ -196,11 +211,10 @@ const EditGroupForm = () => {
           )}
         </div>
         <div>
-          <button onSubmit={handleSubmit}>Re-Assemble Faction!</button>
+          <button type="submit">Re-Assemble Faction!</button>
         </div>
       </form>
     </section>
   );
 };
-
 export default EditGroupForm;
