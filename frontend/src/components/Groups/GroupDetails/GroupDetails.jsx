@@ -84,17 +84,8 @@ const GroupDetails = () => {
             </h4>
           </div>
           <div className="group-info-buttons">
-            {/* If the user is not logged in, show the "Join this Faction!" button */}
-            {!user && (
-              <button
-                id="join-group"
-                onClick={() => alert("Feature Coming Soon...")}
-              >
-                Join this Faction!
-              </button>
-            )}
             {/* If the user is logged in and not the owner and not a member, show the "Join this Faction!" button */}
-            {user && !isOwner && !isMember && (
+            {!isOwner && !isMember && (
               <button
                 id="join-group"
                 onClick={() => alert("Feature Coming Soon...")}
@@ -103,7 +94,7 @@ const GroupDetails = () => {
               </button>
             )}
             {/* If the user is logged in and not the owner and is a member, show the "Abandon this Faction!" and "Initialize New Campaign" buttons */}
-            {user && !isOwner && isMember && (
+            {!isOwner && isMember && (
               <>
                 <button
                   id="leave-group"
@@ -119,7 +110,7 @@ const GroupDetails = () => {
               </>
             )}
             {/* If the user is logged in and is the owner, show the "Update Faction Intel", "Delete", and "Initialize New Campaign" buttons */}
-            {user && isOwner && (
+            {isOwner && (
               <>
                 <button onClick={() => navigate(`/groups/${groupId}/edit`)}>
                   Update Faction Intel

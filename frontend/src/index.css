@@ -1,43 +1,114 @@
-/* Comic Book Inspired Site-Wide Styles */
-@import url("https://fonts.googleapis.com/css2?family=Bangers&display=swap");
-
-body {
-  background-image: url("./comic-skyline-bg.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  margin: 0;
-  background-color: #f4f4f4;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(255, 255, 255, 0.5); /* Semi-transparent white overlay */
-  z-index: -1;
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --gray: #808080;
+  --dark-gray: #999999;
+  --light-gray: #cccccc;
+  --red: #ff5a5f;
+  --teal: #00525e;
+  --light-teal: #e8f0fe;
+  --light-yellow: #dec963;
+  --brown: rgb(122, 43, 29);
+  --dark-brown: rgb(110, 75, 75);
 }
 
 * {
-  font-family: "Bangers", cursive;
+  padding: 0;
+  margin: 0;
+  font-size: 12pt;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
-li {
-  list-style-type: none;
+.heading {
+  font-size: 25pt;
+  font-weight: bold;
+}
+
+.subheading {
+  font-size: 17pt;
+  font-weight: bold;
+}
+
+button {
+  padding: 10px 20px;
+  text-align: center;
+  background-color: var(--white);
+  color: var(--black);
+  border-color: var(--light-gray);
+  border-radius: 5px;
+}
+
+.btn-accent {
+  background-color: var(--dark-gray);
+  color: var(--white);
+  border-color: var(--black);
+}
+
+.btn-primary {
+  background-color: var(--red);
+  color: var(--white);
+  border-color: var(--black);
+}
+
+.btn-teal {
+  background-color: var(--teal);
+  color: var(--white);
+  border-color: var(--black);
+}
+
+a,
+button:hover {
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+}
+
+.hidden {
+  display: none;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+form input {
+  padding: 10px;
+}
+
+form select {
+  padding: 10px;
+}
+
+form textarea {
+  padding: 10px;
+}
+
+form .btn-primary {
+  border: none;
+  margin-top: 20px;
+}
+
+form .btn-primary.enabled:hover {
+  background-color: transparent;
+  color: var(--red);
+  border: 1px solid var(--red);
+}
+
+.error-message {
+  color: var(--red);
 }
 
 a {
-  color: #1e81b0;
-  text-decoration: none;
+  text-align: center;
+  color: var(--teal);
 }
 
-.error {
-  color: #ff6161;
-}
-
-p {
-  word-wrap: break-word;
+a:hover {
+  text-decoration: underline;
+  font-size: 20px;
 }

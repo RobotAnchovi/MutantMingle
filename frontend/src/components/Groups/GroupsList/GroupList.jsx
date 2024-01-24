@@ -8,9 +8,9 @@ import "./GroupList.css";
 
 const GroupList = () => {
   const dispatch = useDispatch();
-  const groupsObj = useSelector((state) => state.groups);
+  const groupsObj = useSelector((state) => state.groups.list);
   // const eventsObj = useSelector((state) => state.events);
-  const groups = Object.values(groupsObj);
+  // const groups = Object.values(groupsObj);
   // const events = Object.values(eventsObj);
 
   // if (groups.length) {
@@ -46,9 +46,10 @@ const GroupList = () => {
       </section>
       <section>
         <ul className="group-list" style={{ listStyleType: "none" }}>
-          {groups.map((group) => (
-            <ListGroupItem group={group} key={group.id} />
-          ))}
+          {Array.isArray(groupsObj) &&
+            groupsObj.map((group) => (
+              <ListGroupItem group={group} key={group.id} />
+            ))}
         </ul>
       </section>
     </div>

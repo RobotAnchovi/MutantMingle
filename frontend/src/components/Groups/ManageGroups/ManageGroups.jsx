@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import GroupListItem from "../GroupListItem";
 import { useEffect } from "react";
-import { thunkGetUserGroups } from "../../../store/session";
+import { thunkLoadUserGroups } from "../../../store/session";
 import "./ManageGroups.css";
 
 const ManageGroups = () => {
@@ -14,7 +14,7 @@ const ManageGroups = () => {
   }
 
   useEffect(() => {
-    dispatch(thunkGetUserGroups(user.id));
+    dispatch(thunkLoadUserGroups(user.id));
   }, [dispatch, user.id]);
 
   return (
