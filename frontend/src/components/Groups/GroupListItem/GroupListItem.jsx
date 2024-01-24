@@ -3,22 +3,19 @@ import OpenModalButton from "../../OpenModalButton";
 import DeleteGroupModal from "../DeleteGroupModal";
 import "./GroupListItem.css";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { thunkLoadGroupEvents } from "../../../store/groups";
+import { thunkLoadUserGroupEvents } from "../../../store/session";
 
 const GroupListItem = ({ group, isOwner, isMember }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const groupEvents = useSelector((state) => state.groups[group.id].Events);
+  // const groupEvents = useSelector((state) => state.groups[group.id].Events);
 
-  // useEffect(() => {
-  //   dispatch(thunkLoadGroupEvents(group.id));
-  // }, [dispatch, group]);
   useEffect(() => {
-    if (!groupEvents || groupEvents.length === 0) {
-      dispatch(thunkLoadGroupEvents(group.id));
-    }
-  }, [dispatch, group.id]); //removed groupEvents from dependency array
+    dispatch(thunkLoadGroupEvents(group.id));
+    if (isOwner || isMember) dispatch(thunkLoadUserGroupEvents(group.id));
+  }, [dispatch, group.id, isMember, isOwner]);
 
   return (
     <li>
@@ -39,7 +36,7 @@ const GroupListItem = ({ group, isOwner, isMember }) => {
             <p>{group.about}</p>
             <div className="group-list-item-lowest-container">
               <div className="group-events-type-container">
-                <span>{groupEvents?.length} Campaigns</span>
+                <span>{group.Events?.length} Campaigns</span>
                 <span> · </span>
                 <span>{group.private ? "Private" : "Public"}</span>
               </div>

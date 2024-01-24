@@ -3,30 +3,30 @@ import ListGroupItem from "../GroupListItem/GroupListItem";
 import { useEffect } from "react";
 import { thunkLoadGroups } from "../../../store/groups";
 import { NavLink } from "react-router-dom";
-import { thunkLoadEvents } from "../../../store/events";
+// import { thunkLoadEvents } from "../../../store/events";
 import "./GroupList.css";
 
 const GroupList = () => {
   const dispatch = useDispatch();
   const groupsObj = useSelector((state) => state.groups);
-  const eventsObj = useSelector((state) => state.events);
+  // const eventsObj = useSelector((state) => state.events);
   const groups = Object.values(groupsObj);
-  const events = Object.values(eventsObj);
+  // const events = Object.values(eventsObj);
 
-  if (groups.length) {
-    groups?.forEach((group) => {
-      group.events = [];
-      events?.forEach((event) => {
-        if (event?.groupId == group.id) {
-          group.events.push(event);
-        }
-      });
-    });
-  }
+  // if (groups.length) {
+  //   groups?.forEach((group) => {
+  //     group.events = [];
+  //     events?.forEach((event) => {
+  //       if (event?.groupId == group.id) {
+  //         group.events.push(event);
+  //       }
+  //     });
+  //   });
+  // }
 
   useEffect(() => {
     dispatch(thunkLoadGroups());
-    dispatch(thunkLoadEvents());
+    // dispatch(thunkLoadEvents());
   }, [dispatch]);
 
   return (

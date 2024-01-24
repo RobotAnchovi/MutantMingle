@@ -1,8 +1,11 @@
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import GroupListItem from "../GroupListItem";
+import { useEffect } from "react";
+import { thunkGetUserGroups } from "../../../store/session";
 import "./ManageGroups.css";
 
 const ManageGroups = () => {
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
   const userGroupsObj = useSelector((state) => state.session.user.Groups);
   let userGroups;
@@ -10,8 +13,12 @@ const ManageGroups = () => {
     userGroups = Object.values(userGroupsObj);
   }
 
+  useEffect(() => {
+    dispatch(thunkGetUserGroups(user.id));
+  }, [dispatch, user.id]);
+
   return (
-    <div className="user-groups-content">
+    <div className="user-factions-content">
       <h2>Manage Factions</h2>
 
       <h4>Your Factions in MutantMingle</h4>

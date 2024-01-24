@@ -1,13 +1,13 @@
-.user-groups-content {
+.user-factions-content {
   width: 60%;
   margin: 0 auto;
 }
 
-.user-groups-content ul {
+.user-factions-content ul {
   padding-left: 0;
 }
 
-.user-groups-content li {
+.user-factions-content li {
   border-top: 2px solid #1e81b0;
   padding: 1rem 0;
   position: relative;

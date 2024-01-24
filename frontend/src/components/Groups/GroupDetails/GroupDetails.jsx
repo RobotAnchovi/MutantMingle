@@ -5,7 +5,7 @@ import {
   thunkLoadGroupEvents,
   thunkLoadMembers,
 } from "../../../store/groups";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import EventsListItem from "../../Events/EventsListItem/";
 import OpenModalButton from "../../OpenModalButton";
 import DeleteGroupModal from "../DeleteGroupModal";
@@ -20,8 +20,8 @@ const GroupDetails = () => {
   const eventsState = useSelector((state) => state.events);
   const events = useSelector((state) => state.groups[groupId]?.Events);
 
-  const [upcoming, setUpcoming] = useState([]);
-  const [past, setPast] = useState([]);
+  // const [upcoming, setUpcoming] = useState([]);
+  // const [past, setPast] = useState([]);
 
   useEffect(() => {
     // console.log("LOADED EVENTS: ", events);
@@ -29,24 +29,6 @@ const GroupDetails = () => {
     dispatch(thunkLoadGroupEvents(groupId));
     dispatch(thunkLoadMembers(groupId));
   }, [dispatch, groupId]);
-
-  useEffect(() => {
-    if (events) {
-      const now = new Date();
-      const sortedEvents = [...events].sort(
-        (a, b) => new Date(a.startDate) - new Date(b.startDate)
-      );
-      const upcomingEvents = sortedEvents.filter(
-        (event) => new Date(event.startDate) >= now
-      );
-      const pastEvents = sortedEvents.filter(
-        (event) => new Date(event.startDate) < now
-      );
-
-      setUpcoming(upcomingEvents);
-      setPast(pastEvents);
-    }
-  }, [events]);
 
   if (!eventsState) return null;
 
@@ -60,10 +42,9 @@ const GroupDetails = () => {
         return member.id == user.id;
       }).length > 0;
   }
-
   const now = new Date();
-  // const upcoming = [];
-  // const past = [];
+  const upcoming = [];
+  const past = [];
 
   events?.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
 
