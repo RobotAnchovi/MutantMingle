@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { thunkLoadGroups } from "../../store/groups";
-import { thunkLoadEvents } from "../../store/events";
+import { LoadGroups } from "../../store/groups";
+import { LoadEvents } from "../../store/events";
 import * as sessionActions from "../../store/session";
 import "./LoginForm.css";
 
@@ -19,12 +19,12 @@ function LoginFormModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors("");
-    return dispatch(sessionActions.thunkLoginUser({ credential, password }))
+    return dispatch(sessionActions.LoginUser({ credential, password }))
       .then(() => {
         closeModal();
-        dispatch(thunkLoadGroups());
-        dispatch(thunkLoadEvents());
-        dispatch(sessionActions.thunkLoadUserGroups());
+        dispatch(LoadGroups());
+        dispatch(LoadEvents());
+        dispatch(sessionActions.LoadUserGroups());
       })
       .catch((error) => {
         if (error && error.message) {
@@ -48,16 +48,16 @@ function LoginFormModal() {
 
     setErrors("");
     return dispatch(
-      sessionActions.thunkLoginUser({
+      sessionActions.LoginUser({
         credential: "Demo-lition",
         password: "password",
       })
     )
       .then(() => {
         closeModal();
-        dispatch(thunkLoadGroups());
-        dispatch(thunkLoadEvents());
-        dispatch(sessionActions.thunkLoadUserGroups());
+        dispatch(LoadGroups());
+        dispatch(LoadEvents());
+        dispatch(sessionActions.LoadUserGroups());
       })
       .catch(async (res) => {
         const data = await res.json();

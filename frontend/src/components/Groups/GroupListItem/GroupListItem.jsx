@@ -4,7 +4,7 @@ import DeleteGroupModal from "../DeleteGroupModal";
 import "./GroupListItem.css";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkLoadGroupEvents } from "../../../store/groups";
+import { LoadGroupEvents } from "../../../store/groups";
 
 const GroupListItem = ({ group, isOwner, isMember }) => {
   const dispatch = useDispatch();
@@ -12,11 +12,11 @@ const GroupListItem = ({ group, isOwner, isMember }) => {
   const groupEvents = useSelector((state) => state.groups[group.id].Events);
 
   // useEffect(() => {
-  //   dispatch(thunkLoadGroupEvents(group.id));
+  //   dispatch(LoadGroupEvents(group.id));
   // }, [dispatch, group]);
   useEffect(() => {
     if (!groupEvents || groupEvents.length === 0) {
-      dispatch(thunkLoadGroupEvents(group.id));
+      dispatch(LoadGroupEvents(group.id));
     }
   }, [dispatch, group.id]); //removed groupEvents from dependency array
 

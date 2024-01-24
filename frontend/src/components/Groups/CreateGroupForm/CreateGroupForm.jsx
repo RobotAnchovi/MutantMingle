@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { thunkCreateGroup, thunkAddImage } from "../../../store/groups";
+import { CreateGroup, AddImage } from "../../../store/groups";
 import "./CreateGroupForm.css";
 
 const CreateGroupForm = () => {
@@ -62,12 +62,12 @@ const CreateGroupForm = () => {
         preview: true,
       };
 
-      const createdGroup = await dispatch(thunkCreateGroup(newGroupReqBody));
+      const createdGroup = await dispatch(CreateGroup(newGroupReqBody));
 
       if (createdGroup.errors) {
         setValidationErrors(createdGroup.errors);
       } else {
-        await dispatch(thunkAddImage(createdGroup.id, newImageReqBody));
+        await dispatch(AddImage(createdGroup.id, newImageReqBody));
         navigate(`/groups/${createdGroup.id}`);
       }
     }

@@ -57,21 +57,21 @@ export const loadMembers = (groupId, members) => ({
 });
 
 ///*====> Thunks <====
-export const thunkLoadGroups = () => async (dispatch) => {
-  const response = await fetch("/api/groups");
+export const LoadGroups = () => async (dispatch) => {
+  const response = await csrfFetch("/api/groups");
   const groups = await response.json();
   dispatch(loadGroups(groups));
 };
 
-export const thunkGroupDetails = (groupId) => async (dispatch) => {
-  const response = await fetch(`/api/groups/${groupId}`);
+export const GroupDetails = (groupId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/groups/${groupId}`);
   const group = await response.json();
   dispatch(loadGroupDetails(group));
   return group;
 };
 
-export const thunkLoadGroupEvents = (groupId) => async (dispatch) => {
-  const response = await fetch(`/api/groups/${groupId}/events`);
+export const LoadGroupEvents = (groupId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/groups/${groupId}/events`);
 
   if (response.ok) {
     const events = await response.json();
@@ -83,7 +83,7 @@ export const thunkLoadGroupEvents = (groupId) => async (dispatch) => {
   }
 };
 
-export const thunkCreateGroup = (group) => async (dispatch) => {
+export const CreateGroup = (group) => async (dispatch) => {
   const response = await csrfFetch("/api/groups", {
     method: "POST",
     headers: {
@@ -102,7 +102,7 @@ export const thunkCreateGroup = (group) => async (dispatch) => {
   }
 };
 
-export const thunkAddImage = (groupId, image) => async (dispatch) => {
+export const AddImage = (groupId, image) => async (dispatch) => {
   const response = await csrfFetch(`/api/groups/${groupId}/images`, {
     method: "POST",
     headers: {
@@ -121,7 +121,7 @@ export const thunkAddImage = (groupId, image) => async (dispatch) => {
   }
 };
 
-export const thunkEditGroup = (groupId, group) => async (dispatch) => {
+export const EditGroup = (groupId, group) => async (dispatch) => {
   const response = await csrfFetch(`/api/groups/${groupId}`, {
     method: "PUT",
     headers: {
@@ -140,7 +140,7 @@ export const thunkEditGroup = (groupId, group) => async (dispatch) => {
   }
 };
 
-export const thunkDeleteGroup = (group) => async (dispatch) => {
+export const DeleteGroup = (group) => async (dispatch) => {
   const response = await csrfFetch(`/api/groups/${group.id}`, {
     method: "DELETE",
     headers: {
@@ -161,8 +161,8 @@ export const thunkDeleteGroup = (group) => async (dispatch) => {
   }
 };
 
-export const thunkLoadMembers = (groupId) => async (dispatch) => {
-  const response = await fetch(`/api/groups/${groupId}/members`);
+export const LoadMembers = (groupId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/groups/${groupId}/members`);
 
   if (response.ok) {
     const members = await response.json();

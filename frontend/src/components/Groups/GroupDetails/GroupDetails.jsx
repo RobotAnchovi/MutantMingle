@@ -1,9 +1,9 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  thunkGroupDetails,
-  thunkLoadGroupEvents,
-  thunkLoadMembers,
+  GroupDetails,
+  LoadGroupEvents,
+  LoadMembers,
 } from "../../../store/groups";
 import { useEffect, useState } from "react";
 import EventsListItem from "../../Events/EventsListItem/";
@@ -11,7 +11,7 @@ import OpenModalButton from "../../OpenModalButton";
 import DeleteGroupModal from "../DeleteGroupModal";
 import "./GroupDetails.css";
 
-const GroupDetails = () => {
+const FetchGroupDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { groupId } = useParams();
@@ -25,9 +25,9 @@ const GroupDetails = () => {
 
   useEffect(() => {
     // console.log("LOADED EVENTS: ", events);
-    dispatch(thunkGroupDetails(groupId));
-    dispatch(thunkLoadGroupEvents(groupId));
-    dispatch(thunkLoadMembers(groupId));
+    dispatch(GroupDetails(groupId));
+    dispatch(LoadGroupEvents(groupId));
+    dispatch(LoadMembers(groupId));
   }, [dispatch, groupId]);
 
   useEffect(() => {
@@ -194,4 +194,4 @@ const GroupDetails = () => {
   );
 };
 
-export default GroupDetails;
+export default FetchGroupDetails;

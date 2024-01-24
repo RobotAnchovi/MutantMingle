@@ -1,9 +1,9 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { thunkGroupDetails } from "../../../store/groups";
-import { thunkCreateEvent } from "../../../store/events";
-import { thunkAddEventImage } from "../../../store/events";
+import { GroupDetails } from "../../../store/groups";
+import { CreateEvent } from "../../../store/events";
+import { AddEventImage } from "../../../store/events";
 import "./CreateEventForm.css";
 
 const CreateEventForm = () => {
@@ -23,7 +23,7 @@ const CreateEventForm = () => {
   // const [isFree, setIsFree] = useState(false);
 
   useEffect(() => {
-    dispatch(thunkGroupDetails(groupId));
+    dispatch(GroupDetails(groupId));
   }, [dispatch, groupId]);
 
   const handleSubmit = async (e) => {
@@ -80,9 +80,9 @@ const CreateEventForm = () => {
         preview: true,
       };
 
-      await dispatch(thunkCreateEvent(groupId, newEventReqBody))
+      await dispatch(CreateEvent(groupId, newEventReqBody))
         .then(async (createdEvent) => {
-          await dispatch(thunkAddEventImage(createdEvent.id, newEventImgBody));
+          await dispatch(AddEventImage(createdEvent.id, newEventImgBody));
           navigate(`/events/${createdEvent.id}`);
         })
         .catch(async (res) => {

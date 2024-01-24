@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
-import { thunkDeleteEvent } from "../../../store/events";
+import { DeleteEvent } from "../../../store/events";
 import "./DeleteEventModal.css";
 
 const DeleteEventModal = ({ event }) => {
@@ -14,7 +14,7 @@ const DeleteEventModal = ({ event }) => {
     e.preventDefault();
     closeModal();
     navigate(`/groups/${group.id}`);
-    dispatch(thunkDeleteEvent(event.id));
+    dispatch(DeleteEvent(event.id));
   };
 
   const handleCancel = (e) => {

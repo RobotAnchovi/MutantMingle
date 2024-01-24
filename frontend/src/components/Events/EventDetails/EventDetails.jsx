@@ -1,13 +1,13 @@
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { thunkEventDetails } from "../../../store/events";
-import { thunkGroupDetails } from "../../../store/groups";
+import { EventDetails } from "../../../store/events";
+import { GroupDetails } from "../../../store/groups";
 import OpenModalButton from "../../OpenModalButton";
 import DeleteEventModal from "../DeleteEventModal";
 import "./EventDetails.css";
 
-const EventDetails = () => {
+const FetchEventDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { eventId } = useParams();
@@ -17,8 +17,8 @@ const EventDetails = () => {
   const isUserOwner = group?.organizerId == user?.id;
 
   useEffect(() => {
-    if (!event?.EventImages) dispatch(thunkEventDetails(eventId));
-    if (group && !group.Organizer) dispatch(thunkGroupDetails(group?.id));
+    if (!event?.EventImages) dispatch(EventDetails(eventId));
+    if (group && !group.Organizer) dispatch(GroupDetails(group?.id));
   }, [dispatch, eventId, group, group?.id, event?.EventImages]);
 
   let eventImagesPreview;
@@ -160,4 +160,4 @@ const EventDetails = () => {
   );
 };
 
-export default EventDetails;
+export default FetchEventDetails;

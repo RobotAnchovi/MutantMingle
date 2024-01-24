@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 import ListGroupItem from "../GroupListItem/GroupListItem";
 import { useEffect } from "react";
-import { thunkLoadGroups } from "../../../store/groups";
+import { LoadGroups } from "../../../store/groups";
 import { NavLink } from "react-router-dom";
-import { thunkLoadEvents } from "../../../store/events";
+import { LoadEvents } from "../../../store/events";
 import "./GroupList.css";
 
 const GroupList = () => {
@@ -25,8 +25,8 @@ const GroupList = () => {
   }
 
   useEffect(() => {
-    dispatch(thunkLoadGroups());
-    dispatch(thunkLoadEvents());
+    dispatch(LoadGroups());
+    dispatch(LoadEvents());
   }, [dispatch]);
 
   return (

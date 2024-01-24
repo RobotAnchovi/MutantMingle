@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
-import { thunkDeleteGroup } from "../../../store/groups";
+import { DeleteGroup } from "../../../store/groups";
 import "./DeleteGroupModal.css";
 
 const DeleteGroupModal = ({ group }) => {
@@ -11,7 +11,7 @@ const DeleteGroupModal = ({ group }) => {
 
   const handleDelete = (e) => {
     e.preventDefault();
-    dispatch(thunkDeleteGroup(group));
+    dispatch(DeleteGroup(group));
     closeModal();
     navigate("/groups");
   };

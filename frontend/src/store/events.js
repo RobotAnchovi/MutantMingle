@@ -71,8 +71,8 @@ const formatDate = (dateString) => {
   return `${formattedDate} ${formattedTime}`;
 };
 
-export const thunkLoadEvents = () => async (dispatch) => {
-  const response = await fetch("/api/events");
+export const LoadEvents = () => async (dispatch) => {
+  const response = await csrfFetch("/api/events");
   const { Events } = await response.json();
   const formattedEvents = Events.map((event) => ({
     ...event,
@@ -98,8 +98,8 @@ export const thunkLoadEvents = () => async (dispatch) => {
 //   }
 // };
 
-export const thunkEventDetails = (eventId) => async (dispatch) => {
-  const response = await fetch(`/api/events/${eventId}`);
+export const EventDetails = (eventId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/events/${eventId}`);
   const event = await response.json();
 
   if (response.ok) {
@@ -114,7 +114,7 @@ export const thunkEventDetails = (eventId) => async (dispatch) => {
   }
 };
 
-export const thunkCreateEvent = (groupId, event) => async (dispatch) => {
+export const CreateEvent = (groupId, event) => async (dispatch) => {
   const response = await csrfFetch(`/api/groups/${groupId}/events`, {
     method: "POST",
     headers: {
@@ -133,7 +133,7 @@ export const thunkCreateEvent = (groupId, event) => async (dispatch) => {
   }
 };
 
-export const thunkUpdateEvent = (eventId, event) => async (dispatch) => {
+export const UpdateEvent = (eventId, event) => async (dispatch) => {
   const response = await csrfFetch(`/api/events/${eventId}`, {
     method: "PUT",
     headers: {
@@ -152,7 +152,7 @@ export const thunkUpdateEvent = (eventId, event) => async (dispatch) => {
   }
 };
 
-export const thunkAddEventImage = (eventId, image) => async (dispatch) => {
+export const AddEventImage = (eventId, image) => async (dispatch) => {
   const response = await csrfFetch(`/api/events/${eventId}/images`, {
     method: "POST",
     headers: {
@@ -171,7 +171,7 @@ export const thunkAddEventImage = (eventId, image) => async (dispatch) => {
   }
 };
 
-export const thunkDeleteEvent = (eventId) => async (dispatch) => {
+export const DeleteEvent = (eventId) => async (dispatch) => {
   const response = await csrfFetch(`/api/events/${eventId}`, {
     method: "DELETE",
     headers: {

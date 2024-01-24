@@ -25,7 +25,7 @@ export const loadUserEvents = (events) => ({
 });
 
 //*====> Session Thunks <====
-export const thunkLoginUser = (user) => async (dispatch) => {
+export const LoginUser = (user) => async (dispatch) => {
   const { credential, password } = user;
   const response = await csrfFetch("/api/session", {
     method: "POST",
@@ -44,14 +44,14 @@ export const thunkLoginUser = (user) => async (dispatch) => {
   }
 };
 
-export const thunkRestoreUser = () => async (dispatch) => {
+export const RestoreUser = () => async (dispatch) => {
   const response = await csrfFetch("/api/session");
   const data = await response.json();
   dispatch(loginUser(data.user));
   return data;
 };
 
-export const thunkSignup = (user) => async (dispatch) => {
+export const Signup = (user) => async (dispatch) => {
   const { username, firstName, lastName, email, password } = user;
   const response = await csrfFetch("/api/users", {
     method: "POST",
@@ -73,7 +73,7 @@ export const thunkSignup = (user) => async (dispatch) => {
   }
 };
 
-export const thunkLogout = () => async (dispatch) => {
+export const Logout = () => async (dispatch) => {
   const response = await csrfFetch("/api/session", {
     method: "DELETE",
   });
@@ -81,7 +81,7 @@ export const thunkLogout = () => async (dispatch) => {
   return response;
 };
 
-export const thunkLoadUserGroups = () => async (dispatch) => {
+export const LoadUserGroups = () => async (dispatch) => {
   const response = await csrfFetch("/api/groups/current");
 
   if (response.ok) {
@@ -94,7 +94,7 @@ export const thunkLoadUserGroups = () => async (dispatch) => {
   }
 };
 
-export const thunkLoadUserEvents = () => async (dispatch) => {
+export const LoadUserEvents = () => async (dispatch) => {
   const response = await csrfFetch(`/api/events/current`);
 
   if (response.ok) {

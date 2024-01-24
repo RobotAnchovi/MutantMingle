@@ -2,7 +2,7 @@ import "./EditGroupForm.css";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { thunkGroupDetails, thunkEditGroup } from "../../../store/groups";
+import { GroupDetails, EditGroup } from "../../../store/groups";
 
 const EditGroupForm = () => {
   const navigate = useNavigate();
@@ -24,7 +24,7 @@ const EditGroupForm = () => {
   }
 
   useEffect(() => {
-    dispatch(thunkGroupDetails(groupId));
+    dispatch(GroupDetails(groupId));
   }, [dispatch, groupId]);
 
   const handleSubmit = async (e) => {
@@ -53,9 +53,7 @@ const EditGroupForm = () => {
         state,
       };
 
-      const editedGroup = await dispatch(
-        thunkEditGroup(groupId, newGroupReqBody)
-      );
+      const editedGroup = await dispatch(EditGroup(groupId, newGroupReqBody));
 
       if (editedGroup.errors) {
         setValidationErrors(editedGroup.errors);

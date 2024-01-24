@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { thunkEventDetails } from "../../../store/events";
+import { EventDetails } from "../../../store/events";
 import "./EventsListItem.css";
 import { Link } from "react-router-dom";
 
@@ -18,7 +18,7 @@ const EventsListItem = ({ eventId }) => {
   }
 
   useEffect(() => {
-    dispatch(thunkEventDetails(eventId));
+    dispatch(EventDetails(eventId));
   }, [dispatch, eventId]);
 
   let date;

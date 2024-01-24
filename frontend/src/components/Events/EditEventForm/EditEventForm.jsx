@@ -1,8 +1,8 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { thunkEventDetails } from "../../../store/events";
-import { thunkUpdateEvent, thunkAddEventImage } from "../../../store/events";
+import { EventDetails } from "../../../store/events";
+import { UpdateEvent, AddEventImage } from "../../../store/events";
 
 import "./EditEventForm.css";
 
@@ -32,7 +32,7 @@ const EditEventForm = () => {
   }
 
   useEffect(() => {
-    dispatch(thunkEventDetails(eventId));
+    dispatch(EventDetails(eventId));
   }, [dispatch, eventId]);
 
   const handleSubmit = async (e) => {
@@ -84,12 +84,12 @@ const EditEventForm = () => {
       };
 
       const updatedEvent = await dispatch(
-        thunkUpdateEvent(eventId, updatedEventReqBody)
+        UpdateEvent(eventId, updatedEventReqBody)
       );
       if (updatedEvent.errors) {
         setValidationErrors(updatedEvent.errors);
       } else {
-        await dispatch(thunkAddEventImage(eventId, newEventImgBody));
+        await dispatch(AddEventImage(eventId, newEventImgBody));
         navigate(`/events/${updatedEvent.id}`);
       }
     }
