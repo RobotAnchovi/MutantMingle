@@ -6,7 +6,7 @@ import {
   LoadMembers,
 } from "../../../store/groups";
 import { useEffect } from "react";
-// import EventsListItem from "../../Events/EventsListItem/";
+import EventsListItem from "../../Events/EventsListItem/";
 import OpenModalButton from "../../OpenModalButton";
 import DeleteGroupModal from "../DeleteGroupModal";
 import "./GroupDetails.css";
@@ -18,7 +18,9 @@ const FetchGroupDetails = () => {
   const user = useSelector((state) => state.session.user);
   const group = useSelector((state) => state.groups[groupId]);
   const eventsState = useSelector((state) => state.events);
-  let events = useSelector((state) => state.groups[groupId]?.Events);
+  const events = useSelector((state) => state.groups[groupId]?.events?.Events);
+  console.log(`GROUP_DETAILS_EVENTS: `, events);
+  console.log(`GROUP_DETAILS_GROUP_STATE: `, group);
 
   useEffect(() => {
     dispatch(GroupDetails(groupId));
@@ -162,7 +164,7 @@ const FetchGroupDetails = () => {
           {!upcoming.length && !past.length && <h2>No Upcoming Campaigns</h2>}
           {upcoming.length != 0 && (
             <div className="upcoming-events">
-              {/* <h2>Upcoming Campaigns ({upcoming.length})</h2>
+              <h2>Upcoming Campaigns ({upcoming.length})</h2>
               <ul>
                 {upcoming.map((event) => {
                   console.log(`MAPPED EVENT: `, event);
@@ -178,7 +180,7 @@ const FetchGroupDetails = () => {
                 {past.map((event) => (
                   <EventsListItem key={event.id} eventId={event.id} />
                 ))}
-              </ul> */}
+              </ul>
             </div>
           )}
         </div>

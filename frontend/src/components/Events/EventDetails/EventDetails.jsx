@@ -5,25 +5,40 @@ import { EventDetails } from "../../../store/events";
 import { GroupDetails } from "../../../store/groups";
 import OpenModalButton from "../../OpenModalButton";
 import DeleteEventModal from "../DeleteEventModal";
+// import { ManageEvents } from "../ManageEvents";
 import "./EventDetails.css";
 
 const FetchEventDetails = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { eventId } = useParams();
-  const user = useSelector((state) => state.session.user);
   const event = useSelector((state) => state.events[eventId]);
   const group = useSelector((state) => state.groups[event?.groupId]);
+  const user = useSelector((state) => state.session.user);
   const isUserOwner = group?.organizerId == user?.id;
 
   const handleEventDeleted = () => {
     navigate("/events");
   };
 
+  // useEffect(() => {
+  //   if (!event?.EventImages) dispatch(EventDetails(eventId));
+  //   if (group && !group.Organizer) dispatch(GroupDetails(group?.id));
+  // }, [dispatch, eventId, group, group?.id, event?.EventImages]);
+
+  // Fetch Event Details
   useEffect(() => {
-    if (!event?.EventImages) dispatch(EventDetails(eventId));
-    if (group && !group.Organizer) dispatch(GroupDetails(group?.id));
-  }, [dispatch, eventId, group, group?.id, event?.EventImages]);
+    if (!event?.EventImages) {
+      dispatch(EventDetails(eventId));
+    }
+  }, [dispatch, eventId, event?.EventImages]);
+
+  // Fetch Group Details
+  useEffect(() => {
+    if (group && !group.Organizer) {
+      dispatch(GroupDetails(group?.id));
+    }
+  }, [dispatch, group, group?.id]);
 
   let eventImagesPreview;
   if (event?.previewImage) {
@@ -57,7 +72,7 @@ const FetchEventDetails = () => {
       : null;
   }
 
-  if (!event) return null;
+  if (!event || !group) return null;
 
   return (
     <>
@@ -140,20 +155,25 @@ const FetchEventDetails = () => {
 
                 <div className="campaign-details-user-buttons">
                   {isUserOwner && (
-                    <button onClick={() => navigate(`/events/${eventId}/edit`)}>
-                      Update Campaign Intel
-                    </button>
-                  )}
-                  {isUserOwner && (
-                    <OpenModalButton
-                      buttonText="Delete"
-                      modalComponent={
-                        <DeleteEventModal
-                          event={event}
-                          onEventDeleted={handleEventDeleted}
-                        />
-                      }
-                    />
+                    <>
+                      <button
+                        onClick={() => navigate(`/events/${eventId}/edit`)}
+                      >
+                        Update Campaign Intel
+                      </button>
+                      <button onClick={() => navigate(`/groups/${group.id}`)}>
+                        Back to Group
+                      </button>
+                      <OpenModalButton
+                        buttonText="Delete"
+                        modalComponent={
+                          <DeleteEventModal
+                            event={event}
+                            onEventDeleted={handleEventDeleted}
+                          />
+                        }
+                      />
+                    </>
                   )}
                 </div>
               </div>

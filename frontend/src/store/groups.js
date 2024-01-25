@@ -131,6 +131,7 @@ export const LoadGroupEvents = (groupId) => async (dispatch, getState) => {
 
   if (response.ok) {
     const events = await response.json();
+    console.log("Fetched Events: ", events);
     dispatch(loadGroupEvents(groupId, events));
     return events;
   } else {

@@ -111,15 +111,18 @@ const selectUserEventsLoaded = (state) => !!state.session.user?.Events;
 export const LoadUserEvents = () => async (dispatch, getState) => {
   // Check if user events are already loaded
   if (selectUserEventsLoaded(getState())) return;
+  console.log("Fetching user events...");
 
   // If not loaded, fetch the data
   const response = await csrfFetch(`/api/events/current`);
   if (response.ok) {
     const events = await response.json();
+    console.log("Received events data:", events);
     dispatch(loadUserEvents(events));
     return events;
   } else {
     const error = await response.json();
+    console.error("Error fetching events:", error);
     return error;
   }
 };

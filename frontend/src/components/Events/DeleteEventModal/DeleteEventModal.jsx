@@ -26,7 +26,7 @@ const DeleteEventModal = ({ event, onEventDeleted }) => {
       <h1>Abort Campaign</h1>
       <h4>Sure you want to abort campaign? Think of the children!</h4>
       <button id="campaign-delete-yes-btn" onClick={handleDelete}>
-        Abort (Delete campaign)
+        Abort Campaign (Delete campaign)
       </button>
       <button id="campaign-delete-no-btn" onClick={handleCancel}>
         Keep Pushing! (Keep campaign)

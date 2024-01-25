@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
+import { useState } from "react";
 import { LoadUserEvents } from "../../../store/session";
 import "./ManageEvents.css";
 import EventsListItem from "../EventsListItem";
@@ -7,27 +8,55 @@ import EventsListItem from "../EventsListItem";
 const ManageEvents = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.session.user);
-  const events = useSelector((state) => state.session.user.Events);
+  const events = useSelector((state) => state.session.user?.Events);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
   console.log("EVENTS: ", events);
 
-  let ownedEvents;
-  let attendingEvents;
+  useEffect(() => {
+    if (user && !isDataLoaded && !user.Events) {
+      dispatch(LoadUserEvents())
+        .then(() => {
+          console.log("Events data loaded");
+          setIsDataLoaded(true);
+        })
+        .catch((error) => {
+          console.error("Error loading events data: ", error);
+        });
+    } else if (user && !isDataLoaded) {
+      setIsDataLoaded(true);
+    }
+  }, [dispatch, user, isDataLoaded]);
 
-  if (events) {
-    ownedEvents = Object.values(events.ownedEvents);
-    attendingEvents = Object.values(events.attendingEvents);
+  let ownedEvents = [];
+  let attendingEvents = [];
+
+  if (isDataLoaded && user.Events) {
+    ownedEvents = Object.values(user.Events.ownedEvents || {}).sort(
+      (a, b) => new Date(a.startDate) - new Date(b.startDate)
+    );
+    attendingEvents = Object.values(user.Events.attendingEvents || {}).sort(
+      (a, b) => new Date(a.startDate) - new Date(b.startDate)
+    );
   }
 
-  ownedEvents?.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
-  attendingEvents?.sort(
-    (a, b) => new Date(a.startDate) - new Date(b.startDate)
-  );
+  if (!isDataLoaded || events === undefined)
+    return <div className="loading">Loading...</div>;
 
-  useEffect(() => {
-    if (!user.Events) dispatch(LoadUserEvents());
-    console.log("USER EVENTS: ", user.Events);
-    console.log("USER: ", user);
-  }, [dispatch, user]);
+  // if (events) {
+  //   ownedEvents = Object.values(events.ownedEvents);
+  //   attendingEvents = Object.values(events.attendingEvents);
+  // }
+
+  // ownedEvents?.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+  // attendingEvents?.sort(
+  //   (a, b) => new Date(a.startDate) - new Date(b.startDate)
+  // );
+
+  // useEffect(() => {
+  //   if (!user.Events) dispatch(LoadUserEvents());
+  //   console.log("USER EVENTS: ", user.Events);
+  //   console.log("USER: ", user);
+  // }, [dispatch, user]);
 
   return (
     <div className="user-groups-content">
