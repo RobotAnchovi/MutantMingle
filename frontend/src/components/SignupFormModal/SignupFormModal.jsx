@@ -53,7 +53,7 @@ function SignupFormModal() {
     console.log("Error State:", newErrors);
     if (Object.keys(newErrors).length === 0) {
       return dispatch(
-        sessionActions.thunkSignup({
+        sessionActions.signup({
           email,
           username,
           firstName,

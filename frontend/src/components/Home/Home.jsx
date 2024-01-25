@@ -9,9 +9,9 @@ import mutantCampaign from "/mutant-campaign.png";
 import newFaction from "/new-faction.png";
 
 const Home = () => {
-  const user = useSelector((state) => state.session.user);
+  const isLoggedIn = useSelector((state) => state.session.user !== null);
 
-  const activeLink = user ? "" : "disabled";
+  const activeLink = isLoggedIn ? "" : "disabled";
 
   return (
     <div className="content">
@@ -65,7 +65,7 @@ const Home = () => {
           />
         </div>
       </div>
-      {!user && (
+      {!isLoggedIn && (
         <div className="home-join-btn-div">
           <OpenModalButton
             buttonText="Join MutantMingle"

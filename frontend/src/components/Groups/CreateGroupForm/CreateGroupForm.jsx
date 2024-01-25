@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { CreateGroup, AddImage } from "../../../store/groups";
-import "./CreateGroupForm.css";
+import { thunkAddImage, thunkCreateGroup } from "../../../store/groups";
 
-const CreateGroupForm = () => {
+const CreateGroupPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [city, setCity] = useState("");
@@ -22,28 +21,24 @@ const CreateGroupForm = () => {
     e.preventDefault();
 
     const errors = {};
-    const urlEndings = [".png", ".jpg", ".jpeg"];
-    const urlEnding3 = imageUrl.slice(-4);
-    const urlEnding4 = imageUrl.slice(-5);
+    // const urlEndings = [".png", ".jpg", ".jpeg"];
+    // const urlEnding3 = imageUrl.slice(-4);
+    // const urlEnding4 = imageUrl.slice(-5);
 
-    if (!city)
-      errors.city =
-        "City is required (If from another planet: Use the city you landed in)";
-    if (!state)
+    if (!city) errors.city = "Spider-Sense tingling! City is required.";
+    if (!state) errors.state = "State initials, like SH, are required.";
+    if (state.length !== 2)
       errors.state =
-        "State is required, and we aren't talking about Meta-physical states...";
-    if (state.length < 2 || state.length > 2)
-      errors.state = "State must be 2 characters long";
-    if (!name) errors.name = "Actual Name is required. No aliases allowed";
+        "Wakanda Forever! State initials must be 2 characters long.";
+    if (!name) errors.name = "Avengers, assemble! A group name is required.";
+    if (!imageUrl) errors.imageUrl = "Thor's hammer demands an image URL.";
     if (about.length < 30)
       errors.about =
-        "Less than 30 characters to describe your faction? You're that famous, huh?";
-    if (type == "placeholder" || !type)
-      errors.type = "Faction Type is required for authorization";
-    if (privacy == "placeholder" || !privacy)
-      errors.privacy = "Visibility Type is required even if you're invisible";
-    if (!urlEndings.includes(urlEnding3) && !urlEndings.includes(urlEnding4))
-      errors.imageUrl = "Image URL must end in .png, .jpg, or .jpeg";
+        "Doctor Strange says it must be at least 30 characters long.";
+    if (type === "placeholder" || !type)
+      errors.type = "Type, like mutant or hero, is required.";
+    if (privacy === "placeholder" || !privacy)
+      errors.privacy = "Guardians of the Galaxy say this is required.";
 
     if (Object.values(errors).length) {
       setValidationErrors(errors);
@@ -62,36 +57,32 @@ const CreateGroupForm = () => {
         preview: true,
       };
 
-      const createdGroup = await dispatch(CreateGroup(newGroupReqBody));
+      const createdGroup = await dispatch(thunkCreateGroup(newGroupReqBody));
 
       if (createdGroup.errors) {
         setValidationErrors(createdGroup.errors);
       } else {
-        await dispatch(AddImage(createdGroup.id, newImageReqBody));
-        navigate(`/groups/${createdGroup.id}`);
+        await dispatch(thunkAddImage(createdGroup.id, newImageReqBody));
+        navigate(`/events/${createdGroup.id}`);
       }
     }
   };
 
   return (
-    <section className="group-section">
-      <h4>ASSEMBLE YOUR OWN FACTION!</h4>
-      <h2>Start a New Faction</h2>
+    <section className="faction-section">
+      <h1>Start a New Faction</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <h2>Set your faction&apos;s base of operation&apos;s location</h2>
+          <h2>Set your Faction&apos;s Base of Operation</h2>
           <p>
-            MutantMingle factions assemble locally, in person and online.
-            <br />
-            We&apos;ll connect you with heroes or villains in your area.
-            <br />
-            (Galactic locations are not supported at this time)
+            MutantMingle faction&apos;s gather locally, in person, and online.
+            We&apos;ll connect you with heroes (or villains) in your area.
           </p>
           <label htmlFor="city">
             <input
               type="text"
               name="city"
-              id="group-city"
+              id="faction-city"
               placeholder="City"
               value={city}
               onChange={(e) => setCity(e.target.value)}
@@ -101,7 +92,7 @@ const CreateGroupForm = () => {
           <label htmlFor="state">
             <input
               type="text"
-              id="group-state"
+              id="faction-state"
               placeholder="STATE"
               value={state}
               onChange={(e) => setState(e.target.value)}
@@ -121,21 +112,17 @@ const CreateGroupForm = () => {
           </div>
         </div>
         <div>
-          <h2>
-            How will your Faction&apos;s name be seen by your enemies and fans?
-          </h2>
+          <h2>What shall we call your Faction?</h2>
           <p>
-            Choose a name that will strike fear in your enemies and cheered by
-            your fans.
-            <br />
-            Be creative! Your faction name is critical! You can always change it
-            later. (Avengers is already taken)
+            Choose a name that will give people a clear idea of what the faction
+            is about. Feel free to get creative! You can edit this later if you
+            change your mind.
           </p>
           <label>
             <input
               type="text"
-              id="group-name"
-              placeholder="What is your faction's name?"
+              id="faction-name"
+              placeholder="Faction name?"
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -147,23 +134,19 @@ const CreateGroupForm = () => {
           </div>
         </div>
         <div>
-          <h2>Describe the destiny of your faction.</h2>
+          <h2>Describe the mission of your faction.</h2>
           <label>
             <p>
-              Other Heroes will see this when we promote your faction, but
-              you&apos;ll be able to add to it later, too.
-              <br />
-              <br />
-              1. What&apos;s the purpose of the faction?
-              <br />
-              2. Who should join?
-              <br />
-              3. What will you do at your campaigns?
+              People will see this when we promote your faction, but you&apos;ll
+              be able to add to it later, too. 1. What&apos;s the mission of the
+              faction? 2. Who should join? 3. What heroic deeds will you do at
+              your events?
             </p>
           </label>
+
           <textarea
             name=""
-            id="group-about"
+            id="faction-about"
             cols="30"
             rows="10"
             placeholder="Please write at least 30 characters"
@@ -177,9 +160,9 @@ const CreateGroupForm = () => {
           </div>
         </div>
         <div id="final-steps-div">
-          <h2>Final steps...</h2>
+          <h2>Additional Intel.</h2>
           <label htmlFor="type">
-            <p>Is this an in person or online faction?</p>
+            <p>Is this an in-person or online faction?</p>
             <select
               name="type"
               value={type}
@@ -202,10 +185,7 @@ const CreateGroupForm = () => {
             )}
           </div>
           <label htmlFor="privacy">
-            <p>
-              Is this faction a private underground syndicate or a public entity
-              for gifted mutants?
-            </p>
+            <p>Is this faction private or public?</p>
             <select
               value={privacy}
               onChange={(e) => setPrivacy(e.target.value)}
@@ -227,12 +207,9 @@ const CreateGroupForm = () => {
             )}
           </div>
           <label htmlFor="imageUrl">
-            <p>
-              Add a decent image url for your faction below (JJ Jameson may want
-              to hire you!):
-            </p>
+            <p>Please add an image URL for your faction below:</p>
             <input
-              id="group-imageUrl"
+              id="faction-imageUrl"
               type="url"
               name="imageUrl"
               placeholder="Image Url"
@@ -254,4 +231,4 @@ const CreateGroupForm = () => {
   );
 };
 
-export default CreateGroupForm;
+export default CreateGroupPage;

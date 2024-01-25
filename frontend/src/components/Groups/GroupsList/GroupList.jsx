@@ -1,14 +1,20 @@
 import { useDispatch, useSelector } from "react-redux";
-import GroupListItem from "../GroupListItem/GroupListItem";
+// import GroupListItem from "../GroupListItem/GroupListItem";
 import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import { LoadGroups /*LoadGroupEvents*/ } from "../../../store/groups";
+import { fetchGroups } from "../../../store/groups";
 import "./GroupList.css";
 
 const GroupList = () => {
   const dispatch = useDispatch();
-  const groupsObj = useSelector((state) => state.groups);
-  const eventsObj = useSelector((state) => state.events);
+
+  const groups = useSelector((state) => state.groups.list);
+
+  useEffect(() => {
+    dispatch(fetchGroups());
+  }, [dispatch]);
+  // const groupsObj = useSelector((state) => state.groups);
+  // const eventsObj = useSelector((state) => state.events);
   // const groups = Object.values(groupsObj);
   // const events = Object.values(eventsObj);
 
@@ -23,18 +29,18 @@ const GroupList = () => {
   //   });
   // }
 
-  useEffect(() => {
-    dispatch(LoadGroups());
-    // dispatch(LoadEvents());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(LoadGroups());
+  //   // dispatch(LoadEvents());
+  // }, [dispatch]);
 
-  const groups = Object.values(groupsObj);
-  const events = Object.values(eventsObj);
-  console.log(`GROUPS: `, groups);
-  console.log(`EVENTS: `, events);
+  // const groups = Object.values(groupsObj);
+  // const events = Object.values(eventsObj);
+  // console.log(`GROUPS: `, groups);
+  // console.log(`EVENTS: `, events);
 
   return (
-    <div className="group-list-page">
+    <div className="faction-list-page">
       <section>
         <div className="page-links">
           <NavLink className="" to="/events">
@@ -48,24 +54,37 @@ const GroupList = () => {
           <span> Active Factions on MutantMingle</span>
         </div>
       </section>
-      <section>
-        <ul className="group-list">
-          {groups.map((group) => {
-            //^ Filter events for this group
-            const groupEvents = events.filter(
-              (event) => event.groupId === group.id
-            );
-            return (
-              <GroupListItem
-                key={group.id}
-                group={group}
-                groupEvents={groupEvents}
-                // Pass other necessary props like isOwner, isMember if needed
+      <div className="faction-list">
+        {groups.map((group) => (
+          <a
+            href={`/groups/${group.id}`}
+            key={group.id}
+            className="faction-container"
+          >
+            <div>
+              <img
+                src={
+                  group.previewImage !== "No preview image found."
+                    ? group.previewImage
+                    : "https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg"
+                }
+                alt={group.name}
               />
-            );
-          })}
-        </ul>
-      </section>
+              <div>
+                <h2>{group.name}</h2>
+                <p>
+                  {group.city}, {group.state}
+                </p>
+                <p>{group.about}</p>
+                <p>
+                  {group.numEvents} Campaigns ·{" "}
+                  {group.private ? "Private" : "Public"}
+                </p>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
     </div>
   );
 };
