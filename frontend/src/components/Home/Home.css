@@ -1,0 +1,102 @@
+.landing {
+  display: flex;
+  justify-content: space-between; /* Evenly space the child elements */
+  align-items: center; /* Align items vertically in the center */
+  margin: 2rem auto;
+  width: 75%;
+  gap: 20px; /* Add space between elements */
+}
+
+.landing-info {
+  width: 40%;
+  max-width: 400px;
+  min-width: 360px;
+}
+
+.landing-info,
+.landing-img {
+  padding: 10px; /* Add padding for internal spacing */
+}
+
+h1 {
+  font-size: xx-large;
+  font-family: "Bangers", cursive;
+}
+
+.landing-img {
+  width: 60%;
+}
+
+.landing-img img {
+  max-width: 100%;
+  border-radius: 50%; /* Create a circular shape */
+  object-fit: cover; /* Ensure the image covers the area */
+  width: 100%; /* Full width of the container */
+  height: auto; /* Maintain aspect ratio */
+  aspect-ratio: 2 / 1; /* Make it a horizontal oval (change ratio as needed) */
+}
+
+.how-works {
+  font-size: large;
+  margin: 0 auto;
+  width: 50%;
+  color: red;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+.how-works p,
+.how-works h2 {
+  text-align: center;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  width: 60%;
+}
+
+.home-link-img {
+  max-width: 150px;
+}
+
+.home-link {
+  color: #1e81b0;
+  font-size: large;
+  cursor: pointer;
+  text-decoration: underline;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+  margin: 0;
+}
+
+.disabled {
+  color: lightgray;
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+}
+
+.disabled p {
+  color: black;
+}
+
+.disabled a:hover,
+.home-link:hover {
+  text-decoration: underline;
+}
+
+.home-join-btn-div {
+  display: flex;
+}
+
+.home-join-btn-div button {
+  background-color: #f2cb05;
+  color: black;
+  font-size: large;
+  padding: 1rem;
+  box-shadow: 3px 3px black;
+  margin: 2rem auto;
+  cursor: pointer;
+}

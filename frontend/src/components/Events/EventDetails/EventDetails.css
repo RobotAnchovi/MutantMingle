@@ -1,0 +1,141 @@
+#back-to-campaigns {
+  color: #1e81b0;
+  text-decoration: underline;
+  padding-left: 5px;
+  font-size: large;
+  font-weight: bold;
+  width: 80%;
+  margin: 3rem auto 0 5px;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+.campaign-heading {
+  padding-top: 2rem;
+  width: 80%;
+  margin: 0 auto;
+  font-family: "Bangers", cursive;
+}
+
+h4 {
+  color: red;
+  font-weight: 100;
+  font-family: "Bangers", cursive;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+.campaign-section {
+  background-color: #fdfd96;
+}
+
+.campaign-detail {
+  width: 80%;
+  margin: 0 auto;
+  padding-top: 2rem;
+  display: flex;
+}
+
+.campaign-img {
+  max-width: 500px;
+  min-width: 500px;
+  background-color: white;
+  border-radius: 15px;
+}
+
+.campaign-img img {
+  max-width: 500px;
+  max-height: 500px;
+  border-radius: 15px;
+}
+
+.campaign-stats-section {
+  margin-left: 1.5rem;
+  width: 100%;
+}
+
+.campaign-stats-stats {
+  margin-left: 10rem;
+}
+
+.campaign-group-card {
+  background-color: white;
+  display: flex;
+  padding: 2rem;
+  border-radius: 15px;
+  margin-bottom: 1rem;
+}
+
+.campaign-group-image img {
+  max-width: 200px;
+  max-height: 200px;
+}
+
+.campaign-group-info {
+  padding-left: 1rem;
+}
+
+.campaign-stats {
+  background-color: white;
+  border-radius: 15px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.campaign-stats > div {
+  margin: 0.5rem 0;
+}
+
+.campaign-stats span,
+.campaign-stats i {
+  color: grey;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+.campaign-stats i {
+  font-size: larger;
+}
+
+.icon-div {
+  width: 1.5rem;
+}
+
+.campaign-stats p {
+  color: #2a9d8f;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+.times,
+.campaign-price,
+.campaign-type {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.times-headers,
+.campaign-price-stat,
+.campaign-type-stat {
+  margin-left: 1rem;
+}
+
+.campaign-details-user-buttons {
+  margin-left: auto;
+}
+
+.campaign-type button {
+  color: black;
+  background-color: #f2cb05;
+  box-shadow: 3px 3px black;
+  margin: 0 0.5rem;
+  cursor: pointer;
+}
+
+.event-description {
+  width: 80%;
+  margin: 0 auto;
+  padding-bottom: 3rem;
+}

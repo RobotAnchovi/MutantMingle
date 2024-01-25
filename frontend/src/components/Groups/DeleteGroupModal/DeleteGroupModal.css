@@ -1,0 +1,36 @@
+.delete-group-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.delete-group-modal h1,
+.delete-group-modal h4 {
+  margin: 0.5rem 0;
+  text-align: center;
+  font-family: "Bangers", cursive;
+  color: red;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+.delete-group-modal button {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.3rem;
+  font-family: "Bangers", cursive;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+#group-delete-yes-btn {
+  color: white;
+  background-color: red;
+  box-shadow: 3px 3px black;
+}
+
+#group-delete-no-btn {
+  color: white;
+  background-color: #1e81b0;
+  box-shadow: 3px 3px black;
+}

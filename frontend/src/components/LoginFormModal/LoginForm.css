@@ -1,0 +1,114 @@
+.log-in {
+  text-align: center;
+  font-family: "Bangers", cursive;
+}
+
+h1 {
+  margin: 10px 0;
+}
+
+.log-in form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  width: 100%;
+}
+
+.log-in form input {
+  width: 100%;
+  padding: 3px 5px;
+  margin: 5px auto;
+  border: 2px solid #1e81b0;
+  background-color: #fdfd96;
+  box-sizing: border-box;
+}
+
+.log-in form label {
+  align-self: flex-start;
+  color: red;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+/* #login-button-,
+#login-button-disabled {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  color: white;
+  border: 1.5px solid black;
+  box-shadow: 3px 3px black;
+}
+
+#login-button- {
+  background-color: #ff6161;
+} */
+/* #login-button-disabled {
+  background-color: lightgray;
+  box-shadow: 3px 3px lightgray;
+} */
+
+.button {
+  font-family: "Bangers", cursive;
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  color: black;
+  background-color: #f2cb05; /* Default background */
+  border: 1.5px solid black;
+  box-shadow: 3px 3px black;
+}
+
+.button:disabled {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  color: white;
+  background-color: red;
+  box-shadow: 3px 3px lightgray;
+  cursor: not-allowed; /* Indicates the button is disabled */
+}
+
+.demo {
+  border: none;
+  background-color: transparent;
+  text-decoration: underline;
+  cursor: pointer;
+  width: fit-content;
+  align-self: center;
+  padding: 15px 0px;
+  font-size: large;
+  color: red;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+.error {
+  color: red;
+  font-family: "Bangers", cursive;
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 10px;
+  margin: 10px 0;
+  border: 2px solid #ff6161;
+  background-color: #fdfd96;
+  box-shadow: 5px 5px 0px 0px #1e81b0;
+  border-radius: 5px;
+  text-shadow: 2px 2px #000000;
+}
+
+@keyframes shake {
+  0% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  100% {
+    transform: translateX(-5px);
+  }
+}
+
+.error {
+  animation: shake 0.5s;
+  animation-iteration-count: 2;
+}
