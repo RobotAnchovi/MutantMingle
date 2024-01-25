@@ -6,7 +6,13 @@ import "./GroupListItem.css";
 // import { useDispatch, useSelector } from "react-redux";
 // import { LoadGroupEvents } from "../../../store/groups";
 
-const GroupListItem = ({ group, isOwner, isMember, groupEvents }) => {
+const GroupListItem = ({
+  group,
+  isOwner,
+  isMember,
+  groupEvents,
+  onGroupDeleted,
+}) => {
   // const dispatch = useDispatch();
   const navigate = useNavigate();
   // const groupEvents = useSelector((state) => state.groups[group.id].Events);
@@ -54,7 +60,9 @@ const GroupListItem = ({ group, isOwner, isMember, groupEvents }) => {
           <OpenModalButton
             className="delete-group-btn"
             buttonText="Delete"
-            modalComponent={<DeleteGroupModal group={group} />}
+            modalComponent={
+              <DeleteGroupModal group={group} onGroupDeleted={onGroupDeleted} />
+            }
           />
         )}
         {isMember && (

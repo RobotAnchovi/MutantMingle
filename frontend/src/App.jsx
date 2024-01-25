@@ -28,9 +28,9 @@ function Layout() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    dispatch(LoadGroups());
-    dispatch(LoadEvents());
     dispatch(sessionActions.RestoreUser()).then(() => {
+      dispatch(LoadGroups());
+      dispatch(LoadEvents());
       setIsLoaded(true);
       dispatch(sessionActions.LoadUserGroups());
       dispatch(sessionActions.LoadUserEvents());

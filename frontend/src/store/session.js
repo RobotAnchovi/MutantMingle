@@ -29,25 +29,30 @@ export const LoginUser = (user) => async (dispatch) => {
   const { credential, password } = user;
   const response = await csrfFetch("/api/session", {
     method: "POST",
-    body: JSON.stringify({
-      credential,
-      password,
-    }),
+    body: JSON.stringify({ credential, password }),
   });
+
   if (response.ok) {
     const data = await response.json();
     dispatch(loginUser(data.user));
+    dispatch(LoadUserGroups()); // Load user's groups
+    dispatch(LoadUserEvents()); // Load user's events
     return response;
   } else {
     const error = await response.json();
-    throw error; // Throws an error to be caught in the .catch block where the thunk is dispatched
+    throw error;
   }
 };
 
 export const RestoreUser = () => async (dispatch) => {
   const response = await csrfFetch("/api/session");
   const data = await response.json();
-  dispatch(loginUser(data.user));
+
+  if (data.user) {
+    dispatch(loginUser(data.user));
+    dispatch(LoadUserGroups()); // Load user's groups
+    dispatch(LoadUserEvents()); // Load user's events
+  }
   return data;
 };
 
@@ -81,9 +86,15 @@ export const Logout = () => async (dispatch) => {
   return response;
 };
 
-export const LoadUserGroups = () => async (dispatch) => {
-  const response = await csrfFetch("/api/groups/current");
+// Selector to check if user's groups are already loaded
+const selectUserGroupsLoaded = (state) => !!state.session.user?.Groups;
 
+export const LoadUserGroups = () => async (dispatch, getState) => {
+  // Check if user groups are already loaded
+  if (selectUserGroupsLoaded(getState())) return;
+
+  // If not loaded, fetch the data
+  const response = await csrfFetch("/api/groups/current");
   if (response.ok) {
     const groups = await response.json();
     dispatch(loadUserGroups(groups));
@@ -94,9 +105,15 @@ export const LoadUserGroups = () => async (dispatch) => {
   }
 };
 
-export const LoadUserEvents = () => async (dispatch) => {
-  const response = await csrfFetch(`/api/events/current`);
+// Selector to check if user's events are already loaded
+const selectUserEventsLoaded = (state) => !!state.session.user?.Events;
 
+export const LoadUserEvents = () => async (dispatch, getState) => {
+  // Check if user events are already loaded
+  if (selectUserEventsLoaded(getState())) return;
+
+  // If not loaded, fetch the data
+  const response = await csrfFetch(`/api/events/current`);
   if (response.ok) {
     const events = await response.json();
     dispatch(loadUserEvents(events));
@@ -109,6 +126,7 @@ export const LoadUserEvents = () => async (dispatch) => {
 
 //*====> Session Reducer <====
 const initialState = { user: null };
+
 const sessionReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_USER: {
@@ -118,31 +136,33 @@ const sessionReducer = (state = initialState, action) => {
       return { ...state, user: null };
     }
     case LOAD_USER_GROUPS: {
+      // Update the Groups field of the user object
       return {
         ...state,
         user: {
           ...state.user,
-          ...action.groups,
+          Groups: action.groups.Groups,
         },
       };
     }
     case LOAD_USER_EVENTS: {
-      const ownedEvents = {};
-      const attendingEvents = {};
-      action.events.ownedEvents.forEach((event) => {
-        ownedEvents[event.id] = event;
-      });
-      action.events.attendingEvents.forEach((event) => {
-        attendingEvents[event.id] = event;
-      });
-
+      // Directly map owned and attending events
       return {
         ...state,
         user: {
           ...state.user,
           Events: {
-            ownedEvents,
-            attendingEvents,
+            ownedEvents: action.events.ownedEvents.reduce((acc, event) => {
+              acc[event.id] = event;
+              return acc;
+            }, {}),
+            attendingEvents: action.events.attendingEvents.reduce(
+              (acc, event) => {
+                acc[event.id] = event;
+                return acc;
+              },
+              {}
+            ),
           },
         },
       };

@@ -1,20 +1,19 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+// import { useNavigate } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
 import { DeleteEvent } from "../../../store/events";
 import "./DeleteEventModal.css";
 
-const DeleteEventModal = ({ event }) => {
+const DeleteEventModal = ({ event, onEventDeleted }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { closeModal } = useModal();
-  const group = useSelector((state) => state.groups[event.groupId]);
 
   const handleDelete = async (e) => {
     e.preventDefault();
+    await dispatch(DeleteEvent(event.id));
     closeModal();
-    navigate(`/groups/${group.id}`);
-    dispatch(DeleteEvent(event.id));
+    // navigate(`/groups/${group.id}`);
+    onEventDeleted();
   };
 
   const handleCancel = (e) => {

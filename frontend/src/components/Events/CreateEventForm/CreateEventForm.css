@@ -1,6 +1,9 @@
 .campaign-form {
-  width: 50%;
-  margin: 0 auto;
+  width: 80%;
+  margin: 0 auto 5rem;
+  outline: thick solid #1e81b0;
+  background-color: lightgray;
+  padding: 20px;
 }
 
 .campaign-form div {

@@ -71,7 +71,16 @@ const formatDate = (dateString) => {
   return `${formattedDate} ${formattedTime}`;
 };
 
-export const LoadEvents = () => async (dispatch) => {
+export const LoadEvents = () => async (dispatch, getState) => {
+  // Get the current state of events
+  const currentEvents = getState().events;
+
+  // Check if events are already loaded
+  if (Object.keys(currentEvents).length > 0) {
+    console.log("Events already loaded, skipping fetch");
+    return;
+  }
+
   const response = await csrfFetch("/api/events");
   const { Events } = await response.json();
   const formattedEvents = Events.map((event) => ({
@@ -79,38 +88,34 @@ export const LoadEvents = () => async (dispatch) => {
     startDate: formatDate(event.startDate),
     endDate: formatDate(event.endDate),
   }));
-  // console.log("HERE ARE THE FORMATTED EVENTS,:", formattedEvents);
+
   dispatch(loadEvents(formattedEvents));
 };
 
-// export const thunkLoadEvents = () => async (dispatch) => {
-//   const response = await fetch("/api/events");
-//   const events = await response.json();
-//   dispatch(loadEvents(events.Events));
-// };
+export const EventDetails = (eventId) => async (dispatch, getState) => {
+  // Check if the event details are already loaded
+  const currentEvent = getState().events[eventId];
+  if (currentEvent && currentEvent.detailsLoaded) {
+    console.log(`Details for event ${eventId} are already loaded.`);
+    return;
+  }
 
-// export const thunkEventDetails = (eventId) => async (dispatch) => {
-//   const response = await fetch(`/api/events/${eventId}`);
-//   const event = await response.json();
-
-//   if (response.ok) {
-//     dispatch(loadEventDetails(event));
-//   }
-// };
-
-export const EventDetails = (eventId) => async (dispatch) => {
   const response = await csrfFetch(`/api/events/${eventId}`);
-  const event = await response.json();
-
   if (response.ok) {
+    const event = await response.json();
     // Apply the formatting to the event dates
     const formattedEvent = {
       ...event,
       startDate: formatDate(event.startDate),
       endDate: formatDate(event.endDate),
+      detailsLoaded: true, // Mark the event as loaded
     };
 
     dispatch(loadEventDetails(formattedEvent));
+  } else {
+    // Handle error response
+    const error = await response.json();
+    console.error(`Error fetching event details: ${error.message}`);
   }
 };
 

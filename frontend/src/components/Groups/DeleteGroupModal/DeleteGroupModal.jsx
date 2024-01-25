@@ -1,19 +1,18 @@
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
 import { DeleteGroup } from "../../../store/groups";
 import "./DeleteGroupModal.css";
 
-const DeleteGroupModal = ({ group }) => {
+const DeleteGroupModal = ({ group, onGroupDeleted }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const { closeModal } = useModal();
 
-  const handleDelete = (e) => {
+  const handleDelete = async (e) => {
     e.preventDefault();
-    dispatch(DeleteGroup(group));
+    await dispatch(DeleteGroup(group));
     closeModal();
-    navigate("/groups");
+    onGroupDeleted();
   };
 
   const handleCancel = (e) => {

@@ -5,7 +5,7 @@ import {
   LoadGroupEvents,
   LoadMembers,
 } from "../../../store/groups";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 // import EventsListItem from "../../Events/EventsListItem/";
 import OpenModalButton from "../../OpenModalButton";
 import DeleteGroupModal from "../DeleteGroupModal";
@@ -17,30 +17,16 @@ const FetchGroupDetails = () => {
   const { groupId } = useParams();
   const user = useSelector((state) => state.session.user);
   const group = useSelector((state) => state.groups[groupId]);
-  // const eventsState = useSelector((state) => state.events);
+  const eventsState = useSelector((state) => state.events);
   let events = useSelector((state) => state.groups[groupId]?.Events);
-  const [upcoming, setUpcoming] = useState([]);
-  const [past, setPast] = useState([]);
-
-  // useEffect(() => {
-  //   dispatch(GroupDetails(groupId));
-  //   dispatch(LoadGroupEvents(groupId));
-  //   dispatch(LoadMembers(groupId));
-  // }, [dispatch, groupId, group]);
 
   useEffect(() => {
-    if (group?.Events) {
-      const now = new Date();
-      group.Events.forEach((event) => {
-        const startDate = new Date(event.startDate);
-        if (startDate >= now) {
-          setUpcoming((prev) => [...prev, event]);
-        } else {
-          setPast((prev) => [...prev, event]);
-        }
-      });
-    }
-  }, [group?.Events]);
+    dispatch(GroupDetails(groupId));
+    dispatch(LoadGroupEvents(groupId));
+    dispatch(LoadMembers(groupId));
+  }, [dispatch, groupId]);
+
+  if (!eventsState) return null;
 
   const isOrganizer = user?.id == group?.organizerId;
   let isMember;
@@ -52,6 +38,30 @@ const FetchGroupDetails = () => {
         return member.id == user.id;
       }).length > 0;
   }
+
+  const now = new Date();
+  const upcoming = [];
+  const past = [];
+
+  events?.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+
+  events?.forEach((event) => {
+    new Date(event.startDate) < now ? past.push(event) : upcoming.push(event);
+  });
+
+  // useEffect(() => {
+  //   if (group?.Events) {
+  //     const now = new Date();
+  //     group.Events.forEach((event) => {
+  //       const startDate = new Date(event.startDate);
+  //       if (startDate >= now) {
+  //         setUpcoming((prev) => [...prev, event]);
+  //       } else {
+  //         setPast((prev) => [...prev, event]);
+  //       }
+  //     });
+  //   }
+  // }, [group?.Events]);
 
   const groupPreviewImage = group?.GroupImages?.find(
     (image) => image.preview == true
@@ -152,15 +162,12 @@ const FetchGroupDetails = () => {
           {!upcoming.length && !past.length && <h2>No Upcoming Campaigns</h2>}
           {upcoming.length != 0 && (
             <div className="upcoming-events">
-              <h2>Upcoming Campaigns ({upcoming.length})</h2>
+              {/* <h2>Upcoming Campaigns ({upcoming.length})</h2>
               <ul>
-                {upcoming.map((event) => (
-                  <li key={event.id}>
-                    {/* Render event details here */}
-                    {event.name} -{" "}
-                    {new Date(event.startDate).toLocaleDateString()}
-                  </li>
-                ))}
+                {upcoming.map((event) => {
+                  console.log(`MAPPED EVENT: `, event);
+                  return <EventsListItem key={group.id} eventId={event.id} />;
+                })}
               </ul>
             </div>
           )}
@@ -169,13 +176,9 @@ const FetchGroupDetails = () => {
               <h2>Past Campaigns ({past.length})</h2>
               <ul>
                 {past.map((event) => (
-                  <li key={event.id}>
-                    {/* Render event details here */}
-                    {event.name} -{" "}
-                    {new Date(event.startDate).toLocaleDateString()}
-                  </li>
+                  <EventsListItem key={event.id} eventId={event.id} />
                 ))}
-              </ul>
+              </ul> */}
             </div>
           )}
         </div>

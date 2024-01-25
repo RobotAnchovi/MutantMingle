@@ -16,6 +16,10 @@ const FetchEventDetails = () => {
   const group = useSelector((state) => state.groups[event?.groupId]);
   const isUserOwner = group?.organizerId == user?.id;
 
+  const handleEventDeleted = () => {
+    navigate("/events");
+  };
+
   useEffect(() => {
     if (!event?.EventImages) dispatch(EventDetails(eventId));
     if (group && !group.Organizer) dispatch(GroupDetails(group?.id));
@@ -143,7 +147,12 @@ const FetchEventDetails = () => {
                   {isUserOwner && (
                     <OpenModalButton
                       buttonText="Delete"
-                      modalComponent={<DeleteEventModal event={event} />}
+                      modalComponent={
+                        <DeleteEventModal
+                          event={event}
+                          onEventDeleted={handleEventDeleted}
+                        />
+                      }
                     />
                   )}
                 </div>

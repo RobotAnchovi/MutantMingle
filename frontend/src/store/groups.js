@@ -57,20 +57,76 @@ export const loadMembers = (groupId, members) => ({
 });
 
 ///*====> Thunks <====
-export const LoadGroups = () => async (dispatch) => {
+export const LoadGroups = () => async (dispatch, getState) => {
+  // Access the current state
+  const currentState = getState();
+
+  // Check if the groups data is already loaded
+  const groupsAlreadyLoaded =
+    currentState.groups && Object.keys(currentState.groups).length > 0;
+
+  if (groupsAlreadyLoaded) {
+    // If groups data is already in the state, skip fetching and return the existing data
+    return currentState.groups;
+  }
+
+  // If groups data is not in the state, proceed with the fetch call
   const response = await csrfFetch("/api/groups");
-  const groups = await response.json();
-  dispatch(loadGroups(groups));
+
+  if (response.ok) {
+    const groups = await response.json();
+    dispatch(loadGroups(groups));
+    return groups;
+  } else {
+    // Handle error case
+    const error = await response.json();
+    return error;
+  }
 };
 
-export const GroupDetails = (groupId) => async (dispatch) => {
+export const GroupDetails = (groupId) => async (dispatch, getState) => {
+  // Access the current state
+  const currentState = getState();
+
+  // Check if the specific group's details are already loaded
+  const groupAlreadyLoaded =
+    currentState.groups[groupId] && currentState.groups[groupId].details;
+
+  if (groupAlreadyLoaded) {
+    // If group details are already in the state for this group, skip fetching and return the existing data
+    return currentState.groups[groupId].details;
+  }
+
+  // If group details are not in the state for this group, proceed with the fetch call
   const response = await csrfFetch(`/api/groups/${groupId}`);
-  const group = await response.json();
-  dispatch(loadGroupDetails(group));
-  return group;
+
+  if (response.ok) {
+    const group = await response.json();
+    dispatch(loadGroupDetails(group));
+    return group;
+  } else {
+    // Handle error case
+    const error = await response.json();
+    return error;
+  }
 };
 
-export const LoadGroupEvents = (groupId) => async (dispatch) => {
+export const LoadGroupEvents = (groupId) => async (dispatch, getState) => {
+  // Access the current state
+  const currentState = getState();
+
+  // Check if the specific group's events are already loaded
+  const eventsAlreadyLoaded =
+    currentState.groups[groupId] &&
+    currentState.groups[groupId].Events &&
+    currentState.groups[groupId].Events.length > 0;
+
+  if (eventsAlreadyLoaded) {
+    // If events data is already in the state for this group, skip fetching and return the existing data
+    return currentState.groups[groupId].Events;
+  }
+
+  // If events data is not in the state for this group, proceed with the fetch call
   const response = await csrfFetch(`/api/groups/${groupId}/events`);
 
   if (response.ok) {
@@ -78,6 +134,7 @@ export const LoadGroupEvents = (groupId) => async (dispatch) => {
     dispatch(loadGroupEvents(groupId, events));
     return events;
   } else {
+    // Handle error case
     const error = await response.json();
     return error;
   }
@@ -93,12 +150,17 @@ export const CreateGroup = (group) => async (dispatch) => {
   });
 
   if (response.ok) {
-    const group = await response.json();
-    dispatch(createGroup(group));
-    return group;
+    const newGroup = await response.json();
+    dispatch(createGroup(newGroup));
+    return newGroup;
   } else {
+    // Handling server-side validation errors or other errors
     const error = await response.json();
-    return error;
+    if (error && error.errors) {
+      // Assuming the server sends back an object with a key `errors` containing the validation messages
+      throw new Error(error.errors.join(", "));
+    }
+    return Promise.reject(error);
   }
 };
 
@@ -112,31 +174,41 @@ export const AddImage = (groupId, image) => async (dispatch) => {
   });
 
   if (response.ok) {
-    const group = await response.json();
-    await dispatch(addImage(groupId, image));
-    return group;
+    const updatedGroup = await response.json();
+    dispatch(addImage(groupId, updatedGroup)); // Assuming updatedGroup contains the updated group data including new images
+    return updatedGroup;
   } else {
+    // Handling server-side validation errors or other errors
     const error = await response.json();
-    return error;
+    if (error && error.errors) {
+      // If the server sends back an object with a key `errors` containing validation messages
+      throw new Error(error.errors.join(", "));
+    }
+    return Promise.reject(error);
   }
 };
 
-export const EditGroup = (groupId, group) => async (dispatch) => {
+export const EditGroup = (groupId, groupData) => async (dispatch) => {
   const response = await csrfFetch(`/api/groups/${groupId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(group),
+    body: JSON.stringify(groupData),
   });
 
   if (response.ok) {
-    const group = await response.json();
-    dispatch(editGroup(groupId, group));
-    return group;
+    const updatedGroup = await response.json();
+    dispatch(editGroup(groupId, updatedGroup)); // Update the group data in the Redux store
+    return updatedGroup;
   } else {
+    // Handling server-side validation errors or other errors
     const error = await response.json();
-    return error;
+    if (error && error.errors) {
+      // If the server sends back an object with a key `errors` containing validation messages
+      throw new Error(error.errors.join(", "));
+    }
+    return Promise.reject(error);
   }
 };
 
@@ -150,9 +222,14 @@ export const DeleteGroup = (group) => async (dispatch) => {
 
   if (response.ok) {
     const message = await response.json();
-    group.events.forEach((event) => {
-      dispatch(deleteAssociatedEvents(event.id));
-    });
+
+    // Check if group.events is defined and is an array before iterating
+    if (Array.isArray(group.events)) {
+      group.events.forEach((event) => {
+        dispatch(deleteAssociatedEvents(event.id));
+      });
+    }
+
     dispatch(deleteGroup(group.id));
     return message;
   } else {
@@ -161,7 +238,19 @@ export const DeleteGroup = (group) => async (dispatch) => {
   }
 };
 
-export const LoadMembers = (groupId) => async (dispatch) => {
+export const LoadMembers = (groupId) => async (dispatch, getState) => {
+  // Access the current state
+  const currentState = getState();
+
+  // Check if the members for the specified group are already loaded
+  const membersAlreadyLoaded = currentState.groups[groupId]?.members;
+
+  if (membersAlreadyLoaded) {
+    // If members data is already in the state, skip fetching and return the existing data
+    return membersAlreadyLoaded;
+  }
+
+  // If members data is not in the state, proceed with the fetch call
   const response = await csrfFetch(`/api/groups/${groupId}/members`);
 
   if (response.ok) {
@@ -177,49 +266,48 @@ export const LoadMembers = (groupId) => async (dispatch) => {
 //*====> Group Reducer <====
 const groupReducer = (state = {}, action) => {
   switch (action.type) {
-    case LOAD_GROUPS: {
-      const groupsState = { ...state };
-      action.groups.Groups.forEach((group) => {
-        groupsState[group.id] = group;
-      });
-      return groupsState;
-    }
-    case LOAD_GROUP_DETAILS: {
-      const groupsState = { ...state };
-      groupsState[action.group.id] = action.group;
-      return groupsState;
-    }
-    case LOAD_GROUP_EVENTS: {
-      const groupsState = { ...state };
-      groupsState[action.groupId].Events = action.events.Events;
-      return groupsState;
-    }
-    case CREATE_GROUP: {
-      const groupsState = { ...state };
-      groupsState[action.group.id] = action.group;
-      return groupsState;
-    }
-    case ADD_IMAGE: {
-      const groupsState = { ...state };
-      if ("GroupImages" in groupsState[action.groupId]) {
-        groupsState[action.groupId].GroupImages.push(action.image);
-      } else {
-        groupsState[action.groupId].GroupImages = [action.image];
-      }
-      return groupsState;
-    }
-    case EDIT_GROUP: {
-      const groupsState = { ...state };
-      groupsState[action.groupId] = {
-        ...groupsState[action.groupId],
-        ...action.group,
+    case LOAD_GROUPS:
+      return action.groups.Groups.reduce(
+        (acc, group) => ({ ...acc, [group.id]: group }),
+        { ...state }
+      );
+
+    case LOAD_GROUP_DETAILS:
+    case CREATE_GROUP:
+    case EDIT_GROUP:
+      return {
+        ...state,
+        [action.group.id]: action.group,
       };
-      return groupsState;
+
+    case LOAD_GROUP_EVENTS:
+      if (state[action.groupId]) {
+        return {
+          ...state,
+          [action.groupId]: {
+            ...state[action.groupId],
+            Events: action.events.Events,
+          },
+        };
+      }
+      console.error(`Group with id ${action.groupId} not found.`);
+      return state;
+
+    case ADD_IMAGE: {
+      const groupImages = state[action.groupId]?.GroupImages || [];
+      return {
+        ...state,
+        [action.groupId]: {
+          ...state[action.groupId],
+          GroupImages: [...groupImages, action.image],
+        },
+      };
     }
+
     case DELETE_GROUP: {
-      const groupsState = { ...state };
-      delete groupsState[action.groupId];
-      return groupsState;
+      const newState = { ...state };
+      delete newState[action.groupId];
+      return newState;
     }
     default:
       return state;
