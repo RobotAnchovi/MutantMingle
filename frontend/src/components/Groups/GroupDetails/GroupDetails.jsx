@@ -127,7 +127,7 @@ const GroupDetailPage = () => {
   const handleDeleteGroup = () => {}; //!insert logic here
 
   return (
-    <div className="group-detail-page">
+    <div className="faction-detail-page">
       <nav>
         <Link to="/groups">Factions</Link>
       </nav>
