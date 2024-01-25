@@ -167,7 +167,7 @@ const GroupDetailPage = () => {
                 onClick={handleCreateEvent}
                 className="create-campaign-button"
               >
-                Start Campaign
+                Initialize Campaign
               </button>
               <button
                 onClick={handleUpdateGroup}
