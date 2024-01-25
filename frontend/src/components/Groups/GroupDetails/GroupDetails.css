@@ -1,0 +1,89 @@
+.back-link {
+  font-family: "Bangers", cursive;
+  color: #1e81b0;
+  font-size: large;
+  font-weight: bold;
+  width: 80%;
+  margin: 3rem auto 0 5px;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+#back-to-groups {
+  color: #1e81b0;
+  text-decoration: underline;
+  padding-left: 5px;
+}
+
+.group-landing {
+  margin: auto;
+  width: 80%;
+  display: flex;
+}
+
+.group-image {
+  max-height: 500px;
+  max-width: 500px;
+}
+
+.group-info {
+  margin-left: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.group-info h1 {
+  margin-top: 0;
+  font-family: "Bangers", cursive;
+}
+
+.group-info h4 {
+  color: red;
+  margin: 10px 0px;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+#join-group {
+  background-color: #f2cb05;
+  color: black;
+  padding: 0.5rem 2rem;
+  font-family: "Bangers", cursive;
+}
+
+.group-info-buttons button {
+  color: black;
+  background-color: #f2cb05;
+  box-shadow: 3px 3px black;
+  margin-right: 10px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+}
+
+.group-events-section {
+  margin-top: 2rem;
+  background-color: #fdfd96;
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+.group-events {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.group-events h4 {
+  color: #1e81b0;
+}
+
+.group-events ul {
+  padding-left: 0;
+}
+
+.group-events li {
+  background-color: white;
+  border-radius: 15px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+}

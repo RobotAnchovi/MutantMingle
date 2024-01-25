@@ -1,0 +1,28 @@
+.not-found {
+  margin: 5rem auto;
+  text-align: center;
+  font-family: "Bangers", cursive; /* Consistent comic book font */
+  color: #1e81b0; /* Bright blue for text */
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+  background-image: url("/spiderweb-error.png");
+  background-size: contain;
+  /* background-repeat: no-repeat; */
+}
+
+.not-found h1 {
+  font-size: 3rem; /* Larger size for the main heading */
+  color: #f2cb05;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+.not-found h2 {
+  color: #f2cb05; /* Bold yellow for secondary heading */
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+.not-found p {
+  font-size: 1.2rem; /* Slightly larger font for readability */
+}

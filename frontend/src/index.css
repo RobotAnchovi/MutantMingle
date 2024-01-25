@@ -1,0 +1,43 @@
+/* Comic Book Inspired Site-Wide Styles */
+@import url("https://fonts.googleapis.com/css2?family=Bangers&display=swap");
+
+body {
+  background-image: url("./comic-skyline-bg.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  margin: 0;
+  background-color: #f4f4f4;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.5); /* Semi-transparent white overlay */
+  z-index: -1;
+}
+
+* {
+  font-family: "Bangers", cursive;
+}
+
+li {
+  list-style-type: none;
+}
+
+a {
+  color: #1e81b0;
+  text-decoration: none;
+}
+
+.error {
+  color: #ff6161;
+}
+
+p {
+  word-wrap: break-word;
+}
