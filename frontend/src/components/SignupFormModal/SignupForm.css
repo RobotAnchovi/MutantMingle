@@ -4,6 +4,7 @@
   color: red; /* Bright red for the heading */
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
+  letter-spacing: 1px;
 }
 
 .sign-up-form {
@@ -13,6 +14,7 @@
   width: 100%;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
+  letter-spacing: 1px;
 }
 
 .sign-up-form input {
@@ -22,7 +24,9 @@
   border: 2px solid #1e81b0; /* Bright blue border */
   background-color: #fdfd96; /* Bright yellow background */
   box-sizing: border-box;
-  font-family: "Bangers", cursive; /* Comic book font for inputs */
+  font-family: "Bangers", cursive;
+  color: lightgrey;
+  letter-spacing: 1px; /* Comic book font for inputs */
 }
 
 .error {
@@ -51,7 +55,7 @@
 
 .pop-up-submit-button {
   background-color: #f2cb05; /* Bold yellow for submit button */
-  color: black;
+  color: white;
   padding: 10px 15px;
   border-radius: 5px; /* Rounded corners for button */
   box-shadow: 3px 3px black; /* Adds a slight shadow */

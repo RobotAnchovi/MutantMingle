@@ -92,7 +92,7 @@
 //   );
 // };
 
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
@@ -149,14 +149,20 @@ const ManageEvents = () => {
 
   return (
     <div className="campaigns-page">
-      <nav>
-        <Link to="/events">Campaigns</Link>
-        <Link to="/groups" className="active">
-          Factions
-        </Link>
-      </nav>
-      <p>Active Campaigns in MutantMingle</p>
-      <div className="campaign-list">
+      <section>
+        <div className="page-links">
+          <NavLink className="" to="/events">
+            Campaigns
+          </NavLink>
+          <NavLink className="" to="/groups">
+            Factions
+          </NavLink>
+        </div>
+        <div>
+          <span> Active Factions on MutantMingle</span>
+        </div>
+      </section>
+      <div className="faction-list">
         {sortedAndFilteredEvents.map(
           (event) => (
             console.log("Campaigns Page: event:", event),
@@ -164,7 +170,7 @@ const ManageEvents = () => {
               <a
                 href={`/events/${event.id}`}
                 key={event.id}
-                className="campaign-container"
+                className="faction-container"
               >
                 <div>
                   {/* Check if event.previewImage is not the specific string */}
@@ -177,18 +183,32 @@ const ManageEvents = () => {
                     alt={event.name}
                   />
                   <div>
-                    <h2>{event.name}</h2>
+                    <p className="faction-date">
+                      {formatDate(event.startDate)}
+                    </p>
+                    <h2 className="faction-name">{event.name}</h2>
                     {/* Check if event.Venue exists before trying to access its properties */}
-                    {event.Venue ? (
-                      <p>
-                        {event.Venue.city}, {event.Venue.state}
+                    <p>
+                      {event.Venue ? (
+                        <span className="faction-location">
+                          {event.Venue.city}, {event.Venue.state}
+                        </span>
+                      ) : (
+                        "There is not a venue, or it is CLASSIFIED"
+                      )}
+                    </p>
+                    <div>
+                      <p className="faction-about">
+                        (Insert Campaign Description here.)
                       </p>
-                    ) : (
-                      <p>There is not a venue, or it is CLASSIFIED</p>
-                    )}
-                    {/* <p>{new Date(event.startDate).toLocaleString()}</p> */}
-                    <p>{formatDate(event.startDate)}</p>
-                    <p>{event.numAttending} attending</p>
+                      {console.log(
+                        `🚀 ~ ManageEvents ~ description:`,
+                        event.description
+                      )}
+                    </div>
+                    <p className="faction-attendance">
+                      {event.numAttending} attending
+                    </p>
                   </div>
                 </div>
               </a>

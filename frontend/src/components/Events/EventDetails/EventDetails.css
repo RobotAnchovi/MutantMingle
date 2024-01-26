@@ -1,141 +1,145 @@
-#back-to-campaigns {
+/* General Reset */
+* {
+  box-sizing: border-box;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
   color: #1e81b0;
-  text-decoration: underline;
-  padding-left: 5px;
-  font-size: large;
-  font-weight: bold;
-  width: 80%;
-  margin: 3rem auto 0 5px;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    1px 1px 0 #000;
+}
+.campaigns-page section {
+  padding-bottom: 10px;
 }
 
-.campaign-heading {
-  padding-top: 2rem;
-  width: 80%;
-  margin: 0 auto;
+/* Main Page Layout */
+.campaign-detail-page {
   font-family: "Bangers", cursive;
-}
-
-h4 {
-  color: red;
-  font-weight: 100;
-  font-family: "Bangers", cursive;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    1px 1px 0 #000;
-}
-
-.campaign-section {
-  background-color: #fdfd96;
-}
-
-.campaign-detail {
-  width: 80%;
+  padding: 2rem;
+  max-width: 900px;
   margin: 0 auto;
-  padding-top: 2rem;
+  background-color: lightgrey; /* Or any other light color that matches the comic theme */
+}
+
+/* Navigation */
+.back-to-campaigns {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  display: block;
+}
+
+/* Campaign Card Heading */
+.campaign-card-heading {
+  text-align: left;
+  padding: 1rem;
+  background-color: lightgray; /* Yellow background */
+  margin-bottom: 2rem;
+}
+
+/* Management Buttons */
+.campaign-management-buttons {
   display: flex;
+  justify-content: center;
+  gap: 1rem; /* Spacing between buttons */
 }
 
-.campaign-img {
-  max-width: 500px;
-  min-width: 500px;
-  background-color: white;
-  border-radius: 15px;
+.update-event-button,
+.delete-event-button {
+  background-color: #ff6161; /* Red color for action buttons */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 #000;
 }
 
-.campaign-img img {
-  max-width: 500px;
-  max-height: 500px;
-  border-radius: 15px;
+/* Top Card */
+.top-card {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
 }
 
-.campaign-stats-section {
-  margin-left: 1.5rem;
+/* Campaign Image */
+.campaign-image-div {
+  flex: 1;
+  padding: 10px;
+  background-color: lightgray;
+  /* box-shadow: 1px 1px 0 #000; */
+}
+
+.campaign-image {
   width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 10px;
 }
 
-.campaign-stats-stats {
-  margin-left: 10rem;
-}
-
-.campaign-group-card {
-  background-color: white;
-  display: flex;
-  padding: 2rem;
-  border-radius: 15px;
-  margin-bottom: 1rem;
-}
-
-.campaign-group-image img {
-  max-width: 200px;
-  max-height: 200px;
-}
-
-.campaign-group-info {
-  padding-left: 1rem;
-}
-
-.campaign-stats {
-  background-color: white;
-  border-radius: 15px;
-  padding: 2rem;
+/* Faction Info */
+.faction-info {
+  flex: 1;
   display: flex;
   flex-direction: column;
+  background-color: lightgrey;
+  padding: 10px;
+  margin-left: 20px; /* Spacing between image and faction info */
 }
 
-.campaign-stats > div {
-  margin: 0.5rem 0;
+/* Faction Details */
+.faction-name {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: #fdfd96;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+.faction-deets {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* This will vertically center the text inside faction-deets */
+  /* Add padding or margin as necessary */
+  padding-left: 20px; /* Add padding to the left of the text */
+  /* If you want more control over the space between h3 and p, you can add margin to them individually */
 }
 
-.campaign-stats span,
-.campaign-stats i {
-  color: grey;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    1px 1px 0 #000;
+.faction-image {
+  width: 100px; /* Adjust as necessary */
+  height: auto;
+  display: block;
+  margin-bottom: 10px;
+  object-fit: contain;
+  border: 1px solid black;
+  border-radius: 10px;
 }
 
-.campaign-stats i {
-  font-size: larger;
+/* Campaign Stats */
+.campaign-stats {
+  display: flex;
+  flex-direction: column;
+  background-color: #fdfd96; /* Yellow background */
+  padding: 10px;
+  border-radius: 10px;
 }
 
-.icon-div {
-  width: 1.5rem;
-}
-
-.campaign-stats p {
-  color: #2a9d8f;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    1px 1px 0 #000;
-}
-
-.times,
+.campaign-date,
 .campaign-price,
 .campaign-type {
   display: flex;
+  align-items: center; /* Center align the icon and text vertically */
+  margin-bottom: 10px;
+  justify-content: space-between;
+}
+.start-end-times {
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  width: 100%;
+  margin-bottom: 10px;
 }
 
-.times-headers,
-.campaign-price-stat,
-.campaign-type-stat {
-  margin-left: 1rem;
-}
+/* Icons should be added with proper classes or styles */
 
-.campaign-details-user-buttons {
-  margin-left: auto;
-}
-
-.campaign-type button {
-  color: black;
-  background-color: #f2cb05;
-  box-shadow: 3px 3px black;
-  margin: 0 0.5rem;
-  cursor: pointer;
-}
-
-.event-description {
-  width: 80%;
-  margin: 0 auto;
-  padding-bottom: 3rem;
+/* Campaign Details */
+.campaign-details {
+  padding: 1rem;
+  background-color: lightgray; /* Yellow background */
+  margin-top: 2rem;
 }

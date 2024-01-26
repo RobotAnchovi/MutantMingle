@@ -1,0 +1,122 @@
+.campaigns-page {
+  margin: auto;
+  width: 60%;
+  font-family: "Bangers", cursive;
+}
+
+.page-links {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+.page-links a:hover {
+  color: red;
+  text-decoration: underline;
+}
+
+.page-links .active {
+  color: red;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+  text-decoration: underline;
+  pointer-events: none;
+  font-family: "Bangers", cursive;
+}
+
+.page-links a {
+  font-size: x-large;
+  padding-right: 1.5rem;
+  color: #1e81b0;
+}
+
+.faction-list {
+  padding-left: 0;
+}
+
+.faction-list li {
+  border-top: 2px solid #f2cb05;
+  padding: 1rem 0;
+  background-color: #fdfd96;
+}
+
+.faction-list-item {
+  display: flex;
+}
+
+.faction-list-image-div {
+  min-width: 300px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  background-color: red;
+}
+
+.faction-list-image {
+  max-width: 300px;
+  max-height: 200px;
+  object-fit: contain;
+}
+
+.faction-list-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 1.5rem;
+  width: 455px;
+  flex-grow: 1;
+  max-height: 200px;
+}
+
+.faction-list-info h2 {
+  margin: 0;
+
+  font-family: "Bangers", cursive;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+.faction-list-info h4 {
+  color: red;
+  margin: 0.5rem 0;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+.faction-container {
+  display: flex;
+  border: 3px solid #1e81b0;
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.6);
+  margin-bottom: 20px;
+  background-color: #fdfd96; /* Comic-style background */
+  transition: transform 0.3s, box-shadow 0.3s;
+  /* letter-spacing: 1px; */
+}
+
+.faction-container:hover {
+  transform: scale(1.03);
+  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.6);
+}
+
+.faction-container img {
+  border: 2px solid black;
+  max-width: 300px; /* Adjust as needed */
+  max-height: 200px; /* Adjust as needed */
+  object-fit: contain;
+  margin-right: 20px; /* Space between image and info */
+}
+
+.faction-container > div:last-child {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 10px;
+  border-left: 2px solid #1e81b0; /* Separating border */
+}
+
+.faction-container h2,
+.faction-container p {
+  color: #1e81b0; /* Dark blue for contrast */
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+  letter-spacing: 2px;
+}

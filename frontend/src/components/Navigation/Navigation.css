@@ -1,3 +1,7 @@
+* {
+  letter-spacing: 1px;
+}
+
 .hidden {
   display: none;
 }
@@ -47,7 +51,7 @@ nav {
   font-size: large;
 }
 
-.user-circle {
+i.fas.fa-user-circle {
   font-size: 40px;
   border: none;
   color: red;
@@ -82,6 +86,7 @@ nav {
 .user-dropdown-links,
 #logout-li {
   border-top: 1px solid lightgray;
+  color: red;
 }
 
 .user-dropdown a {
@@ -90,6 +95,7 @@ nav {
 #logout-li {
   padding-top: 5px;
   cursor: pointer;
+  color: red;
 }
 
 #user-profile-ul {

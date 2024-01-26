@@ -323,10 +323,10 @@ const EventDetails = () => {
     }
     return (
       <div className="campaign-detail-page">
-        <nav>
-          <Link to="/events">Campaigns</Link>
+        <nav className="back-to-campaigns">
+          <Link to="/events">&lt; Return to Campaigns</Link>
         </nav>
-        <div>
+        <div className="campaign-card-heading">
           <h1>{eventDetails.name}</h1>
           {groupDetails && groupDetails.Organizer && (
             <p>
@@ -363,8 +363,8 @@ const EventDetails = () => {
           )}
         </div>
         <div>
-          <div>
-            <div>
+          <div className="top-card">
+            <div className="campaign-image-div">
               <img
                 src={
                   eventImageWithPreview !== undefined
@@ -372,10 +372,11 @@ const EventDetails = () => {
                     : "https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg"
                 }
                 alt={eventDetails.name}
+                className="campaign-image"
               />
             </div>
-            <div>
-              <div>
+            <div className="faction-info">
+              <div className="faction-name">
                 {
                   <img
                     src={
@@ -384,29 +385,42 @@ const EventDetails = () => {
                         : "https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg"
                     }
                     alt={groupDetails?.name}
+                    className="faction-image"
                   />
                 }
-                <h3>{eventDetails.Group.name}</h3>
-                <p>{eventDetails.Group.private ? "Private" : "Public"}</p>
-              </div>
-              <div>
-                <div>
-                  <img src="" alt="icon" />
-                  <p>START {formatDate(eventDetails.startDate)}</p>
-                  <p>END {formatDate(eventDetails.endDate)}</p>
+                <div className="faction-deets">
+                  <h3>{eventDetails.Group.name}</h3>
+                  <p>{eventDetails.Group.private ? "Private" : "Public"}</p>
                 </div>
-                <div>
-                  <img src="" alt="icon" />
+              </div>
+              <div className="campaign-stats">
+                <div className="campaign-date">
+                  <img src="fa-regular fa-clock" alt="icon" className="clock" />
+                  <div className="start-end-times">
+                    <p>START {formatDate(eventDetails.startDate)}</p>
+                    <p>END {formatDate(eventDetails.endDate)}</p>
+                  </div>
+                </div>
+                <div className="campaign-price">
+                  <img
+                    src="fa-solid fa-dollar-sign"
+                    alt="icon"
+                    className="dollar-sign"
+                  />
                   <p>Price: {formatPrice(eventDetails.price)}</p>
                 </div>
-                <div>
-                  <img src="" alt="icon" />
+                <div className="campaign-type">
+                  <img
+                    src="fa-solid fa-map-pin"
+                    alt="icon"
+                    className="map-pin"
+                  />
                   <p>{eventDetails.type}</p>
                 </div>
               </div>
             </div>
           </div>
-          <div>
+          <div className="campaign-details">
             <h1>Intel Briefing</h1>
             <p>{eventDetails.description}</p>
           </div>

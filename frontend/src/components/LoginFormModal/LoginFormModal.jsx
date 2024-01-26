@@ -81,13 +81,13 @@ function LoginFormModal() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit" disabled={buttonStatus}>
+        <button className="button" type="submit" disabled={buttonStatus}>
           Log In
         </button>
       </form>
 
       <form onSubmit={demoLogin}>
-        <button type="submit" disabled={buttonStatus}>
+        <button className="demo" type="submit">
           Infiltrate a Faction (Demo)
         </button>
       </form>

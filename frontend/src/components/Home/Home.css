@@ -5,6 +5,7 @@
   margin: 2rem auto;
   width: 75%;
   gap: 20px; /* Add space between elements */
+  letter-spacing: 1px;
 }
 
 .landing-info {
@@ -21,6 +22,7 @@
 h1 {
   font-size: xx-large;
   font-family: "Bangers", cursive;
+  color: red;
 }
 
 .landing-img {
@@ -48,6 +50,8 @@ h1 {
 .how-works p,
 .how-works h2 {
   text-align: center;
+  color: #f2cb05;
+  letter-spacing: 1px;
 }
 
 .cards {
@@ -55,6 +59,7 @@ h1 {
   justify-content: center;
   margin: 0 auto;
   width: 60%;
+  border-radius: 10px;
 }
 
 .home-link-img {
@@ -99,4 +104,13 @@ h1 {
   box-shadow: 3px 3px black;
   margin: 2rem auto;
   cursor: pointer;
+}
+.lower-landing .how-works {
+  letter-spacing: 2px;
+}
+
+p {
+  word-wrap: break-word;
+  letter-spacing: 2px;
+  font-size: large;
 }

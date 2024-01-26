@@ -10,6 +10,10 @@
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
 }
+.page-links a:hover {
+  color: red;
+  text-decoration: underline;
+}
 
 .page-links .active {
   color: red;
@@ -77,11 +81,45 @@
     1px 1px 0 #000;
 }
 
-.faction-list span {
-  font-size: large;
-  padding-right: 1.5rem;
-  color: red;
-  font-family: "Bangers", cursive;
+.faction-container {
+  display: flex;
+  border: 3px solid #1e81b0;
+  box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.6);
+  margin-bottom: 20px;
+  background-color: #fdfd96; /* Comic-style background */
+  transition: transform 0.3s, box-shadow 0.3s;
+  border-radius: 10px;
+}
+
+.faction-container:hover {
+  transform: scale(1.03);
+  box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.6);
+}
+.faction-list-page section {
+  padding-bottom: 10px;
+}
+
+.faction-container img {
+  border: 2px solid black;
+  max-width: 300px; /* Adjust as needed */
+  max-height: 200px; /* Adjust as needed */
+  object-fit: contain;
+  margin-right: 20px; /* Space between image and info */
+  background-color: #1e81b0;
+}
+
+.faction-container > div:last-child {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 10px;
+  border-left: 2px solid #1e81b0; /* Separating border */
+}
+
+.faction-container h2,
+.faction-container p {
+  color: royalblue;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
+  letter-spacing: 1px;
 }

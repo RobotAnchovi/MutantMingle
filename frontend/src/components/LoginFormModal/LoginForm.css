@@ -5,6 +5,7 @@
 
 h1 {
   margin: 10px 0;
+  letter-spacing: 3px;
 }
 
 .log-in form {
@@ -21,6 +22,10 @@ h1 {
   border: 2px solid #1e81b0;
   background-color: #fdfd96;
   box-sizing: border-box;
+  letter-spacing: 4px;
+  font-size: larger;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 .log-in form label {
@@ -53,10 +58,13 @@ h1 {
   width: 100%;
   padding: 10px;
   margin-top: 5px;
-  color: black;
+  color: white;
   background-color: #f2cb05; /* Default background */
   border: 1.5px solid black;
   box-shadow: 3px 3px black;
+  border-radius: 10px;
+  letter-spacing: 1px;
+  font-size: larger;
 }
 
 .button:disabled {
@@ -77,23 +85,26 @@ h1 {
   width: fit-content;
   align-self: center;
   padding: 15px 0px;
-  font-size: large;
+  font-size: x-large;
   color: red;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
+  letter-spacing: 1px;
 }
 .error {
   color: red;
   font-family: "Bangers", cursive;
   font-size: 1.2rem;
   text-align: center;
-  padding: 10px;
+  padding: 10px 0 20px 0; /* Increased bottom padding */
   margin: 10px 0;
   border: 2px solid #ff6161;
   background-color: #fdfd96;
   box-shadow: 5px 5px 0px 0px #1e81b0;
   border-radius: 5px;
-  text-shadow: 2px 2px #000000;
+  text-shadow: 2px 2px 0 #000000; /* Black outline for the text */
+  animation: shake 0.5s;
+  animation-iteration-count: 2;
 }
 
 @keyframes shake {

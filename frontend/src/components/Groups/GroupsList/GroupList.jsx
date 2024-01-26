@@ -71,12 +71,12 @@ const GroupList = () => {
                 alt={group.name}
               />
               <div>
-                <h2>{group.name}</h2>
-                <p>
+                <h2 className="faction-name">{group.name}</h2>
+                <p className="faction-location">
                   {group.city}, {group.state}
                 </p>
-                <p>{group.about}</p>
-                <p>
+                <p className="faction-about">{group.about}</p>
+                <p className="faction-campaigns-private">
                   {group.numEvents} Campaigns ·{" "}
                   {group.private ? "Private" : "Public"}
                 </p>
