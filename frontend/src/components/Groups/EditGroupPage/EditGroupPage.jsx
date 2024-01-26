@@ -18,13 +18,13 @@ const EditGroupPage = () => {
     groupPrivate,
     userId,
   } = location.state;
-  console.log("🚀 ~ EditGroupPage ~ location.state:", location.state);
+  // console.log("🚀 ~ EditGroupPage ~ location.state:", location.state);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const user = useSelector((state) => state.session?.user);
-  console.log("🚀 ~ EditGroupPage ~ user:", user);
+  // console.log("🚀 ~ EditGroupPage ~ user:", user);
 
   if (user === null || userId !== user.id) {
     navigate("/");

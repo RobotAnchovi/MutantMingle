@@ -59,7 +59,7 @@ export const fetchGroupDetails = (groupId) => async (dispatch) => {
     const response = await csrfFetch(`/api/groups/${groupId}`);
     if (response.ok) {
       const groupDetails = await response.json();
-      console.log("🚀 ~ fetchGroupDetails ~ groupDetails:", groupDetails);
+      // console.log("🚀 ~ fetchGroupDetails ~ groupDetails:", groupDetails);
       dispatch(setGroupDetails(groupDetails));
     } else {
       throw new Error("Group details fetch failed");

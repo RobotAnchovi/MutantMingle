@@ -51,7 +51,7 @@ const CreateEventPage = () => {
       };
 
       const createdEvent = await dispatch(thunkCreateEvent(groupId, newEvent));
-      console.log("handleSubmit ~ createdEvent:", createdEvent);
+      // console.log("handleSubmit ~ createdEvent:", createdEvent);
       if (createdEvent.errors) {
         setValidationErrors(createdEvent.errors);
       } else {

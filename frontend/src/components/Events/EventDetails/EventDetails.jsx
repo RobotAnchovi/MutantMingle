@@ -20,7 +20,7 @@ const EventDetails = () => {
   const [isEventDetailsLoaded, setIsEventDetailsLoaded] = useState(false);
   const [isGroupDetailsLoaded, setIsGroupDetailsLoaded] = useState(false);
 
-  console.log(`EventDetails ~ isGroupDetailsLoaded:`, isGroupDetailsLoaded);
+  // console.log(`EventDetails ~ isGroupDetailsLoaded:`, isGroupDetailsLoaded);
 
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
@@ -59,12 +59,12 @@ const EventDetails = () => {
       (image) => image.preview === true
     );
   }
-  console.log(groupImageWithPreview);
+  // console.log(groupImageWithPreview);
 
   //^ Check if the user is logged in and is the event creator
   const isEventCreator =
     currentUser && groupDetails?.Organizer?.id === currentUser.id; //^ Modify this line as per your data structure
-  console.log("EventDetailPage ~ isEventCreator:", isEventCreator);
+  // console.log("EventDetailPage ~ isEventCreator:", isEventCreator);
 
   //^ Handlers for the buttons
   const handleUpdateEvent = () => {
@@ -75,11 +75,11 @@ const EventDetails = () => {
     setShowDeleteConfirmation(true);
   };
 
-  const handleDeleteClick = () => {
-    setShowDeleteConfirmation(true);
-  };
+  // const handleDeleteClick = () => {
+  //   setShowDeleteConfirmation(true);
+  // };
 
-  console.log(`handleDeleteClick ~ handleDeleteClick:`, handleDeleteClick);
+  // console.log(`handleDeleteClick ~ handleDeleteClick:`, handleDeleteClick);
 
   const handleConfirmDelete = async () => {
     const result = await dispatch(thunkRemoveEvent(eventDetails.id));

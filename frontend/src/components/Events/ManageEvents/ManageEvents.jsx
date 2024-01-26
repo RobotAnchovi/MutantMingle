@@ -69,58 +69,52 @@ const ManageEvents = () => {
         </div>
       </section>
       <div className="faction-list">
-        {sortedAndFilteredEvents.map(
-          (event) => (
-            console.log("Campaigns Page: event:", event),
-            (
-              <a
-                href={`/events/${event.id}`}
-                key={event.id}
-                className="faction-container"
-              >
+        {sortedAndFilteredEvents.map((event) => (
+          // console.log("Campaigns Page: event:", event),
+          <a
+            href={`/events/${event.id}`}
+            key={event.id}
+            className="faction-container"
+          >
+            <div>
+              {/* Check if event.previewImage is not the specific string */}
+              <img
+                src={
+                  event.previewImage !== "No preview image found."
+                    ? event.previewImage
+                    : "https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg"
+                }
+                alt={event.name}
+              />
+              <div>
+                <p className="faction-date">{formatDate(event.startDate)}</p>
+                <h2 className="faction-name">{event.name}</h2>
+                {/* Check if event.Venue exists before trying to access its properties */}
+                <p>
+                  {event.Venue ? (
+                    <span className="faction-location">
+                      {event.Venue.city}, {event.Venue.state}
+                    </span>
+                  ) : (
+                    "There is not a venue, or it is CLASSIFIED"
+                  )}
+                </p>
                 <div>
-                  {/* Check if event.previewImage is not the specific string */}
-                  <img
-                    src={
-                      event.previewImage !== "No preview image found."
-                        ? event.previewImage
-                        : "https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg"
-                    }
-                    alt={event.name}
-                  />
-                  <div>
-                    <p className="faction-date">
-                      {formatDate(event.startDate)}
-                    </p>
-                    <h2 className="faction-name">{event.name}</h2>
-                    {/* Check if event.Venue exists before trying to access its properties */}
-                    <p>
-                      {event.Venue ? (
-                        <span className="faction-location">
-                          {event.Venue.city}, {event.Venue.state}
-                        </span>
-                      ) : (
-                        "There is not a venue, or it is CLASSIFIED"
-                      )}
-                    </p>
-                    <div>
-                      <p className="faction-about">
-                        (Insert Campaign Description here.)
-                      </p>
-                      {console.log(
-                        `🚀 ~ ManageEvents ~ description:`,
-                        event.description
-                      )}
-                    </div>
-                    <p className="faction-attendance">
-                      {event.numAttending} attending
-                    </p>
-                  </div>
+                  <p className="faction-about">
+                    (Insert Campaign Description here.)
+                  </p>
+                  {/* {console.log(
+                    `🚀 ~ ManageEvents ~ description:`,
+                    event.description
+                  )} */}
                 </div>
-              </a>
-            )
-          )
-        )}
+                <p className="faction-attendance">
+                  {event.numAttending} attending
+                </p>
+              </div>
+            </div>
+          </a>
+        ))}
       </div>
     </div>
   );
