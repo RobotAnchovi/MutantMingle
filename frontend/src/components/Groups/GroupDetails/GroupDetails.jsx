@@ -34,7 +34,6 @@ const GroupDetailPage = () => {
   // );
 
   // get image url
-  //! Not working
   let imageWithPreview = groupDetails.GroupImages?.find(
     (image) => image.preview === true
   );
@@ -74,7 +73,7 @@ const GroupDetailPage = () => {
 
   const handleConfirmDelete = async () => {
     const result = await dispatch(thunkRemoveGroup(groupDetails.id));
-    if (result.message === "Successfully Yeeted!") {
+    if (result.message === "Successfully deleted") {
       navigate(`/groups`);
     } else {
       // Handle error
@@ -84,7 +83,7 @@ const GroupDetailPage = () => {
   return (
     <div>
       <nav>
-        <Link to="/groups">Factions</Link>
+        <Link to="/groups">Back to Factions</Link>
       </nav>
       <div className="faction-detail-page">
         <div className="faction-deets-upper">

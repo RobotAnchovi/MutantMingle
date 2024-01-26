@@ -9,7 +9,9 @@ import mutantCampaign from "/mutant-campaign.png";
 import newFaction from "/new-faction.png";
 
 const Home = () => {
-  const isLoggedIn = useSelector((state) => state.session.user !== null);
+  const isLoggedIn = useSelector(
+    (state) => state.session?.user !== undefined || null
+  );
 
   const activeLink = isLoggedIn ? "" : "disabled";
 

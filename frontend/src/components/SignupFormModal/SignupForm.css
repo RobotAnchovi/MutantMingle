@@ -1,3 +1,6 @@
+#modal-content {
+  letter-spacing: 1px;
+}
 .sign-up-form-container h1 {
   text-align: center;
   font-family: "Bangers", cursive; /* Comic book font for heading */
@@ -5,6 +8,11 @@
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
   letter-spacing: 1px;
+}
+
+input.pop-up-input {
+  letter-spacing: 3px;
+  color: #f2cb05;
 }
 
 .sign-up-form {
@@ -53,7 +61,7 @@
   border: 2px solid #ff6161; /* Bright red border for inputs */
 }
 
-.pop-up-submit-button {
+.main-button-1 {
   background-color: #f2cb05; /* Bold yellow for submit button */
   color: white;
   padding: 10px 15px;
@@ -63,7 +71,7 @@
   font-family: "Bangers", cursive; /* Comic book font for button */
   margin-top: 20px; /* Extra space above the submit button */
 }
-.pop-up-submit-button:disabled {
+.main-button-1:disabled {
   background-color: red; /* Red color when the button is disabled */
   color: lightgray;
 }

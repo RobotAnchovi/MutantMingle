@@ -20,10 +20,11 @@ h1 {
   padding: 3px 5px;
   margin: 5px auto;
   border: 2px solid #1e81b0;
-  background-color: #fdfd96;
+  background-color: white;
   box-sizing: border-box;
   letter-spacing: 4px;
   font-size: larger;
+  color: #f2cb05;
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
 }
@@ -105,6 +106,7 @@ h1 {
   text-shadow: 2px 2px 0 #000000; /* Black outline for the text */
   animation: shake 0.5s;
   animation-iteration-count: 2;
+  letter-spacing: 1px;
 }
 
 @keyframes shake {
