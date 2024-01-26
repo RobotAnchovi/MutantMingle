@@ -41,6 +41,7 @@ nav a {
   border-radius: 15px; /* Rounded corners for the container */
   overflow: hidden; /* Prevents the image from spilling out of the border-radius */
   box-shadow: 5px 5px 0 #000; /* Comic book style shadow for the container */
+  background-color: #fdfd96;
 }
 
 .faction-image {
