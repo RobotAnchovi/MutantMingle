@@ -141,10 +141,10 @@ const GroupDetailPage = () => {
                   <div className="confirmation-modal">
                     <p>Are you sure you want to delete this group?</p>
                     <button onClick={handleConfirmDelete} className="red">
-                      Yes, delete this group
+                      Yes, delete this faction!
                     </button>
                     <button onClick={() => setShowDeleteConfirmation(false)}>
-                      No, keep this event.
+                      No, I&apos;ll stay strong.
                     </button>
                   </div>
                 </div>
