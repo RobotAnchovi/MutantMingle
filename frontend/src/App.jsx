@@ -12,6 +12,7 @@ import GroupDetails from "./components/Groups/GroupDetails";
 import EventDetails from "./components/Events/EventDetails";
 import CreateGroupForm from "./components/Groups/CreateGroupForm";
 import CreateEventForm from "./components/Events/CreateEventForm";
+import EditGroupPage from "./components/Groups/EditGroupPage/EditGroupPage";
 
 function Layout() {
   const dispatch = useDispatch();
@@ -62,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: "create-event",
         element: <CreateEventForm />,
+      },
+      {
+        path: "edit-group",
+        element: <EditGroupPage />,
       },
       // {
       //   path: 'login',

@@ -15,44 +15,26 @@ function SignupFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
-  // const disableLogin =
-  //   email.length === 0 ||
-  //   username.length < 4 ||
-  //   firstName.length === 0 ||
-  //   lastName.length === 0 ||
-  //   password.length < 6 ||
-  //   confirmPassword.length === 0; // true or false based on required fields
+  const disableLogin =
+    email.length === 0 ||
+    username.length < 4 ||
+    firstName.length === 0 ||
+    lastName.length === 0 ||
+    password.length < 6 ||
+    confirmPassword.length === 0; // true or false based on required fields
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    let newErrors = {};
+    if (password !== confirmPassword) {
+      setErrors({
+        confirmPassword:
+          "Confirm Password field must be the same as the Password field",
+      });
+      return;
+    }
 
-    if (!email) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      newErrors.email = "Ummm...that doesn't look like an email address.";
-    }
-    if (username.length < 4)
-      newErrors.username =
-        "Username must be at least 4 characters. Sorry, Zod.";
-    if (firstName.length < 2 || !/[a-zA-Z]/.test(firstName)) {
-      newErrors.firstName =
-        "First Name is required, but promise we won't tell.";
-    }
-    if (lastName.length < 2 || !/[a-zA-Z]/.test(lastName)) {
-      newErrors.lastName = "Last Name is required, but promise we won't tell.";
-    }
-    if (password.length < 6)
-      newErrors.password =
-        "Passwords deserve more effort than that. Let's go for more than 6 characters.";
-    if (password !== confirmPassword)
-      newErrors.confirmPassword =
-        "Can't save the world if your passwords don't match!";
-
-    setErrors(newErrors); // Set errors immediately
-    console.log("Error State:", newErrors);
-    if (Object.keys(newErrors).length === 0) {
-      return dispatch(
+    try {
+      await dispatch(
         sessionActions.signup({
           email,
           username,
@@ -60,31 +42,23 @@ function SignupFormModal() {
           lastName,
           password,
         })
-      )
-        .then(closeModal)
-        .catch((error) => {
-          // Assuming the error thrown by your thunk action is an object
-          if (error && error.errors) {
-            setErrors(error.errors);
-          } else {
-            // Fallback for other types of errors
-            setErrors({
-              general: "An error occurred during signup. Please try again.",
-            });
-          }
+      );
+      closeModal();
+    } catch (error) {
+      // Check if the error object has the 'errors' field and update state
+      if (error && error.errors) {
+        setErrors(error.errors);
+      } else {
+        setErrors({
+          general: "An error occurred during signup. Please try again.",
         });
+      }
     }
   };
-  //       .catch(async (res) => {
-  //         const data = await res.json();
-  //         if (data?.errors) setErrors(data.errors);
-  //       });
-  //   }
-  // };
 
   return (
     <>
-      <h1>The World Needs You!</h1>
+      <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
         <label className="pop-up-label">
           Email
@@ -94,10 +68,9 @@ function SignupFormModal() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            placeholder="Ex. spiderman@marvel.io"
           />
         </label>
-        {errors.email && <p className="error">{errors.email}</p>}
+        {/* {errors.email && <p>{errors.email}</p>} */}
         <label className="pop-up-label">
           Username
           <input
@@ -106,10 +79,9 @@ function SignupFormModal() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
-            placeholder="Ex. Spidey-Tingles62"
           />
         </label>
-        {errors.username && <p className="error">{errors.username}</p>}
+        {/* {errors.username && <p>{errors.username}</p>} */}
         <label className="pop-up-label">
           First Name
           <input
@@ -118,10 +90,9 @@ function SignupFormModal() {
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
-            placeholder="Ex. Peter"
           />
         </label>
-        {errors.firstName && <p className="error">{errors.firstName}</p>}
+        {/* {errors.firstName && <p>{errors.firstName}</p>} */}
         <label className="pop-up-label">
           Last Name
           <input
@@ -130,10 +101,9 @@ function SignupFormModal() {
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
-            placeholder="Ex. Parker"
           />
         </label>
-        {errors.lastName && <p className="error">{errors.lastName}</p>}
+        {/* {errors.lastName && <p>{errors.lastName}</p>} */}
         <label className="pop-up-label">
           Password
           <input
@@ -142,10 +112,9 @@ function SignupFormModal() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            placeholder="Ex. DocOckStinks123"
           />
         </label>
-        {errors.password && <p className="error">{errors.password}</p>}
+        {/* {errors.password && <p>{errors.password}</p>} */}
         <label className="pop-up-label">
           Confirm Password
           <input
@@ -154,23 +123,16 @@ function SignupFormModal() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
-            placeholder="Do the same thing you did above"
           />
         </label>
-        {errors.confirmPassword && (
-          <p className="error">{errors.confirmPassword}</p>
-        )}
-        {/* {Object.values(errors).map((error, idx) => (
+        {/* {errors.confirmPassword && <p>{errors.confirmPassword}</p>} */}
+        {Object.values(errors).map((error, idx) => (
           <div key={idx} className="error">
             {error}
           </div>
-        ))} */}
-        <button
-          type="submit"
-          // disabled={disableLogin}
-          className="pop-up-submit-button"
-        >
-          Enlist!
+        ))}
+        <button type="submit" disabled={disableLogin} className="main-button-1">
+          Sign Up
         </button>
       </form>
     </>

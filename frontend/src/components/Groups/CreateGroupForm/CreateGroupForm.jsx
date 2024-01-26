@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { thunkAddImage, thunkCreateGroup } from "../../../store/groups";
+import "./CreateGroupForm.css";
 
 const CreateGroupPage = () => {
   const navigate = useNavigate();

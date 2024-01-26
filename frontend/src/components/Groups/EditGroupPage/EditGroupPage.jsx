@@ -113,7 +113,7 @@ const EditGroupPage = () => {
               onChange={(e) => setCity(e.target.value)}
             />
           </label>
-          <span id="comma-span">,</span>
+          <span id="comma-span"></span>
           <label htmlFor="state">
             <input
               type="text"

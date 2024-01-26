@@ -1,78 +1,104 @@
-body {
-  font-family: "Bangers", cursive;
+/* General styles */
+* {
+  letter-spacing: 1px; /* Your preference for letter-spacing */
+  font-family: "Bangers", cursive; /* Comic book font */
 }
 
-.group-section {
-  width: 80%;
-  margin: 0 auto 5rem;
-  outline: thick solid #1e81b0;
-  background-color: lightgray;
-  padding: 20px;
+/* Section styling */
+.faction-section {
+  max-width: 800px; /* Adjust width as needed */
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: #fdfd96; /* Yellow background */
+  border: 5px solid black;
+  border-radius: 15px;
+  box-shadow: 5px 5px 0px #000;
+  text-align: center;
 }
 
-.group-section h4 {
+/* Titles and subtitles */
+.faction-section h1,
+.faction-section h2 {
   color: red;
-  font-family: "Bangers", cursive;
 }
 
-.group-section div {
-  border-top: 1px solid #1e81b0;
-  margin-top: 0.3rem;
+/* Paragraph styling */
+.faction-section p {
+  font-size: 1rem;
+  color: #1e81b0; /* Dark text for readability */
+  margin-bottom: 1rem; /* Spacing after paragraphs */
+  letter-spacing: 2px;
 }
 
-.group-section .errors-div {
-  border: none;
-  height: 1rem;
+/* Input fields styling */
+.faction-section input[type="text"],
+.faction-section textarea,
+.faction-section select {
+  width: 100%; /* Full width */
+  padding: 0.5rem;
+  margin-bottom: 1rem; /* Spacing between fields */
+  border: 2px solid #1e81b0;
+  border-radius: 10px;
+  background-color: white;
+  color: #f2cb05;
 }
 
+/* Placeholder styling */
+.faction-section input::placeholder,
+.faction-section textarea::placeholder {
+  color: lightgray;
+  letter-spacing: 1px;
+}
+
+/* Error messages styling */
 .errors-div {
   display: flex;
-}
-
-.group-section button {
-  background-color: #f2cb05;
-  box-shadow: 3px 3px black;
-  color: black;
-  font-size: large;
-  padding: 0.5rem 1rem;
-  margin-top: 1rem;
-  cursor: pointer;
-  font-family: "Bangers", cursive;
-}
-
-.group-section input,
-.group-section select,
-.group-section textarea {
-  border: 2px solid #1e81b0;
-  background-color: #fdfd96;
-  box-sizing: border-box;
-  padding: 0.25rem;
-}
-
-#group-city,
-#group-name,
-#group-about,
-#group-imageUrl {
-  width: 20rem;
-}
-
-#group-error-city,
-#group-error-state {
-  display: flex;
-}
-
-#comma-span {
-  margin: 0 0.5rem 0 0.25rem;
-}
-
-.placeholder-select {
-  color: lightgray;
+  justify-content: center;
 }
 
 .errors {
   color: red;
+  text-shadow: 2px 2px 0px #000;
 }
-span.errors {
-  font-family: "Bangers", cursive;
-  color: red;
+
+/* Button styling */
+.faction-section button {
+  padding: 1rem 2rem;
+  background-color: #f2cb05; /* Button background */
+  color: red; /* Button text */
+  border: none;
+  border-radius: 10px;
+  box-shadow: 3px 3px 0px #000;
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+}
+
+.faction-section button:hover {
+  background-color: #ff6161; /* Button hover color */
+}
+
+/* Additional styles for select elements */
+.faction-section .placeholder-select {
+  color: lightgray;
+}
+
+/* Final steps div */
+#final-steps-div {
+  text-align: center; /* Align content to the left */
+}
+
+/* Additional Intel section styling */
+#final-steps-div p {
+  color: #1e81b0; /* Dark text color for the questions */
+  font-size: 1rem; /* Readable font size */
+}
+
+/* Image URL input */
+#faction-imageUrl {
+  font-family: "Arial", sans-serif; /* More suitable for URL inputs */
+}
+
+select {
+  cursor: pointer;
 }
