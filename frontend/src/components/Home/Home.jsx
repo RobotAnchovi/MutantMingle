@@ -10,7 +10,7 @@ import newFaction from "/new-faction.png";
 
 const Home = () => {
   const isLoggedIn = useSelector(
-    (state) => state.session?.user !== undefined || null
+    (state) => state.session?.user !== undefined && state.session?.user !== null
   );
 
   const activeLink = isLoggedIn ? "" : "disabled";
