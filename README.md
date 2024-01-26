@@ -1,4 +1,62 @@
-# MutantMingle (Meetup Clone)
+# MutantMerge
+
+## Introduction
+
+MutantMerge is a full-stack, work-in-progress clone of Meetup, showcasing CRUD (Create, Read, Update, Delete) capabilities across various features. This project demonstrates a comprehensive understanding of both frontend and backend technologies, making it an ideal portfolio piece for potential employers.
+
+## Technologies Used
+
+### Backend
+
+- **Express**: A minimal and flexible Node.js web application framework.
+- **Express-Validator**: Middleware for validating and sanitizing requests.
+- **Sequelize**: A promise-based Node.js ORM for Postgres, MySQL, MariaDB, SQLite, and Microsoft SQL Server.
+- **JWT (JSON Web Tokens)**: For securely transmitting information between parties as a JSON object.
+
+### Frontend
+
+- **React**: A JavaScript library for building user interfaces.
+- **React Router**: A standard library for routing in React.
+- **Redux**: A Predictable State Container for JS Apps.
+- **CSS**: For styling.
+- **Font Awesome**: For icons.
+- **Google Fonts**: For web typography.
+
+## Getting Started
+
+### Prerequisites
+
+Ensure you have Node.js and npm installed on your machine. Also, it's important to note that my database schema uses `Groups` and `Events` for the tables. This project is meant to be a clone of MeetUp, but to inject a little creativity I'm choosing to go with a comic book-centric theme. Therefore, within the file structure `Groups` will be `Factions` and `Events` will be `Campaigns`. Most of the internal functionality will still reflect `Groups` and `Events` for simplification of the coding process, but CSS tags and other design elements will reflect the `Factions` and `Campaigns`theme elements.
+
+### To Launch
+
+1. **Set Up the Backend**
+
+   - Navigate to the backend directory.
+   - Create a `.env` file and initialize the following variables:
+     ```
+     PORT=8000
+     DB_FILE=db/dev.db
+     JWT_SECRET=<Your secret here>
+     JWT_EXPIRES_IN=604800
+     ```
+   - Run `npm install` to install dependencies.
+   - Run `npm run dbreset` to create and seed the database.
+   - Run `npm start` to start the backend server.
+
+2. **Set Up the Frontend**
+   - Navigate to the frontend directory.
+   - Run `npm install` to install dependencies.
+   - Run `npm run dev` to start the frontend server.
+   - Press "o" in the terminal running the server to open the rendered webpage.
+
+## Contributing
+
+MutantMerge is currently a personal portfolio project, and contributions are not being accepted at this time. However, any feedback or suggestions are welcome!
+
+---
+
+MutantMerge is not affiliated with or endorsed by Meetup.
 
 ## Database Schema Design
 

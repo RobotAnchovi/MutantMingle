@@ -4,7 +4,7 @@ const { Group } = require("../models");
 
 let options = {};
 if (process.env.NODE_ENV === "production") {
-  options.schema = process.env.SCHEMA; // define your schema in options object
+  options.schema = process.env.SCHEMA;
 }
 
 module.exports = {
@@ -13,8 +13,9 @@ module.exports = {
       [
         {
           organizerId: 1,
-          name: "Outdoor Adventurers",
-          about: "A group for outdoor enthusiasts",
+          name: "League of Urban Pillagers",
+          about:
+            "Unite with fellow adventurers to rob...I mean discover the city's hidden gems!",
           type: "In person",
           private: false,
           city: "San Francisco",
@@ -23,32 +24,11 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          organizerId: 1,
-          name: "Techno Talks",
-          about: "Discussing the latest in technology",
+          organizerId: 2,
+          name: "Tech Titans Roundtable",
+          about:
+            "Join the league of extraordinary minds discussing the future of tech!",
           type: "Online",
-          private: false,
-          city: "New York",
-          state: "NY",
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          organizerId: 1,
-          name: "Readers Club",
-          about: "Monthly fiction and non-fiction book discussions",
-          type: "In person",
-          private: true,
-          city: "Chicago",
-          state: "IL",
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          organizerId: 3,
-          name: "Movie Knights",
-          about: "Weekly gatherings to watch and discuss movies",
-          type: "In person",
           private: false,
           city: "Los Angeles",
           state: "CA",
@@ -56,10 +36,23 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          organizerId: 2,
-          name: "Culinary Club",
-          about: "Share recipes and cooking techniques",
-          type: "Online",
+          organizerId: 3,
+          name: "Mystery & Myth Book Club",
+          about:
+            "Dive into the world of fiction and non-fiction mysteries every month!",
+          type: "In person",
+          private: true,
+          city: "New York",
+          state: "NY",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          organizerId: 4,
+          name: "Cinematic Crusaders",
+          about:
+            "Weekly gatherings for cinema enthusiasts to watch and analyze films!",
+          type: "In person",
           private: false,
           city: "Seattle",
           state: "WA",
@@ -67,31 +60,46 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          organizerId: 2,
-          name: "Fitness Fanatics",
-          about: "Group focused on fitness and wellness activities",
+          organizerId: 5,
+          name: "Gourmet Guild",
+          about:
+            "Exchange extraordinary recipes and culinary secrets while battling the evil villain: Count Cholesterol!",
+          type: "Online",
+          private: false,
+          city: "San Francisco",
+          state: "CA",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          organizerId: 6,
+          name: "Wellness Warriors",
+          about:
+            "Join forces to embark on fitness and wellness quests! Fighting fat and making gains! Where's my protein!!!",
           type: "In person",
           private: false,
-          city: "Miami",
-          state: "FL",
+          city: "Chicago",
+          state: "IL",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          organizerId: 3,
-          name: "Game On",
-          about: "Board game nights and discussion",
+          organizerId: 7,
+          name: "Strategic Superheroes",
+          about:
+            "Conquer board games and strategies at our epic game nights all while my mom makes HotPockets!",
           type: "Online",
           private: true,
-          city: "Austin",
-          state: "TX",
+          city: "Boston",
+          state: "MA",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          organizerId: 1,
-          name: "Music Makers",
-          about: "A community for aspiring musicians",
+          organizerId: 8,
+          name: "Melody Masters Assembly",
+          about:
+            "Gather with fellow music aficionados and create harmonious symphonies together!",
           type: "In person",
           private: false,
           city: "Nashville",
@@ -100,20 +108,22 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          organizerId: 2,
-          name: "Artists' Haven",
-          about: "A space for artists to collaborate and share their work",
+          organizerId: 9,
+          name: "Canvas Crusaders",
+          about:
+            "A consortium for artists to unite, create, and showcase their masterpieces!",
           type: "Online",
           private: true,
-          city: "Portland",
-          state: "OR",
+          city: "Miami",
+          state: "FL",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          organizerId: 3,
-          name: "Green Thumbs",
-          about: "Gardening and plant care discussions",
+          organizerId: 10,
+          name: "Eco Avengers",
+          about:
+            "Discuss and delve into the art of gardening and nurturing our planet! Become a Planeteer!",
           type: "In person",
           private: false,
           city: "Denver",

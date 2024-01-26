@@ -1,45 +1,42 @@
-import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import ProfileButton from './ProfileButton';
-import OpenModalButton from '../OpenModalButton';
-import LoginFormModal from '../LoginFormModal';
-import SignupFormModal from '../SignupFormModal';
-import './Navigation.css';
+import { useSelector } from "react-redux";
+import OpenModalButton from "../OpenModalButton";
+import LoginFormModal from "../LoginFormModal";
+import SignupFormModal from "../SignupFormModal";
+import ProfileButton from "./ProfileButton";
+import { Link } from "react-router-dom";
+import "./Navigation.css";
+import cyclopsLogo from "/cyclopsLogo.png";
 
-function Navigation({ isLoaded }) {
-  const sessionUser = useSelector(state => state.session.user);
+function Navigation() {
+  const sessionUser = useSelector((state) => state.session.user);
+  return (
+    <nav>
+      <div className="nav-bar-logo">
+        <Link to="/">
+          <img id="logo" src={cyclopsLogo} alt="Pic" />
+        </Link>
+      </div>
 
-  const sessionLinks = sessionUser ?
-    (
-      <li>
-        <ProfileButton user={sessionUser} />
-      </li>
-    ) : (
-      <>
-        <li>
+      {sessionUser ? (
+        <div className="nav-bar-user-links">
+          <Link to={"/groups/new"} className="link">
+            Start a new Faction!
+          </Link>
+          <ProfileButton user={sessionUser} />
+        </div>
+      ) : (
+        <div className="nav-bar-no-user">
           <OpenModalButton
-            buttonText="Log In"
+            buttonText="Enter your Portal"
             modalComponent={<LoginFormModal />}
           />
-          {/* <NavLink to="/login">Log In</NavLink> */}
-        </li>
-        <li>
           <OpenModalButton
-            buttonText="Sign Up"
+            buttonText="Enlist Today!"
             modalComponent={<SignupFormModal />}
           />
-          {/* <NavLink to="/signup">Sign Up</NavLink> */}
-        </li>
-      </>
-    );
-
-  return (
-    <ul>
-      <li>
-        <NavLink to="/">Home</NavLink>
-      </li>
-      {isLoaded && sessionLinks}
-    </ul>
+        </div>
+      )}
+    </nav>
   );
 }
 

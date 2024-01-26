@@ -3,8 +3,16 @@ import { useDispatch } from "react-redux";
 import { Outlet, createBrowserRouter, RouterProvider } from "react-router-dom";
 // import LoginFormPage from './components/LoginFormPage';
 // import SignupFormPage from './components/SignupFormPage';
-import Navigation from "./components/Navigation/Navigation-bonus";
+import Navigation from "./components/Navigation/Navigation";
 import * as sessionActions from "./store/session";
+import LandingPage from "./components/Home";
+import GroupsList from "./components/Groups/GroupsList";
+import ManageEvents from "./components/Events/ManageEvents";
+import GroupDetails from "./components/Groups/GroupDetails";
+import EventDetails from "./components/Events/EventDetails";
+import CreateGroupForm from "./components/Groups/CreateGroupForm";
+import CreateEventForm from "./components/Events/CreateEventForm";
+import EditGroupPage from "./components/Groups/EditGroupPage/EditGroupPage";
 
 function Layout() {
   const dispatch = useDispatch();
@@ -30,7 +38,35 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <h1>Welcome!</h1>,
+        element: <LandingPage />,
+      },
+      {
+        path: "/groups",
+        element: <GroupsList />,
+      },
+      {
+        path: "/events",
+        element: <ManageEvents />,
+      },
+      {
+        path: "groups/:id",
+        element: <GroupDetails />,
+      },
+      {
+        path: "events/:id",
+        element: <EventDetails />,
+      },
+      {
+        path: "groups/new",
+        element: <CreateGroupForm />,
+      },
+      {
+        path: "create-event",
+        element: <CreateEventForm />,
+      },
+      {
+        path: "edit-group",
+        element: <EditGroupPage />,
       },
       // {
       //   path: 'login',

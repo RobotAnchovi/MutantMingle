@@ -1,0 +1,142 @@
+/* Back link */
+nav a {
+  font-family: "Bangers", cursive;
+  color: #1e81b0;
+  font-size: large;
+  font-weight: bold;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+  text-decoration: underline;
+  cursor: pointer;
+  display: block; /* Adjust if you want it inline */
+  margin-bottom: 20px; /* Space before the main content */
+  margin-left: 10px;
+}
+
+/* Main group image and info container */
+.faction-detail-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+.faction-deets-upper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 20px;
+  flex-wrap: wrap;
+}
+
+.faction-image {
+  width: 100%; /* Full width of its parent */
+  min-height: 300px; /* Minimum height you want the container to take up */
+  display: flex; /* Use flexbox to center the image */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  border-radius: 15px; /* Rounded corners for the container */
+  overflow: hidden; /* Prevents the image from spilling out of the border-radius */
+  box-shadow: 5px 5px 0 #000; /* Comic book style shadow for the container */
+}
+
+.faction-image {
+  max-width: 100%; /* Ensures image does not overflow its container */
+  max-height: 100%; /* Ensures image does not overflow the container's height */
+  object-fit: contain; /* Image will be contained within the container, maintaining its aspect ratio */
+  border-radius: 15px; /* Rounded corners for the image */
+}
+
+/* Group information next to the image */
+.faction-deets-top {
+  flex-grow: 1; /* Take up remaining space */
+  margin-left: 2rem; /* Space from the image */
+}
+
+/* Group info header */
+.faction-deets-top p {
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+  color: #1e81b0; /* Style color as per theme */
+}
+.faction-deets-top h1 {
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+  color: red;
+}
+
+/* Modal Confirmation */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.confirmation-modal {
+  background-color: #fdfd96;
+  border: 5px solid black;
+  box-shadow: 5px 5px 0 #000;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Join group button */
+#join-group {
+  background-color: #f2cb05; /* Comic button color */
+  color: black;
+  text-shadow: none; /* Adjust as per design */
+  font-family: "Bangers", cursive;
+  margin-top: 10px; /* Space from the last text */
+  cursor: pointer;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 3px 3px black; /* Comic book style shadow */
+}
+
+/* Faction management buttons */
+.faction-management-buttons button {
+  font-family: "Bangers", cursive;
+  background-color: #f2cb05; /* Comic button color */
+  color: white;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+  margin-right: 10px; /* Space between buttons */
+  padding: 10px 20px;
+  border-radius: 5px; /* Rounded corners */
+  box-shadow: 3px 3px black; /* Comic book style shadow */
+  border: none;
+  cursor: pointer;
+}
+
+/* Campaigns section */
+.faction-events-section {
+  background-color: #fdfd96; /* Yellow background */
+  padding: 1rem;
+  border: 5px solid black; /* Comic book style border */
+  box-shadow: 5px 5px 0 #000; /* Comic book style shadow */
+  margin-top: 20px; /* Space from the previous section */
+  text-align: center; /* Center the title */
+}
+
+/* Campaigns listing */
+.faction-events-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center campaigns in the list */
+}
+
+.faction-events {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff; /* White background for each event */
+  border-radius: 15px; /* Rounded corners */
+  padding: 1rem;
+  margin: 1rem 0; /* Space between events */
+}

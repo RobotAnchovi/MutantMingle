@@ -1,0 +1,100 @@
+.campaign-form {
+  width: 80%;
+  margin: 0 auto 5rem;
+  outline: thick solid #1e81b0;
+  background-color: lightgray;
+  padding: 20px;
+}
+
+.campaign-form div {
+  border-top: 1px solid #1e81b0;
+  margin-top: 1rem;
+}
+
+.campaign-form input,
+.campaign-form select,
+.campaign-form textarea {
+  border: 2px solid #1e81b0;
+  background-color: #fdfd96;
+  box-sizing: border-box;
+  padding: 0.25rem;
+  margin-left: 20px;
+}
+label {
+  font-family: "Bangers", cursive;
+  font-size: large;
+  letter-spacing: 1px;
+}
+input::placeholder,
+textarea::placeholder {
+  color: lightgray; /* Color for the placeholder text */
+  letter-spacing: 1px; /* Letter spacing for the placeholder text */
+}
+
+textarea {
+  width: 40%; /* or a fixed width like 500px */
+  height: auto; /* Adjust the height as needed */
+  padding: 10px; /* Add some padding for text inside textarea */
+  border: 2px solid #1e81b0; /* A border color that matches your theme */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 5px 5px 0 #000; /* Shadow effect for depth */
+  font-family: "Bangers", cursive; /* Maintaining the comic theme */
+  font-size: 1em; /* Adjust the font size as needed */
+  overflow: auto; /* This will show a scrollbar when the text overflows */
+  resize: vertical; /* Allows the user to resize the textarea vertically */
+  background-color: #fdfd96; /* Background color */
+  color: lightcoral; /* Text color */
+}
+
+.campaign-form p {
+  margin: 0.5rem 0;
+  font-family: "Bangers", cursive;
+}
+
+.campaign-form .errors {
+  margin: 0;
+  color: red;
+  letter-spacing: 1px;
+}
+
+.campaign-form button {
+  background-color: #f2cb05;
+  box-shadow: 3px 3px black;
+  color: red;
+  font-size: large;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
+  cursor: pointer;
+  font-family: "Bangers", cursive;
+  letter-spacing: 1px;
+}
+
+#campaign-top-div {
+  border: none;
+}
+
+#campaign-input-name,
+#campaign-input-imageUrl,
+#campaign-input-description {
+  width: 50rem;
+}
+
+#campaign-div-price,
+#campaign-input-capacity {
+  border: 2px solid #1e81b0;
+  background-color: #fdfd96;
+  width: fit-content;
+  padding-left: 5px;
+  margin: 0;
+}
+
+#campaign-input-price {
+  border: none;
+  width: 75px;
+  background-color: transparent;
+}
+
+#campaign-input-price:focus {
+  outline: none;
+}
