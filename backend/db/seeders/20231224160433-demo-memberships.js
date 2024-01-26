@@ -26,7 +26,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          userId: 2,
+          userId: 1,
           groupId: 2,
           status: "pending",
           createdAt: new Date(),
