@@ -58,7 +58,8 @@
 
 .errors {
   color: red;
-  text-shadow: 2px 2px 0px #000;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 /* Button styling */

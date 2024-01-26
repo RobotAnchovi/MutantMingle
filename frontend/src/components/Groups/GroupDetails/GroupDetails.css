@@ -101,9 +101,9 @@ div.campaign {
 }
 
 /* Join group button */
-#join-group {
+button.join-faction-button {
   background-color: #f2cb05; /* Comic button color */
-  color: black;
+  color: white;
   text-shadow: none; /* Adjust as per design */
   font-family: "Bangers", cursive;
   margin-top: 10px; /* Space from the last text */
@@ -112,6 +112,8 @@ div.campaign {
   padding: 10px 20px;
   border-radius: 5px; /* Rounded corners */
   box-shadow: 3px 3px black; /* Comic book style shadow */
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 /* Faction management buttons */
