@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGroupDetails, thunkRemoveGroup } from "../../../store/groups";
 import GroupEvents from "../GroupEvents";
-// import "./GroupDetails.css";
+import "./GroupDetails.css";
 
 const GroupDetailPage = () => {
   const { id } = useParams();
@@ -82,76 +82,80 @@ const GroupDetailPage = () => {
   };
 
   return (
-    <div className="faction-detail-page">
+    <div>
       <nav>
         <Link to="/groups">Factions</Link>
       </nav>
-      <div>
-        <img
-          src={
-            imageWithPreview !== undefined
-              ? imageWithPreview.url
-              : "https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg"
-          }
-          alt={groupDetails.name}
-        />
-        <div>
-          <h1>{groupDetails.name}</h1>
-          <p>
-            {groupDetails.city}, {groupDetails.state}
-          </p>
-          <p>
-            {groupDetails.numEvents} Campaigns ·{" "}
-            {groupDetails.private ? "Private" : "Public"}
-          </p>
-          <p>
-            Fearlessly led by {groupDetails.Organizer?.firstName}{" "}
-            {groupDetails.Organizer?.lastName}
-          </p>
-          {showJoinButton && (
-            <button
-              onClick={() => alert("Feature coming soon")}
-              className="join-faction-button"
-            >
-              Align with this Faction!
-            </button>
-          )}
-          {isGroupCreator && (
-            <div className="faction-management-buttons">
+      <div className="faction-detail-page">
+        <div className="faction-deets-upper">
+          <div className="faction-image">
+            <img
+              src={
+                imageWithPreview !== undefined
+                  ? imageWithPreview.url
+                  : "https://cdn.vectorstock.com/i/preview-1x/65/30/default-image-icon-missing-picture-page-vector-40546530.jpg"
+              }
+              alt={groupDetails.name}
+            />
+          </div>
+          <div className="faction-deets-top">
+            <h1>{groupDetails.name}</h1>
+            <p>
+              {groupDetails.city}, {groupDetails.state}
+            </p>
+            <p>
+              {groupDetails.numEvents} Campaigns ·{" "}
+              {groupDetails.private ? "Private" : "Public"}
+            </p>
+            <p>
+              Fearlessly led by {groupDetails.Organizer?.firstName}{" "}
+              {groupDetails.Organizer?.lastName}
+            </p>
+            {showJoinButton && (
               <button
-                onClick={handleCreateEvent}
-                className="create-campaign-button"
+                onClick={() => alert("Feature coming soon")}
+                className="join-faction-button"
               >
-                Initialize Campaign
+                Align with this Faction!
               </button>
-              <button
-                onClick={handleUpdateGroup}
-                className="update-faction-button"
-              >
-                Update Faction
-              </button>
-              <button
-                onClick={handleDeleteGroup}
-                className="delete-faction-button"
-              >
-                Delete Faction
-              </button>
-              {showDeleteConfirmation && (
-                <div className="modal-backdrop">
-                  <div className="confirmation-modal">
-                    <p>Are you sure you want to delete this group?</p>
-                    <button onClick={handleConfirmDelete} className="red">
-                      Yes, delete this faction!
-                    </button>
-                    <button onClick={() => setShowDeleteConfirmation(false)}>
-                      No, I&apos;ll stay strong.
-                    </button>
+            )}
+            {isGroupCreator && (
+              <div className="faction-management-buttons">
+                <button
+                  onClick={handleCreateEvent}
+                  className="create-campaign-button"
+                >
+                  Initialize Campaign
+                </button>
+                <button
+                  onClick={handleUpdateGroup}
+                  className="update-faction-button"
+                >
+                  Update Faction
+                </button>
+                <button
+                  onClick={handleDeleteGroup}
+                  className="delete-faction-button"
+                >
+                  Delete Faction
+                </button>
+                {showDeleteConfirmation && (
+                  <div className="modal-backdrop">
+                    <div className="confirmation-modal">
+                      <p>Are you sure you want to delete this group?</p>
+                      <button onClick={handleConfirmDelete} className="red">
+                        Yes, delete this faction!
+                      </button>
+                      <button onClick={() => setShowDeleteConfirmation(false)}>
+                        No, I&apos;ll stay strong.
+                      </button>
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-          )}
-          <div>
+                )}
+              </div>
+            )}
+          </div>
+          <div className="faction-deets-lower">
             <h1>Fearlessly Led By</h1>
             <p>
               {groupDetails.Organizer?.firstName}{" "}
@@ -159,8 +163,10 @@ const GroupDetailPage = () => {
             </p>
             <h1>What we&apos;re about</h1>
             <p>{groupDetails.about}</p>
-            <h1>Campaigns ({groupDetails.numEvents})</h1>
-            {<GroupEvents />}
+            <h1 className="faction-events-section">
+              Campaigns ({groupDetails.numEvents})
+            </h1>
+            <div className="faction-events">{<GroupEvents />}</div>
           </div>
         </div>
       </div>

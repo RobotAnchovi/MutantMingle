@@ -1,29 +1,59 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { thunkAddImage, thunkCreateGroup } from "../../../store/groups";
+import { thunkUpdateGroup } from "../../../store/groups";
+import "./EditGroupPage.css";
+import { useSelector } from "react-redux";
 
-const CreateGroupPage = () => {
+const EditGroupPage = () => {
+  const location = useLocation();
+
+  const {
+    groupId,
+    groupName,
+    groupCity,
+    groupState,
+    groupAbout,
+    groupType,
+    groupPrivate,
+    userId,
+  } = location.state;
+  console.log("🚀 ~ EditGroupPage ~ location.state:", location.state);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [name, setName] = useState("");
-  const [about, setAbout] = useState("");
-  const [type, setType] = useState("placeholder");
-  const [privacy, setPrivacy] = useState("placeholder");
-  const [imageUrl, setImageUrl] = useState("");
+
+  const user = useSelector((state) => state.session?.user);
+  console.log("🚀 ~ EditGroupPage ~ user:", user);
+
+  if (user === null || userId !== user.id) {
+    navigate("/");
+  }
+
+  const [city, setCity] = useState(groupCity);
+  const [state, setState] = useState(groupState);
+  const [name, setName] = useState(groupName);
+  const [about, setAbout] = useState(groupAbout);
+  const [type, setType] = useState(groupType);
+  const [privacy, setPrivacy] = useState(groupPrivate ? "true" : "false");
   const [validationErrors, setValidationErrors] = useState({});
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (user === null) {
+      navigate("/");
+      setCity("");
+      setState("");
+      setName("");
+      setAbout("");
+      setType("");
+      setPrivacy("");
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const errors = {};
-    // const urlEndings = [".png", ".jpg", ".jpeg"];
-    // const urlEnding3 = imageUrl.slice(-4);
-    // const urlEnding4 = imageUrl.slice(-5);
 
     if (!city) errors.city = "Spider-Sense tingling! City is required.";
     if (!state) errors.state = "State initials, like SH, are required.";
@@ -31,7 +61,6 @@ const CreateGroupPage = () => {
       errors.state =
         "Wakanda Forever! State initials must be 2 characters long.";
     if (!name) errors.name = "Avengers, assemble! A group name is required.";
-    if (!imageUrl) errors.imageUrl = "Thor's hammer demands an image URL.";
     if (about.length < 30)
       errors.about =
         "Doctor Strange says it must be at least 30 characters long.";
@@ -52,25 +81,21 @@ const CreateGroupPage = () => {
         state: state.toUpperCase(),
       };
 
-      const newImageReqBody = {
-        url: imageUrl,
-        preview: true,
-      };
-
-      const createdGroup = await dispatch(thunkCreateGroup(newGroupReqBody));
+      const createdGroup = await dispatch(
+        thunkUpdateGroup(groupId, newGroupReqBody)
+      );
 
       if (createdGroup.errors) {
         setValidationErrors(createdGroup.errors);
       } else {
-        await dispatch(thunkAddImage(createdGroup.id, newImageReqBody));
-        navigate(`/events/${createdGroup.id}`);
+        navigate(`/groups/${createdGroup.id}`);
       }
     }
   };
 
   return (
     <section className="faction-section">
-      <h1>Start a New Faction</h1>
+      <h1>Update your Faction</h1>
       <form onSubmit={handleSubmit}>
         <div>
           <h2>Set your Faction&apos;s Base of Operation</h2>
@@ -82,7 +107,7 @@ const CreateGroupPage = () => {
             <input
               type="text"
               name="city"
-              id="faction-city"
+              id="group-city"
               placeholder="City"
               value={city}
               onChange={(e) => setCity(e.target.value)}
@@ -143,7 +168,6 @@ const CreateGroupPage = () => {
               your events?
             </p>
           </label>
-
           <textarea
             name=""
             id="faction-about"
@@ -160,9 +184,9 @@ const CreateGroupPage = () => {
           </div>
         </div>
         <div id="final-steps-div">
-          <h2>Additional Intel.</h2>
+          <h2>Additional Information.</h2>
           <label htmlFor="type">
-            <p>Is this an in-person or online faction?</p>
+            <p>Is this an in-person or online group?</p>
             <select
               name="type"
               value={type}
@@ -190,15 +214,8 @@ const CreateGroupPage = () => {
               value={privacy}
               onChange={(e) => setPrivacy(e.target.value)}
             >
-              <option
-                className="placeholder-select"
-                disabled
-                value="placeholder"
-              >
-                (select one)
-              </option>
-              <option value={false}>Public</option>
-              <option value={true}>Private</option>
+              <option value="false">Public</option>
+              <option value="true">Private</option>
             </select>
           </label>
           <div className="errors-div">
@@ -206,29 +223,13 @@ const CreateGroupPage = () => {
               <span className="errors">{validationErrors.privacy}</span>
             )}
           </div>
-          <label htmlFor="imageUrl">
-            <p>Please add an image URL for your faction below:</p>
-            <input
-              id="faction-imageUrl"
-              type="url"
-              name="imageUrl"
-              placeholder="Image Url"
-              value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
-            />
-          </label>
-          <div className="errors-div">
-            {"imageUrl" in validationErrors && (
-              <span className="errors">{validationErrors.imageUrl}</span>
-            )}
-          </div>
         </div>
         <div>
-          <button onSubmit={handleSubmit}>Assemble Faction!!</button>
+          <button onSubmit={handleSubmit}>Re-Assemble Faction!!</button>
         </div>
       </form>
     </section>
   );
 };
 
-export default CreateGroupPage;
+export default EditGroupPage;
