@@ -58,15 +58,27 @@ function ProfileButton({ user }) {
             <li>Hello, {user.firstName}</li>
             <li>{user.email}</li>
             <li
-              onClick={() => setShowMenu(false)}
+              onClick={(e) => {
+                e.preventDefault(); // Prevent the link from navigating
+                setShowMenu(false);
+                alert("Feature coming soon..");
+              }}
               className="user-dropdown-yours"
             >
-              {" "}
-              <Link to="/events/current">View your Campaigns</Link>{" "}
+              <Link to="/events/current" onClick={(e) => e.preventDefault()}>
+                View your Campaigns
+              </Link>
             </li>
-            <li onClick={() => setShowMenu(false)}>
-              {" "}
-              <Link to="/groups/current">View your Factions</Link>{" "}
+            <li
+              onClick={(e) => {
+                e.preventDefault(); // Prevent the link from navigating
+                setShowMenu(false);
+                alert("Feature coming soon..");
+              }}
+            >
+              <Link to="/groups/current" onClick={(e) => e.preventDefault()}>
+                View your Factions
+              </Link>
             </li>
             <li
               onClick={() => setShowMenu(false)}
