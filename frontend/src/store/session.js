@@ -69,7 +69,7 @@ function sessionReducer(state = initialState, action) {
     case SET_USER:
       return { ...state, user: action.payload };
     case REMOVE_USER:
-      return { ...state, user: null };
+      return { user: null }; //! Removed ...state
     default:
       return state;
   }

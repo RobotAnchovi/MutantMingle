@@ -11,6 +11,7 @@ nav a {
   display: block; /* Adjust if you want it inline */
   margin-bottom: 20px; /* Space before the main content */
   margin-left: 10px;
+  letter-spacing: 1px;
 }
 
 /* Main group image and info container */
@@ -19,6 +20,7 @@ nav a {
   justify-content: center;
   align-items: flex-start;
   margin-top: 20px;
+  letter-spacing: 1px;
 }
 
 .faction-deets-upper {
@@ -30,7 +32,8 @@ nav a {
 }
 
 .faction-image {
-  width: 100%; /* Full width of its parent */
+  flex-grow: 0.8;
+  width: 75%; /* Full width of its parent */
   min-height: 300px; /* Minimum height you want the container to take up */
   display: flex; /* Use flexbox to center the image */
   justify-content: center; /* Center horizontally */
@@ -38,6 +41,7 @@ nav a {
   border-radius: 15px; /* Rounded corners for the container */
   overflow: hidden; /* Prevents the image from spilling out of the border-radius */
   box-shadow: 5px 5px 0 #000; /* Comic book style shadow for the container */
+  background-color: #fdfd96;
 }
 
 .faction-image {
@@ -49,7 +53,7 @@ nav a {
 
 /* Group information next to the image */
 .faction-deets-top {
-  flex-grow: 1; /* Take up remaining space */
+  /* flex-grow: 1; Take up remaining space */
   margin-left: 2rem; /* Space from the image */
 }
 
@@ -63,6 +67,16 @@ nav a {
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
   color: red;
+}
+.faction-deets-lower {
+  flex-grow: 1;
+  margin-left: 20px;
+}
+div.campaign {
+  display: grid;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
 }
 
 /* Modal Confirmation */
@@ -130,13 +144,15 @@ nav a {
   display: flex;
   flex-direction: column;
   align-items: center; /* Center campaigns in the list */
+  border: 3px solid black; /* Comic book style border */
 }
 
 .faction-events {
   display: flex;
   flex-direction: column;
-  background-color: #fff; /* White background for each event */
+  background-color: #fdfd96; /* White background for each event */
   border-radius: 15px; /* Rounded corners */
+  border: 3px solid black;
   padding: 1rem;
   margin: 1rem 0; /* Space between events */
 }

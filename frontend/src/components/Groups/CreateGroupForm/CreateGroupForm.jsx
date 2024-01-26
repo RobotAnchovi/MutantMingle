@@ -64,7 +64,7 @@ const CreateGroupPage = () => {
         setValidationErrors(createdGroup.errors);
       } else {
         await dispatch(thunkAddImage(createdGroup.id, newImageReqBody));
-        navigate(`/events/${createdGroup.id}`);
+        navigate(`/groups/${createdGroup.id}`);
       }
     }
   };
@@ -89,7 +89,7 @@ const CreateGroupPage = () => {
               onChange={(e) => setCity(e.target.value)}
             />
           </label>
-          <span id="comma-span">,</span>
+          <span id="comma-span"></span>
           <label htmlFor="state">
             <input
               type="text"
