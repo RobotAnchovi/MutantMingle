@@ -4,6 +4,36 @@
 
 MutantMerge is a full-stack, work-in-progress clone of Meetup, showcasing CRUD (Create, Read, Update, Delete) capabilities across various features. This project demonstrates a comprehensive understanding of both frontend and backend technologies, making it an ideal portfolio piece for potential employers.
 
+While the project is unfinished, there are features I am looking to add soon.
+
+**Features to be Added Later**
+
+-`Align with this Faction` : This feature will allow a logged-in user to join a faction.
+
+-`My Factions` : This feature will allow a logged-in user to see the factions they are associated with.
+
+-`My Campaigns` : This feature will allow a logged-in user to see the campaigns they are associated with.
+
+**What I Learned**
+This project taught me the practical applications of full-stack development in a real-world project setting. Through implementing CRUD operations, I deepened my understanding of how front-end and back-end technologies interconnect to create a seamless user experience. I learned to:
+
+Implement `Express` as a backbone for the server, appreciating its minimalism and flexibility for HTTP requests handling.
+Utilize `Express-Validator` for robust request validation, ensuring data integrity and security.
+Integrate `Sequelize` as an ORM, which abstracted complex SQL queries and enhanced my ability to interact with different databases using `JavaScript`.
+Apply `JWT` for secure authentication, understanding the importance of secure information transmission in web applications.
+
+On the frontend:
+
+Advance my `React` skills, specifically in state management and component lifecycle, which are crucial for responsive UIs.
+Use `React Router` for effective page navigation, learning to manage application state in single-page applications.
+Explore `Redux` for global state management, enabling me to maintain a predictable state across the entire application.
+Enhance my `CSS` skills for styling, creating visually appealing interfaces that adhere to modern design principles.
+Incorporate `Font Awesome` and `Google Fonts` to enrich the UI's visual elements, improving user engagement.
+
+While building MutantMerge, I also gained insights into strategic planning for feature implementation and the importance of scalability and maintainability in codebase architecture.
+
+\*All images generated using `Stable Diffusion`.
+
 ## Technologies Used
 
 ### Backend

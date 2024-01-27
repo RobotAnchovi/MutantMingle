@@ -32,11 +32,13 @@ h1 {
 
 .landing-img img {
   max-width: 100%;
+
   border-radius: 50%; /* Create a circular shape */
   object-fit: cover; /* Ensure the image covers the area */
   width: 100%; /* Full width of the container */
   height: auto; /* Maintain aspect ratio */
-  aspect-ratio: 2 / 1; /* Make it a horizontal oval (change ratio as needed) */
+  aspect-ratio: 2 /1; /*Make it a horizontal oval (change ratio as needed) */
+  border: 3px solid black;
 }
 
 .how-works {
