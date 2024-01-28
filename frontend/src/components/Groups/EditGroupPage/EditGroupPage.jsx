@@ -8,6 +8,19 @@ import { useSelector } from "react-redux";
 const EditGroupPage = () => {
   const location = useLocation();
 
+  const defaultState = {
+    groupId: null,
+    groupName: null,
+    groupCity: null,
+    groupState: null,
+    groupAbout: null,
+    groupType: null,
+    groupPrivate: null,
+    userId: null,
+  };
+
+  const thisState = location.state || defaultState;
+
   const {
     groupId,
     groupName,
@@ -17,29 +30,24 @@ const EditGroupPage = () => {
     groupType,
     groupPrivate,
     userId,
-  } = location.state;
-  // console.log("🚀 ~ EditGroupPage ~ location.state:", location.state);
+  } = thisState;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.session?.user);
-  // console.log("🚀 ~ EditGroupPage ~ user:", user);
+  const user = useSelector((state) => state.session.user);
+  console.log("🚀 ~ EditGroupPage ~ user:", user);
 
-  if (user === null || userId !== user.id) {
-    navigate("/");
-  }
-
-  const [city, setCity] = useState(groupCity);
-  const [state, setState] = useState(groupState);
-  const [name, setName] = useState(groupName);
-  const [about, setAbout] = useState(groupAbout);
-  const [type, setType] = useState(groupType);
+  const [city, setCity] = useState(groupCity || "");
+  const [state, setState] = useState(groupState || "");
+  const [name, setName] = useState(groupName || "");
+  const [about, setAbout] = useState(groupAbout || "");
+  const [type, setType] = useState(groupType || "");
   const [privacy, setPrivacy] = useState(groupPrivate ? "true" : "false");
   const [validationErrors, setValidationErrors] = useState({});
 
   useEffect(() => {
-    if (user === null) {
+    if (user === null || userId !== user.id || groupId === null) {
       navigate("/");
       setCity("");
       setState("");
@@ -48,7 +56,7 @@ const EditGroupPage = () => {
       setType("");
       setPrivacy("");
     }
-  }, [user, navigate]);
+  }, [user, navigate, groupId, userId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
