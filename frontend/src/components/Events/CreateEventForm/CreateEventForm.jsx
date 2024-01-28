@@ -77,7 +77,9 @@ const CreateEventPage = () => {
               onChange={(e) => setEventName(e.target.value)}
             />
           </label>
-          {validationErrors.eventName && <p>{validationErrors.eventName}</p>}
+          {validationErrors.eventName && (
+            <p className="form-error">{validationErrors.eventName}</p>
+          )}
         </div>
 
         <div>
@@ -115,7 +117,9 @@ const CreateEventPage = () => {
               onChange={(e) => setStartDate(e.target.value)}
             />
           </label>
-          {validationErrors.startDate && <p>{validationErrors.startDate}</p>}
+          {validationErrors.startDate && (
+            <p className="form-error">{validationErrors.startDate}</p>
+          )}
         </div>
 
         <div>
@@ -128,7 +132,9 @@ const CreateEventPage = () => {
               onChange={(e) => setEndDate(e.target.value)}
             />
           </label>
-          {validationErrors.endDate && <p>{validationErrors.endDate}</p>}
+          {validationErrors.endDate && (
+            <p className="form-error">{validationErrors.endDate}</p>
+          )}
         </div>
 
         <div>
@@ -141,7 +147,9 @@ const CreateEventPage = () => {
               onChange={(e) => setImageUrl(e.target.value)}
             />
           </label>
-          {validationErrors.imageUrl && <p>{validationErrors.imageUrl}</p>}
+          {validationErrors.imageUrl && (
+            <p className="form-error">{validationErrors.imageUrl}</p>
+          )}
         </div>
 
         <div>
@@ -155,7 +163,7 @@ const CreateEventPage = () => {
             ></textarea>
           </label>
           {validationErrors.description && (
-            <p>{validationErrors.description}</p>
+            <p className="form-error">{validationErrors.description}</p>
           )}
         </div>
 

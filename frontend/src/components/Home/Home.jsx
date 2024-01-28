@@ -3,15 +3,13 @@ import { HomeLinkCard } from "./HomeLinkCard";
 import OpenModalButton from "../OpenModalButton";
 import SignupFormModal from "../SignupFormModal";
 import { useSelector } from "react-redux";
-import landingImage from "/landing-page.png";
+import landingImage from "/spider-landing-page.png";
 import happyMutants from "/happy-mutant-faction.png";
 import mutantCampaign from "/mutant-campaign.png";
 import newFaction from "/new-faction.png";
 
 const Home = () => {
-  const isLoggedIn = useSelector(
-    (state) => state.session?.user !== undefined && state.session?.user !== null
-  );
+  const isLoggedIn = useSelector((state) => state.session.user !== null);
 
   const activeLink = isLoggedIn ? "" : "disabled";
 

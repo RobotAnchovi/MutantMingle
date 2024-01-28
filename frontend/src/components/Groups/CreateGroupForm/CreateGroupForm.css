@@ -1,4 +1,19 @@
 /* General styles */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+}
 * {
   letter-spacing: 1px; /* Your preference for letter-spacing */
   font-family: "Bangers", cursive; /* Comic book font */
@@ -56,9 +71,10 @@
   justify-content: center;
 }
 
-.errors {
+.errors-div span {
   color: red;
-  text-shadow: 2px 2px 0px #000;
+  animation: shake 0.5s;
+  animation-iteration-count: 2;
 }
 
 /* Button styling */

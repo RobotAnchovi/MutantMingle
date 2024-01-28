@@ -204,26 +204,29 @@ const EventDetails = () => {
               </div>
               <div className="campaign-stats">
                 <div className="campaign-date">
-                  <img src="fa-regular fa-clock" alt="icon" className="clock" />
+                  <i
+                    className="fa-regular fa-clock"
+                    aria-label="clock icon"
+                  ></i>
+
                   <div className="start-end-times">
                     <p>START {formatDate(eventDetails.startDate)}</p>
                     <p>END {formatDate(eventDetails.endDate)}</p>
                   </div>
                 </div>
                 <div className="campaign-price">
-                  <img
-                    src="fa-solid fa-dollar-sign"
-                    alt="icon"
-                    className="dollar-sign"
-                  />
+                  <i
+                    className="fa-solid fa-dollar-sign"
+                    aria-label="dollar icon"
+                  ></i>
                   <p>Price: {formatPrice(eventDetails.price)}</p>
                 </div>
                 <div className="campaign-type">
-                  <img
-                    src="fa-solid fa-map-pin"
-                    alt="icon"
-                    className="map-pin"
-                  />
+                  <i
+                    className="fa-solid fa-map-pin"
+                    aria-label="map pin icon"
+                  ></i>
+
                   <p>{eventDetails.type}</p>
                 </div>
               </div>

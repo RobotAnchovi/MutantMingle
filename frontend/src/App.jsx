@@ -13,6 +13,7 @@ import EventDetails from "./components/Events/EventDetails";
 import CreateGroupForm from "./components/Groups/CreateGroupForm";
 import CreateEventForm from "./components/Events/CreateEventForm";
 import EditGroupPage from "./components/Groups/EditGroupPage/EditGroupPage";
+// import NotFound from "./components/NotFound/NotFound";
 
 function Layout() {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function Layout() {
 const router = createBrowserRouter([
   {
     element: <Layout />,
+    // errorElement: <NotFound />,
     children: [
       {
         path: "/",
