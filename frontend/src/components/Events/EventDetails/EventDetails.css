@@ -147,3 +147,42 @@
   background-color: lightgray; /* Yellow background */
   margin-top: 2rem;
 }
+
+/* Confirmation Modal */
+.confirmation-modal {
+  text-align: center;
+  padding: 1rem;
+  background-color: #fdfd96; /* Light yellow background for comic theme */
+  border-radius: 10px;
+  border: 3px solid black;
+  box-shadow: 3px 3px 0 #000; /* Adds depth with shadow */
+  font-family: "Bangers", cursive; /* Matching the font theme */
+  color: #1e81b0; /* Consistent text color */
+}
+
+.confirmation-modal p {
+  margin-bottom: 2rem; /* Space between the text and buttons */
+}
+
+/* Styled Buttons */
+.confirmation-modal button {
+  background-color: #ff6161; /* Red color for action buttons */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  margin: 0 10px; /* Spacing between buttons */
+  box-shadow: 3px 3px 0 #000; /* Consistent with other buttons */
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000; /* Text shadow for readability */
+  font-size: 1rem;
+  transition: transform 0.1s; /* For a press-down effect */
+}
+
+.confirmation-modal button:hover {
+  transform: translateY(2px); /* Press-down effect on hover */
+}
+
+.confirmation-modal button:first-child {
+  background-color: #4caf50; /* Green color for confirmation */
+}
