@@ -78,6 +78,18 @@ div.campaign {
   align-items: center;
   margin-top: 20px;
 }
+.faction-events-lower {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  margin-top: 20px;
+}
+.faction-events-lower h1 {
+  width: 100%;
+  border-radius: 10px;
+}
 
 /* Modal Confirmation */
 .modal-backdrop {
@@ -152,6 +164,7 @@ button.join-faction-button {
 .faction-events {
   display: flex;
   flex-direction: column;
+  width: 100%;
   background-color: #fdfd96; /* White background for each event */
   border-radius: 15px; /* Rounded corners */
   border: 3px solid black;

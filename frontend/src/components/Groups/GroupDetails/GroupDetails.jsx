@@ -162,6 +162,8 @@ const GroupDetailPage = () => {
             </p>
             <h1>What we&apos;re about</h1>
             <p>{groupDetails.about}</p>
+          </div>
+          <div className="faction-events-lower">
             <h1 className="faction-events-section">
               Campaigns ({groupDetails.numEvents})
             </h1>
