@@ -32,7 +32,8 @@ Incorporate `Font Awesome` and `Google Fonts` to enrich the UI's visual elements
 
 While building MutantMerge, I also gained insights into strategic planning for feature implementation and the importance of scalability and maintainability in codebase architecture.
 
-\*All images generated using `Stable Diffusion`.
+\*Some images generated using `Stable Diffusion`.
+\*All other images are property of `digitalcomicmuseum.com`.
 
 ## Technologies Used
 
